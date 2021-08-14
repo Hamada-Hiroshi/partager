@@ -31,7 +31,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'rails-i18n', '~> 6.0'
 gem 'dotenv-rails'
 gem 'devise'
-# gem 'devise-i18n'
+gem 'devise-i18n'
 gem 'kaminari'
 gem 'ransack'
 gem 'slim-rails'
