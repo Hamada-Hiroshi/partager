@@ -97,6 +97,8 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    devise-i18n (1.10.0)
+      devise (>= 4.8.0)
     diff-lcs (1.4.4)
     dotenv (2.7.6)
     dotenv-rails (2.7.6)
@@ -111,9 +113,6 @@ GEM
     ffi (1.15.3)
     globalid (0.5.2)
       activesupport (>= 5.0)
-    hpricot (0.8.6)
-    html2slim (0.2.0)
-      hpricot
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
     jbuilder (2.11.2)
@@ -164,8 +163,6 @@ GEM
       nio4r (~> 2.0)
     racc (1.5.2)
     rack (2.2.3)
-    rack-mini-profiler (2.3.2)
-      rack (>= 1.2.0)
     rack-proxy (0.7.0)
       rack
     rack-test (1.1.0)
@@ -328,9 +325,9 @@ DEPENDENCIES
   bullet
   capybara (>= 3.26)
   devise
+  devise-i18n
   dotenv-rails
   factory_bot_rails
-  html2slim
   jbuilder (~> 2.7)
   kaminari
   listen (~> 3.3)
@@ -338,7 +335,6 @@ DEPENDENCIES
   paranoia
   pry-byebug
   puma (~> 5.0)
-  rack-mini-profiler (~> 2.0)
   rails (~> 6.1.4)
   rails-i18n (~> 6.0)
   ransack
