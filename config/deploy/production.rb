@@ -8,6 +8,11 @@
 # server "db.example.com", user: "deploy", roles: %w{db}
 server "35-72-105-241", user: "ec2-user", roles: %w{app db db}
 
+set :ssh_options, {
+  keys: "~/.ssh/aws-ram-key.pem",
+  forward_agent: true,
+  auth_methods: "publickey",
+}
 
 # role-based syntax
 # ==================
