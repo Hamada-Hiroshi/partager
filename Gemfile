@@ -58,7 +58,11 @@ group :development do
 
   gem 'annotate'
   gem 'bullet'
-e
+
+  gem 'capistrano'
+  gem 'capistrano-rails'
+  gem 'capistrano-rbenv'
+  gem 'capistrano3-puma'
 end
 
 group :test do
