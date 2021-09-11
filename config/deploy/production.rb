@@ -6,12 +6,12 @@
 # server "example.com", user: "deploy", roles: %w{app db web}, my_property: :my_value
 # server "example.com", user: "deploy", roles: %w{app web}, other_property: :other_value
 # server "db.example.com", user: "deploy", roles: %w{db}
-server "35-72-105-241", user: "ec2-user", roles: %w{app db db}
+server "ec2-35-72-105-241.ap-northeast-1.compute.amazonaws.com", user: "ec2-user", roles: %w{app db db}
 
 set :ssh_options, {
-  keys: "~/.ssh/aws-ram-key.pem",
+  keys: %w(~/.ssh/aws-ram-key.pem),
   forward_agent: true,
-  auth_methods: "publickey",
+  auth_methods: %w(publickey)
 }
 
 # role-based syntax
