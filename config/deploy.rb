@@ -11,7 +11,7 @@ set :branch, ENV['BRANCH'] || "master"
 # Default deploy_to directory is /var/www/my_app_name
 set :deploy_to, "/var/www/partager"
 
-set :rbenv_ruby, File.read('.ruby-version').strip
+set :rbenv_ruby, "3.0.2"
 
 # Default value for :format is :airbrussh.
 # set :format, :airbrussh

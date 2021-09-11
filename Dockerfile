@@ -18,6 +18,7 @@ RUN CHROME_DRIVER_VERSION=`curl -sS chromedriver.storage.googleapis.com/LATEST_R
     sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' && \
     apt update && apt install -y google-chrome-stable
 
+RUN mkdir /root/.ssh
 RUN mkdir /partager
 WORKDIR /partager
 COPY Gemfile /partager/Gemfile
