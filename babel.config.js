@@ -32,8 +32,7 @@ module.exports = function(api) {
           useBuiltIns: 'entry',
           corejs: 3,
           modules: false,
-          exclude: ['transform-typeof-symbol'],
-          loose: true
+          exclude: ['transform-typeof-symbol']
         }
       ]
     ].filter(Boolean),
@@ -45,7 +44,7 @@ module.exports = function(api) {
       [
         '@babel/plugin-proposal-class-properties',
         {
-          loose: true
+          loose: false
         }
       ],
       [
