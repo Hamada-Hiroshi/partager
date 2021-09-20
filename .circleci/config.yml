@@ -19,6 +19,7 @@ executors:
         environment:
           MYSQL_USER: root
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_ROOT_PASSWORD: ""
           MYSQL_DATABASE: partager_test
 
 commands:
