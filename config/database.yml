@@ -16,6 +16,7 @@ test:
   <<: *default
   database: partager_test
   host: <%= ENV['DB_HOST'] || db %>
+  password: <%= ENV['DB_PASSWORD'] %>
 
 production:
   <<: *default
