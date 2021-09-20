@@ -18,7 +18,7 @@ executors:
         environment:
           MYSQL_ROOT_HOST: "%"
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          MYSQL_DATABASE: partager_test
+          # MYSQL_DATABASE: partager_test
 
 commands:
   bundle_install:
