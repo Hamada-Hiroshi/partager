@@ -6,8 +6,8 @@ executors:
         environment:
           RAILS_ENV: test
           DB_HOST: 127.0.0.1
-          # DB_USERNAME: root
-          # DB_PASSWORD: password
+          DB_USERNAME: root
+          DB_PASSWORD: password
   mysql_executor:
     docker:
       - image: cimg/ruby:3.0.2-browsers
