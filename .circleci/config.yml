@@ -10,6 +10,10 @@ executors:
           # DB_PASSWORD: password
   mysql_executor:
     docker:
+      - image: cimg/ruby:3.0.2-browsers
+        environment:
+          RAILS_ENV: test
+          DB_HOST: 127.0.0.1
       - image: circleci/mysql:8.0
         command: --default-authentication-plugin=mysql_native_password
         environment:
@@ -47,7 +51,6 @@ jobs:
           name: Run RuboCop
           command: bundle exec rubocop
   test:
-    executor: ruby_executor
     executor: mysql_executor
     working_directory: ~/partager
     steps:
