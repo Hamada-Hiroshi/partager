@@ -14,11 +14,12 @@ development:
 
 test:
   <<: *default
+  host: "127.0.0.1"
   database: partager_test
 
 production:
   <<: *default
-  database: <%= ENV['DB_DATABASE'] %>
   host: <%= ENV['DB_HOST'] %>
   username: <%= ENV['DB_USERNAME'] %>
   password: <%= ENV['DB_PASSWORD'] %>
+  database: <%= ENV['DB_DATABASE'] %>
