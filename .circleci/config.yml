@@ -26,7 +26,7 @@ commands:
     steps:
       - restore_cache:
           name: Restore bundle cache
-          keys: bundle-{{ checksum "Gemfile.lock" }}
+          key: bundle-{{ checksum "Gemfile.lock" }}
       - run:
           name: Run bundle install
           command: bundle install --path vendor/bundle
