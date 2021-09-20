@@ -16,9 +16,8 @@ executors:
       - image: circleci/mysql:8.0
         command: --default-authentication-plugin=mysql_native_password
         environment:
-          MYSQL_ROOT_HOST: "%"
+          # MYSQL_ROOT_HOST: "%"
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          # MYSQL_DATABASE: partager_test
 
 commands:
   bundle_install:
@@ -46,6 +45,7 @@ jobs:
     working_directory: ~/partager
     steps:
       - checkout
+      - bundle_install
       - run:
           name: Run RuboCop
           command: bundle exec rubocop
