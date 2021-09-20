@@ -1,0 +1,95 @@
+version: 2.1
+executors:
+  ruby_executor:
+    docker:
+      - image: cimg/ruby:3.0.2-browsers
+        environment:
+          RAILS_ENV: test
+          DB_HOST: 127.0.0.1
+          # DB_USERNAME: root
+          # DB_PASSWORD: password
+  mysql_executor:
+    docker:
+      - image: circleci/mysql:8.0
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+          MYSQL_USER: root
+          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: partager_test
+
+commands:
+  bundle_install:
+    steps:
+      - restore_cache:
+          name: Restore bundle cache
+          keys: bundle-{{ checksum "Gemfile.lock" }}
+      - run:
+          name: Run bundle install
+          command: bundle install --path vendor/bundle
+      - save_cache:
+          name: Store bundle cache
+          key: bundle-{{ checksum "Gemfile.lock" }}
+          paths: vendor/bundle
+
+jobs:
+  build:
+    executor: ruby_executor
+    working_directory: ~/partager
+    steps:
+      - checkout
+      - bundle_install
+  lint:
+    executor: ruby_executor
+    working_directory: ~/partager
+    steps:
+      - checkout
+      - run:
+          name: Run RuboCop
+          command: bundle exec rubocop
+  test:
+    executor: ruby_executor
+    executor: mysql_executor
+    working_directory: ~/partager
+    steps:
+      - checkout
+      - bundle_install
+      - run:
+          name: Run db create
+          command: |
+            bundle exec rails db:create
+            bundle exec rails db:schema:load
+      - run:
+          name: Run RSpec
+          command: bundle exec rspec
+  production_deploy:
+    executor: ruby_executor
+    working_directory: ~/partager
+    steps:
+      - checkout
+      - bundle_install
+      - add_ssh_keys:
+          fingerprints:
+            -
+      - deploy:
+          name: Run Capistrano deploy
+          command: bundle exec cap production deploy
+
+workflows:
+  version: 2
+  build_lint_test:
+    jobs:
+      - build
+      - lint:
+          filters:
+            branches:
+              ignore: master
+      - test:
+          requires: build
+      - production_deploy:
+          requires:
+            - build
+            - test
+          filters:
+            branches:
+              only: master
+
