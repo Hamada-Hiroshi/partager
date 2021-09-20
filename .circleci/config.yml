@@ -12,12 +12,11 @@ executors:
         environment:
           RAILS_ENV: test
           DB_HOST: 127.0.0.1
-          DB_PASSWORD: ""
+          # DB_PASSWORD: ""
       - image: circleci/mysql:8.0
         command: --default-authentication-plugin=mysql_native_password
         environment:
-          # MYSQL_ROOT_HOST: "%"
-          MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          # MYSQL_ALLOW_EMPTY_PASSWORD: yes
 
 commands:
   bundle_install:
