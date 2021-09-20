@@ -6,8 +6,6 @@ executors:
         environment:
           RAILS_ENV: test
           DB_HOST: 127.0.0.1
-          # DB_USERNAME: root
-          # DB_PASSWORD: password
   mysql_executor:
     docker:
       - image: cimg/ruby:3.0.2-browsers
@@ -15,15 +13,11 @@ executors:
           RAILS_ENV: test
           DB_HOST: 127.0.0.1
           DB_PASSWORD: ""
-          # DB_USERNAME: root
-          # DB_PASSWORD: password
       - image: circleci/mysql:8.0
         command: --default-authentication-plugin=mysql_native_password
         environment:
-          # MYSQL_USER: root
           MYSQL_ROOT_HOST: "%"
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
-          # MYSQL_ROOT_PASSWORD: ""
           MYSQL_DATABASE: partager_test
 
 commands:

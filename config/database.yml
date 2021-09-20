@@ -15,8 +15,10 @@ development:
 test:
   <<: *default
   database: partager_test
-  host: <%= ENV['DB_HOST'] || db %>
-  password: <%= ENV['DB_PASSWORD'] %>
+  # CI: ENV['DB_HOST'] = 127.0.0.1 / ローカル: db
+  host: <%= ENV['DB_HOST'] || "db" %>
+  # CI: "" / ローカル: password
+  password: <%= ENV['DB_PASSWORD'] || "password" %>
 
 production:
   <<: *default
