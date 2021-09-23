@@ -15,9 +15,8 @@ development:
 test:
   <<: *default
   database: partager_test
-  # CI: ENV['DB_HOST'] = 127.0.0.1 / ローカル: db
+  # CIでのテスト時は環境変数を使用する
   host: <%= ENV['DB_HOST'] || "db" %>
-  # CI: "" / ローカル: password
   password: <%= ENV['DB_PASSWORD'] || "password" %>
 
 production:
