@@ -32,11 +32,13 @@ commands:
 jobs:
   build:
     executor: ruby_executor
+    working_directory: ~/partager
     steps:
       - checkout
       - bundle_install
   lint:
     executor: ruby_executor
+    working_directory: ~/partager
     steps:
       - checkout
       - bundle_install
@@ -45,6 +47,7 @@ jobs:
           command: bundle exec rubocop
   test:
     executor: ruby_mysql_executor
+    working_directory: ~/partager
     steps:
       - checkout
       - bundle_install
@@ -58,6 +61,7 @@ jobs:
           command: bundle exec rspec
   production_deploy:
     executor: ruby_executor
+    working_directory: ~/partager
     steps:
       - checkout
       - bundle_install
