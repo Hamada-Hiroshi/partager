@@ -32,24 +32,24 @@ commands:
 jobs:
   build:
     executor: ruby_executor
-    working_directory: ~/partager
+    # working_directory: ~/partager
     steps:
-      - checkout
+      # - checkout
       - bundle_install
   lint:
     executor: ruby_executor
-    working_directory: ~/partager
+    # working_directory: ~/partager
     steps:
-      - checkout
+      # - checkout
       - bundle_install
       - run:
           name: Run RuboCop
           command: bundle exec rubocop
   test:
     executor: ruby_mysql_executor
-    working_directory: ~/partager
+    # working_directory: ~/partager
     steps:
-      - checkout
+      # - checkout
       - bundle_install
       - run:
           name: Run db create
@@ -61,9 +61,9 @@ jobs:
           command: bundle exec rspec
   production_deploy:
     executor: ruby_executor
-    working_directory: ~/partager
+    # working_directory: ~/partager
     steps:
-      - checkout
+      # - checkout
       - bundle_install
       - add_ssh_keys:
           fingerprints:
