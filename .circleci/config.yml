@@ -32,9 +32,9 @@ commands:
 jobs:
   build:
     executor: ruby_executor
-    working_directory: ~/partager
+    # working_directory: ~/partager
     steps:
-      # - checkout
+      - checkout
       - bundle_install
   lint:
     executor: ruby_executor
@@ -49,7 +49,7 @@ jobs:
     executor: ruby_mysql_executor
     # working_directory: ~/partager
     steps:
-      # - checkout
+      - checkout
       - bundle_install
       - run:
           name: Run db create
