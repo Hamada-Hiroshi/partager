@@ -3,7 +3,10 @@ executors:
   ruby_executor:
     docker:
       - image: cimg/ruby:3.0.2-browsers
-  ruby_mysql_executor:
+        environment:
+          RAILS_ENV: test
+          DB_HOST: 127.0.0.1
+  mysql_executor:
     docker:
       - image: cimg/ruby:3.0.2-browsers
         environment:
@@ -13,7 +16,9 @@ executors:
       - image: circleci/mysql:8.0
         command: --default-authentication-plugin=mysql_native_password
         environment:
+          MYSQL_ROOT_HOST: "%"
           MYSQL_ALLOW_EMPTY_PASSWORD: yes
+          MYSQL_DATABASE: partager_test
 
 commands:
   bundle_install:
@@ -32,19 +37,21 @@ commands:
 jobs:
   build:
     executor: ruby_executor
+    working_directory: ~/partager
     steps:
       - checkout
       - bundle_install
   lint:
     executor: ruby_executor
+    working_directory: ~/partager
     steps:
       - checkout
-      - bundle_install
       - run:
           name: Run RuboCop
           command: bundle exec rubocop
   test:
-    executor: ruby_mysql_executor
+    executor: mysql_executor
+    working_directory: ~/partager
     steps:
       - checkout
       - bundle_install
@@ -58,6 +65,7 @@ jobs:
           command: bundle exec rspec
   production_deploy:
     executor: ruby_executor
+    working_directory: ~/partager
     steps:
       - checkout
       - bundle_install

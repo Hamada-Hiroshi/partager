@@ -1,16 +1,3 @@
 inherit_from: .rubocop_todo.yml
-
 AllCops:
-  TargetRubyVersion: 3.0.2
   NewCops: enable
-  Exclude:
-    - "vendor/**/*"
-    - "config/**/*"
-    - "db/migrate/*"
-    - "db/schema.rb"
-    - "lib/tasks/auto_annotate_models.rake"
-    - "spec/rails_helper.rb"
-    - "spec/factories/*"
-
-Style/ClassAndModuleChildren:
-  Enabled: false
