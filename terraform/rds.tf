@@ -41,25 +41,6 @@ resource "aws_db_parameter_group" "db-pg" {
   }
 }
 
-# セキュリティグループ
-resource "aws_security_group" "partager-db-sg" {
-  vpc_id = aws_vpc.partager-vpc.id
-  name = "partager-db-sg"
-  description = "Partager MySQL Security Group"
-  ingress {
-    from_port = 3306
-    to_port = 3306
-    protocol = "tcp"
-    security_groups  = [aws_security_group.partager-web-sg.id]
-  }
-  egress {
-    from_port = 0
-    to_port = 0
-    protocol = "-1"
-    cidr_blocks = ["0.0.0.0/0"]
-  }
-}
-
 # RDS
 resource "aws_db_instance" "partager-db" {
   identifier = "partager-mysql"
@@ -79,4 +60,23 @@ resource "aws_db_instance" "partager-db" {
     "general",
     "slowquery"
   ]
+}
+
+# セキュリティグループ
+resource "aws_security_group" "partager-db-sg" {
+  vpc_id = aws_vpc.partager-vpc.id
+  name = "partager-db-sg"
+  description = "Partager MySQL Security Group"
+  ingress {
+    from_port = 3306
+    to_port = 3306
+    protocol = "tcp"
+    security_groups  = [aws_security_group.partager-web-sg.id]
+  }
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
 }
