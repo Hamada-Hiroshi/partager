@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/bootstrap-ruby/bootstrap_form.git
+  revision: dd64827bed6c8fff3688628b221e3b5255623afd
+  branch: bootstrap-5
+  specs:
+    bootstrap_form (5.0.0.alpha1)
+      actionpack (>= 5.2)
+      activemodel (>= 5.2)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -288,9 +297,6 @@ GEM
       childprocess (>= 0.5, < 4.0)
       rubyzip (>= 1.2.2)
     semantic_range (3.0.0)
-    simple_form (5.1.0)
-      actionpack (>= 5.2)
-      activemodel (>= 5.2)
     slim (4.1.0)
       temple (>= 0.7.6, < 0.9)
       tilt (>= 2.0.6, < 2.1)
@@ -350,6 +356,7 @@ DEPENDENCIES
   bcrypt_pbkdf
   better_errors
   bootsnap (>= 1.4.4)
+  bootstrap_form!
   bullet
   capistrano
   capistrano-rails
@@ -377,7 +384,6 @@ DEPENDENCIES
   rubocop-rails
   rubocop-rspec
   sass-rails (>= 6)
-  simple_form
   slim-rails
   spring
   turbolinks (~> 5)
