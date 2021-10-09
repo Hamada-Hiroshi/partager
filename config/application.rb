@@ -17,6 +17,8 @@ module Partager
     config.time_zone = "Tokyo"
     config.active_record.default_timezone = :local
 
+    config.sass.preferred_syntax = :sass
+
     config.generators do |g|
       g.template_engine :slim
       g.test_framework :rspec, fixture: true, fixture_replacement: :factory_bot
