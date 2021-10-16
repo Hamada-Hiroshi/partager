@@ -1,0 +1,16 @@
+h1 ログイン
+
+= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+  .form-floating
+    = f.email_field :email, autocomplete: "email", placeholder: "メールアドレス", class: "form-control", id: "user_email"
+    = f.label :email, "メールアドレス"
+  .form-floating
+    = f.password_field :password, autocomplete: "current-password", placeholder: "パスワード", class: "form-control"
+    = f.label :password, "パスワード"
+  .form-check
+    = f.check_box :remember_me, class: "form-check-input"
+    = f.label :remember_me, "ログイン情報を記憶する", class: "form-check-label"
+  .form-actions
+    = f.submit "ログイン", class: "btn btn-original"
+
+= render "users/shared/links"
