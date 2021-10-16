@@ -58,6 +58,7 @@ group :development do
 
   gem 'annotate'
   gem 'bullet'
+  gem 'html2slim'
 
   gem 'capistrano'
   gem 'capistrano-rails'
