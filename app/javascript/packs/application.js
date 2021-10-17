@@ -12,7 +12,7 @@ Rails.start()
 Turbolinks.start()
 ActiveStorage.start()
 
-import "../stylesheets/base/reset"
+import "../stylesheets/reset"
 import "bootstrap"
 import "../stylesheets/application"
-import "../stylesheets/base/common"
+import "../stylesheets/common"
