@@ -1,0 +1,33 @@
+@import "constants"
+
+body
+  font-size: 0.9rem
+  h1
+    font-size: 24px
+  a
+    text-decoration: none
+    color: #555555
+  ul
+    margin: 0
+    padding: 0
+  li
+    list-style: none
+  .btn-original
+    width: 100%
+    color: #FFFFFF
+    background-color: #DA8585
+    border-radius: 18px
+    &:hover
+      background-color: $color_main
+      color: #FFFFFF
+  .form-floating
+    label
+      padding: 0.5rem 0.75rem
+      font-size: 0.9rem
+      opacity: 0.65
+    .form-control
+      height: 2.5rem
+      &:focus, &:not(:placeholder-shown), &:-webkit-autofill
+        padding-top: 1.2rem
+    .form-control:focus ~ label, .form-control:not(:placeholder-shown) ~ label
+      transform: scale(0.8) translateY(-0.5rem) translateX(0.15rem)
