@@ -19,6 +19,8 @@ module Partager
 
     config.sass.preferred_syntax = :sass
 
+    config.action_view.field_error_proc = Proc.new { |html_tag, instance| html_tag }
+
     config.generators do |g|
       g.template_engine :slim
       g.test_framework :rspec, fixture: true, fixture_replacement: :factory_bot
