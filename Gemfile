@@ -37,7 +37,6 @@ gem 'ransack'
 gem 'slim-rails'
 gem 'paranoia'
 gem 'bootstrap_form', git: 'https://github.com/bootstrap-ruby/bootstrap_form.git', branch: 'bootstrap-5'
-gem 'react-rails'
 
 group :development, :test do
   gem 'pry-byebug'
