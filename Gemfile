@@ -36,7 +36,6 @@ gem 'kaminari'
 gem 'ransack'
 gem 'slim-rails'
 gem 'paranoia'
-gem 'react-rails'
 gem 'bootstrap_form', git: 'https://github.com/bootstrap-ruby/bootstrap_form.git', branch: 'bootstrap-5'
 
 group :development, :test do
