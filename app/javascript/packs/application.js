@@ -17,3 +17,7 @@ import "bootstrap"
 import "../stylesheets/application"
 import "../stylesheets/common"
 import "../stylesheets/user"
+// Support component names relative to this directory:
+var componentRequireContext = require.context("components", true);
+var ReactRailsUJS = require("react_ujs");
+ReactRailsUJS.useContext(componentRequireContext);
