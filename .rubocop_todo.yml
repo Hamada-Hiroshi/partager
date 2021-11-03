@@ -80,12 +80,13 @@ Style/ClassAndModuleChildren:
 # Offense count: 3
 # Configuration parameters: AllowedConstants.
 Style/Documentation:
-  Exclude:
-    - 'spec/**/*'
-    - 'test/**/*'
-    - 'app/helpers/application_helper.rb'
-    - 'app/models/application_record.rb'
-    - 'config/application.rb'
+  Enabled: false
+  # Exclude:
+  #   - 'spec/**/*'
+  #   - 'test/**/*'
+  #   - 'app/helpers/application_helper.rb'
+  #   - 'app/models/application_record.rb'
+  #   - 'config/application.rb'
 
 # Offense count: 42
 # Cop supports --auto-correct.
@@ -139,3 +140,6 @@ Style/StringLiterals:
 # SupportedStyles: percent, brackets
 Style/SymbolArray:
   EnforcedStyle: brackets
+
+Style/EmptyMethod:
+  Enabled: false
