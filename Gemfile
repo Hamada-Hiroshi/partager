@@ -36,6 +36,7 @@ gem 'kaminari'
 gem 'ransack'
 gem 'slim-rails'
 gem 'react_on_rails'
+gem 'mini_racer', platforms: :ruby
 gem 'paranoia'
 gem 'bootstrap_form', git: 'https://github.com/bootstrap-ruby/bootstrap_form.git', branch: 'bootstrap-5'
 
