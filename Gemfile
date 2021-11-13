@@ -35,6 +35,7 @@ gem 'devise-i18n'
 gem 'kaminari'
 gem 'ransack'
 gem 'slim-rails'
+gem 'react_on_rails'
 gem 'paranoia'
 gem 'bootstrap_form', git: 'https://github.com/bootstrap-ruby/bootstrap_form.git', branch: 'bootstrap-5'
 
