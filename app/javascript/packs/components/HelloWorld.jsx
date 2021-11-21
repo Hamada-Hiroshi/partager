@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
+import Button from '@material-ui/core/Button';
 
 const HelloWorld = (props) => {
   const [name, setName] = useState(props.name);
@@ -13,6 +14,9 @@ const HelloWorld = (props) => {
           Say hello to:
           <input id="name" type="text" value={name} onChange={(e) => setName(e.target.value)} />
         </label>
+        <Button variant="contained" color="primary">
+          Test
+        </Button>
       </form>
     </div>
   );
