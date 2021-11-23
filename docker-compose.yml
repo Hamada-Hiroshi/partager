@@ -9,8 +9,11 @@ services:
       MYSQL_ROOT_PASSWORD: password
     ports:
       - 3306:3306
+
   web:
     build: .
+    environment:
+      - WEBPACKER_DEV_SERVER_HOST=webpacker
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - .:/partager
@@ -22,5 +25,18 @@ services:
       - db
     tty: true
     stdin_open: true
+
+  webpacker:
+    build: .
+    environment:
+      - NODE_ENV=development
+      - RAILS_ENV=development
+      - WEBPACKER_DEV_SERVER_HOST=0.0.0.0
+    command: ./bin/webpack-dev-server
+    volumes:
+      - .:/partager
+    ports:
+      - 3035:3035
+
 volumes:
   mysql_data:
