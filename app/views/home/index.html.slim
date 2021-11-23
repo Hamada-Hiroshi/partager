@@ -1,7 +1,16 @@
-= javascript_pack_tag "hello_world"
+= link_to "#" do
+  .drink-link#beer-link
+    .dark-background
+    p Beer
+= link_to "#" do
+  .drink-link#wine-link
+    .dark-background
+    p Wine
+= link_to "#" do
+  .drink-link#sake-link
+    .dark-background
+    p Japanese Sake
 
-h1 Home#index
-p Find me in app/views/home/index.html.slim
 
-= react_component("HelloWorld", props: @hello_world_props, prerender: false)
-
+/= javascript_pack_tag "hello_world"
+/= react_component("HelloWorld", props: @hello_world_props, prerender: false)
