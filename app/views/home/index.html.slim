@@ -1,16 +1,5 @@
-= link_to "#" do
-  .drink-link#beer-link
-    .dark-background
-    p Beer
-= link_to "#" do
-  .drink-link#wine-link
-    .dark-background
-    p Wine
-= link_to "#" do
-  .drink-link#sake-link
-    .dark-background
-    p Japanese Sake
-
+= javascript_pack_tag "home"
+= react_component("SelectCategory", prerender: false)
 
 /= javascript_pack_tag "hello_world"
 /= react_component("HelloWorld", props: @hello_world_props, prerender: false)
