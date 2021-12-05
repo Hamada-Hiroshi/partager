@@ -1,6 +1,6 @@
 import ReactOnRails from "react-on-rails";
-import SelectCategory from "./components/SelectCategory";
+import Router from "./components/Router";
 
 ReactOnRails.register({
-  SelectCategory,
+  Router,
 });
