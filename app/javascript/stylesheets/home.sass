@@ -20,7 +20,47 @@ body.home.index
       color: #FFF
       top: 50%
       left: 50%
-      -ms-transform: translate(-50%,-50%)
-      -webkit-transform: translate(-50%,-50%)
-      transform: translate(-50%,-50%)
-      margin:0
+      -ms-transform: translate(-50%, -50%)
+      -webkit-transform: translate(-50%, -50%)
+      transform: translate(-50%, -50%)
+      margin: 0
+
+  .beer
+    background-color: #a19b7c3b
+    height: 100vh
+    #select-beer-genre
+      display: flex
+      flex-wrap: wrap
+      .beer-genre
+        position: relative
+        width: 50%
+        padding-top: 50%
+        font-size: 1.2rem
+        background-size: cover
+        &#lager
+          background-image: url("../images/lager.jpg")
+        &#ale
+          background-image: url("../images/ale.jpg")
+        &#others
+          background-image: url("../images/others.jpg")
+        &#genre-hint
+          background-color: #AAA
+        p
+          position: absolute
+          top: 50%
+          left: 50%
+          width: 100%
+          text-align: center
+          -ms-transform: translate(-50%, -50%)
+          -webkit-transform: translate(-50%, -50%)
+          transform: translate(-50%, -50%)
+          margin: 0
+          font-weight: bold
+          span.main-font
+            font-size: 1.4rem
+          span.sub-font
+            font-size: 0.9rem
+
+  .wine
+
+  .sake
