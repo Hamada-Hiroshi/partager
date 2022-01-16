@@ -25,6 +25,8 @@ const SelectDrink = () => {
           </div>
         </div>
       </Link>
+
+      <div className="footer"></div>
     </>
   );
 };
