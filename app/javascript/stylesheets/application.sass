@@ -6,8 +6,8 @@ html
   body
     min-height: 100vh
     min-height: -webkit-fill-available
-    display: flex
-    flex-direction: column
+    position: relative
+    padding-bottom: 50px
     @media (max-width: 779px)
       width: 100%
     @media (min-width: 780px)
@@ -40,6 +40,13 @@ html
       padding: 10px 16px
 
     .footer
+      position: absolute
+      bottom: 0
       height: 50px
       background-color: $color_main
-      margin-top: auto
+      @media (max-width: 779px)
+        width: 100%
+      @media (min-width: 780px)
+        width: 414px
+      &.fixed
+        position: fixed
