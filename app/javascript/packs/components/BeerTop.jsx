@@ -1,4 +1,6 @@
 import React from "react";
+import CameraAltIcon from "@material-ui/icons/CameraAlt";
+import { IconButton } from "@material-ui/core";
 
 const BeerTop = () => {
   return (
@@ -33,8 +35,10 @@ const BeerTop = () => {
         </div>
       </div>
 
-      <div className="footer fixed">
-        
+      <div className="footer fixed beer-footer">
+        <IconButton>
+          <CameraAltIcon />
+        </IconButton>
       </div>
     </>
   );
