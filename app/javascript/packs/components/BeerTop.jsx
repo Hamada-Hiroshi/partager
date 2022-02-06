@@ -11,7 +11,7 @@ const BeerTop = () => {
   const webcamRef = useRef(null);
   const [url, setUrl] = useState(null);
   const capture = useCallback(() => {
-    const imageSrc = webcamRef.current?.getScreenshot();
+    const imageSrc = webcamRef.current.getScreenshot();
     if (imageSrc) {
       setUrl(imageSrc);
     }
@@ -97,21 +97,26 @@ const BeerTop = () => {
         <div>
           <Webcam
             audio={false}
-            width={380}
-            height={460}
             ref={webcamRef}
             screenshotFormat="image/jpeg"
             videoConstraints={{
-              width: 380,
-              height: 460,
-              facingMode: "user"
+              width: 500,
+              height: 700,
+              facingMode: { exact: "environment" }
+              // facingMode: "user"
+            }}
+            style={{
+              height: "100vh",
+              width: "100%",
+              objectFit: "cover",
+              position: "absolute"
             }}
           />
         </div>
       )}
       {url && (
         <div>
-          <img src={url} alt="Screenshot" />
+          <img src={url} alt="Screenshot" className="camera-image" />
         </div>
       )}
 
