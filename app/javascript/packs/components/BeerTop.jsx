@@ -7,13 +7,15 @@ import Webcam from "react-webcam";
 import Grid from "@material-ui/core/Grid";
 
 const BeerTop = () => {
+  let constraints = window.navigator.mediaDevices.getSupportedConstraints();
+  console.log(constraints);
   const [isCaptureEnable, setCaptureEnable] = useState(false);
   const webcamRef = useRef(null);
-  const [url, setUrl] = useState(null);
+  const [imageData, setImageData] = useState(null);
   const capture = useCallback(() => {
     const imageSrc = webcamRef.current.getScreenshot();
     if (imageSrc) {
-      setUrl(imageSrc);
+      setImageData(imageSrc);
     }
   }, [webcamRef]);
 
@@ -31,6 +33,25 @@ const BeerTop = () => {
     document.documentElement.style.setProperty("--vh", `${vh}px`);
   }
 
+  const fetchResponse = (image) => {
+    let csrfToken = document.head.querySelector("[name=csrf-token][content]").content;
+    let data = new FormData();
+    data.append("image_data", image);
+
+    fetch("/beers/image_seach", {
+      method: "post",
+      headers: { "X-CSRF-Token": csrfToken },
+      body: data
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+    })
+    .catch(error => {
+      console.log(error);
+    });
+  }
+
   const CameraButton = () => {
     setHeight();
     if (isCaptureEnable) {
@@ -43,11 +64,11 @@ const BeerTop = () => {
           <CameraAltIcon />
         </IconButton>
       );
-    } else if (url) {
+    } else if (imageData) {
       // 撮り直し
       return (
         <IconButton onClick={() => {
-          setUrl(null);
+          setImageData(null);
           setCaptureEnable(true);
         }}>
           <ReplayIcon />
@@ -106,23 +127,23 @@ const BeerTop = () => {
             ref={webcamRef}
             screenshotFormat="image/jpeg"
             videoConstraints={{
-              width: { min: 750, max: 1242 },
-              height: { min: 1334, max: 2778 },
-              facingMode: { exact: "environment" }
-              // facingMode: "user"
+              width: { min: 640, ideal: 1280 , max: 1284 },
+              height: { min: 720, ideal: 720, max: 2778 },
+              // facingMode: { exact: "environment" }
+              facingMode: "user"
             }}
-            style={{
-              height: "calc(var(--vh, 1vh) * 100 - 108px)",
-              width: "100%",
-              objectFit: "cover",
-              position: "absolute"
-            }}
+            // style={{
+            //   height: "calc(var(--vh, 1vh) * 100 - 108px)",
+            //   width: "100%",
+            //   objectFit: "cover",
+            //   position: "absolute"
+            // }}
           />
         </div>
       )}
-      {url && (
+      {imageData && (
         <div>
-          <img src={url} alt="Screenshot" className="camera-image" />
+          <img src={imageData} alt="Screenshot" className="camera-image" />
         </div>
       )}
 
@@ -139,10 +160,10 @@ const BeerTop = () => {
               </span>
             )}
             {/* 写真削除 */}
-            {url && (
+            {imageData && (
               <span style={{ color: "#FFF", cursor: "pointer" }} onClick={() => {
                 displayShow();
-                setUrl(null);
+                setImageData(null);
               }}>
                 キャンセル
               </span>
@@ -154,9 +175,9 @@ const BeerTop = () => {
           </Grid>
 
           <Grid item xs={4}>
-            {url && (
-              <span>
-                <a href="/beel/image_seach" style={{ color: "#FFF", cursor: "pointer" }}>検索</a>
+            {imageData && (
+              <span style={{ color: "#FFF", cursor: "pointer" }} onClick={() => fetchResponse(imageData)}>
+                検索
               </span>
             )}
           </Grid>
