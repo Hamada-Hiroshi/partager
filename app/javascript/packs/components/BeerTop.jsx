@@ -128,8 +128,8 @@ const BeerTop = () => {
             screenshotFormat="image/jpeg"
             videoConstraints={{
               // width: { min: 640 },
-              height: { min: 1136 },
-              aspectRatio: 0.5625,
+              // height: { min: 1136 },
+              aspectRatio: 1.7777,
               facingMode: { exact: "environment" }
               // facingMode: "user"
             }}
