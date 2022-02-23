@@ -17,6 +17,7 @@ services:
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 3000 -b '0.0.0.0'"
     volumes:
       - .:/partager
+      - gem_data:/usr/local/bundle
       # - ~/.ssh/aws-ram-key.pem:/root/.ssh/aws-ram-key.pem
       # - ~/.ssh/id_rsa:/root/.ssh/id_rsa
     ports:
@@ -35,8 +36,10 @@ services:
     command: ./bin/webpack-dev-server
     volumes:
       - .:/partager
+      - gem_data:/usr/local/bundle
     ports:
       - 3035:3035
 
 volumes:
   mysql_data:
+  gem_data:
