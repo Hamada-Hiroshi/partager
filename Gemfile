@@ -25,7 +25,7 @@ gem 'jbuilder', '~> 2.7'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
-
+gem 'mini_magick'
 gem 'rails-i18n', '~> 6.0'
 gem 'dotenv-rails'
 gem 'devise'
@@ -37,6 +37,7 @@ gem 'react_on_rails'
 gem 'mini_racer', platforms: :ruby
 gem 'paranoia'
 gem 'bootstrap_form', git: 'https://github.com/bootstrap-ruby/bootstrap_form.git', branch: 'bootstrap-5'
+gem 'google-cloud-vision'
 
 group :development, :test do
   gem 'pry-byebug'
