@@ -127,17 +127,18 @@ const BeerTop = () => {
             ref={webcamRef}
             screenshotFormat="image/jpeg"
             videoConstraints={{
-              width: { min: 640, ideal: 1280, max: 1284 },
-              height: { min: 720, ideal: 2532, max: 2778 },
+              // width: { min: 640 },
+              height: { min: 1136 },
+              aspectRatio: 0.5625,
               facingMode: { exact: "environment" }
               // facingMode: "user"
             }}
-            style={{
+            // style={{
             //   height: "calc(var(--vh, 1vh) * 100 - 108px)",
-              width: "100%",
-              objectFit: "cover",
-              position: "absolute"
-            }}
+            //   width: "100%",
+            //   objectFit: "cover",
+            //   position: "absolute"
+            // }}
           />
         </div>
       )}
