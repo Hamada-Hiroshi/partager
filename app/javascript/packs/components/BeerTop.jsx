@@ -7,8 +7,6 @@ import Webcam from "react-webcam";
 import Grid from "@material-ui/core/Grid";
 
 const BeerTop = () => {
-  let constraints = window.navigator.mediaDevices.getSupportedConstraints();
-  console.log(constraints);
   const [isCaptureEnable, setCaptureEnable] = useState(false);
   const webcamRef = useRef(null);
   const [imageData, setImageData] = useState(null);
@@ -126,19 +124,14 @@ const BeerTop = () => {
             audio={false}
             ref={webcamRef}
             screenshotFormat="image/jpeg"
+            width="100%"
             videoConstraints={{
-              // width: { min: 640 },
-              // height: { min: 1136 },
-              aspectRatio: 1.7777,
+              aspectRatio: (window.innerHeight - 108) / window.innerWidth,
               facingMode: { exact: "environment" }
-              // facingMode: "user"
+              // facingMode: "user",
+              // width: { min: 640, ideal: 1170, max: 1284 },
+              // height: { min: 1136, ideal: 2532, max: 2778 }
             }}
-            // style={{
-            //   height: "calc(var(--vh, 1vh) * 100 - 108px)",
-            //   width: "100%",
-            //   objectFit: "cover",
-            //   position: "absolute"
-            // }}
           />
         </div>
       )}
