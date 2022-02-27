@@ -44,6 +44,7 @@ const BeerTop = () => {
     .then(response => response.json())
     .then(data => {
       console.log(data);
+      alert(data["words"].join(", "));
     })
     .catch(error => {
       console.log(error);
