@@ -14,3 +14,6 @@ AllCops:
 
 Style/ClassAndModuleChildren:
   Enabled: false
+
+Metrics/AbcSize:
+  Max: 25
