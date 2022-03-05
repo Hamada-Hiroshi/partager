@@ -5,7 +5,7 @@ class BeersController < ApplicationController
   def image_seach
     image_data = params[:image_data]
     metadata = "data:image/jpeg;base64,"
-    base64_string = image_data[metadata.size..-1]
+    base64_string = image_data[metadata.size..]
     blob = Base64.decode64(base64_string)
     search_image = MiniMagick::Image.read(blob)
 

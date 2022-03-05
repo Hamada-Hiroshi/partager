@@ -38,6 +38,7 @@ gem 'mini_racer', platforms: :ruby
 gem 'paranoia'
 gem 'bootstrap_form', git: 'https://github.com/bootstrap-ruby/bootstrap_form.git', branch: 'bootstrap-5'
 gem 'google-cloud-vision'
+gem 'flag_icon_css_rails'
 
 group :development, :test do
   gem 'pry-byebug'
