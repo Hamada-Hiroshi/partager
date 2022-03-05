@@ -11,4 +11,6 @@
 #  user_id    :integer          not null
 #
 class DrinkImage < ApplicationRecord
+  belongs_to :user
+  belongs_to :drink, polymorphic: true
 end
