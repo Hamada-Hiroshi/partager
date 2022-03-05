@@ -1,4 +1,7 @@
 class BeersController < ApplicationController
+  def top
+  end
+
   def image_seach
     image_data = params[:image_data]
     metadata = "data:image/jpeg;base64,"
