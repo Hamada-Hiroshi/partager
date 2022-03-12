@@ -36,7 +36,7 @@ const CameraSearch = () => {
     let data = new FormData();
     data.append("image_data", image);
 
-    fetch("/beers/image_seach", {
+    fetch("/beers/image_search", {
       method: "post",
       headers: { "X-CSRF-Token": csrfToken },
       body: data
@@ -44,7 +44,7 @@ const CameraSearch = () => {
     .then(response => response.json())
     .then(data => {
       console.log(data);
-      alert(data["words"].join(", "));
+      alert(data["beers"][0]["name"]);
     })
     .catch(error => {
       console.log(error);
