@@ -10,11 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_05_080946) do
+ActiveRecord::Schema.define(version: 2022_03_12_055419) do
 
   create_table "beer_styles", id: :integer, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
-    t.integer "groop", null: false
+    t.integer "category", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
