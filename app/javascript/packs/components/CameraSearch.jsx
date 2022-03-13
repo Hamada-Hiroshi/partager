@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import CameraAltIcon from "@material-ui/icons/CameraAlt";
 import ReplayIcon from "@material-ui/icons/Replay";
 import { IconButton } from "@material-ui/core";
@@ -31,6 +32,8 @@ const CameraSearch = () => {
     document.documentElement.style.setProperty("--vh", `${vh}px`);
   }
 
+  const navigate = useNavigate();
+
   const fetchResponse = (image) => {
     let csrfToken = document.head.querySelector("[name=csrf-token][content]").content;
     let data = new FormData();
@@ -44,7 +47,7 @@ const CameraSearch = () => {
     .then(response => response.json())
     .then(data => {
       console.log(data);
-      alert(data["beers"][0]["name"]);
+      navigate("/beers/search_result", { state: data });
     })
     .catch(error => {
       console.log(error);

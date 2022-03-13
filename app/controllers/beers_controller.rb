@@ -19,6 +19,6 @@ class BeersController < ApplicationController
       beers = beers.or(Beer.where("name LIKE ?", "%#{keyword}%"))
     end
 
-    render json: { beers: beers }
+    render json: beers, include: [:beer_style, :country]
   end
 end
