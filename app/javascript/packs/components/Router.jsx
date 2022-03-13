@@ -4,7 +4,7 @@ import SelectDrink from "./SelectDrink";
 import BeerTop from "./BeerTop";
 import WineTop from "./WineTop";
 import SakeTop from "./SakeTop";
-import BeerSerchResult from "./BeerSerchResult";
+import BeerSearchResult from "./BeerSearchResult";
 
 const Router = () => {
   return (
@@ -14,7 +14,7 @@ const Router = () => {
         <Route path="/beer" element={<BeerTop />}></Route>
         <Route path="/wine" element={<WineTop />}></Route>
         <Route path="/sake" element={<SakeTop />}></Route>
-        <Route path="/beers/search_result" element={<BeerSerchResult />}></Route>
+        <Route path="/beers/search_result" element={<BeerSearchResult />}></Route>
       </Routes>
     </BrowserRouter>
   );

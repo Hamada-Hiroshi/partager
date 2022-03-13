@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import CameraSearch from "./CameraSearch";
 
-const BeerSerchResult = () => {
+const BeerSearchResult = () => {
   const { state } = useLocation();
   console.log(state)
 
@@ -22,4 +22,4 @@ const BeerSerchResult = () => {
     </>
   );
 };
-export default BeerSerchResult;
+export default BeerSearchResult;
