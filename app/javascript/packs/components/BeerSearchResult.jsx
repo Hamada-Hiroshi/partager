@@ -10,13 +10,8 @@ const BeerSearchResult = () => {
     <>
       <div className="wrapper beer">
         <h1>検索結果</h1>
-        <ul>
-          {state.map((beer, i) =>
-            <li key={i}>
-              <div>{beer["name"]} / {beer["beer_style"]["name"]} / {beer["country"]["name"]}</div>
-            </li>
-          )}
-        </ul>
+        <div>{state["name"]} / {state["beer_style"]["name"]} / {state["country"]["name"]}</div>
+        <img src={state["sample_image_url"]} alt="" className="search-result-image" />
       </div>
       <CameraSearch />
     </>
