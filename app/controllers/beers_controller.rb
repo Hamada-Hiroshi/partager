@@ -30,7 +30,7 @@ class BeersController < ApplicationController
     s3_client.put_object(bucket: ENV["AWS_S3_BUCKET"],
                          key: "beers/#{beer_image.id}.jpg",
                          content_type: "image/jpeg",
-                         body: open(search_image.path))
+                         body: File.open(search_image.path))
 
     render json: beer.as_json(include: [:beer_style, :country], methods: :sample_image_url)
   end
