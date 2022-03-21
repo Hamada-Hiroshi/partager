@@ -6,6 +6,8 @@ import { IconButton } from "@material-ui/core";
 import { useRef, useState, useCallback } from "react";
 import Webcam from "react-webcam";
 import Grid from "@material-ui/core/Grid";
+import { BallTriangle } from  "react-loader-spinner";
+import Backdrop from "@material-ui/core/Backdrop";
 
 const CameraSearch = () => {
   const [isCaptureEnable, setCaptureEnable] = useState(false);
@@ -33,8 +35,10 @@ const CameraSearch = () => {
   }
 
   const navigate = useNavigate();
+  const [progress, setProgress] = useState(false);
 
   const fetchResponse = (image) => {
+    setProgress(true);
     let csrfToken = document.head.querySelector("[name=csrf-token][content]").content;
     let data = new FormData();
     data.append("image_data", image);
@@ -47,10 +51,12 @@ const CameraSearch = () => {
     .then(response => response.json())
     .then(data => {
       console.log(data);
+      setProgress(false);
       navigate("/beers/search_result", { state: data });
     })
     .catch(error => {
       console.log(error);
+      setProgress(false);
     });
   }
 
@@ -91,6 +97,10 @@ const CameraSearch = () => {
 
   return (
     <>
+      <Backdrop open={progress} style={{ zIndex: 99 }}>
+        <BallTriangle color="#00BFFF" height={80} width={80} />
+      </Backdrop>
+
       {/* カメラ起動時のディスプレイ */}
       {isCaptureEnable && (
         <div>
