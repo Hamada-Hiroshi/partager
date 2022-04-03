@@ -1,5 +1,6 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
+import CameraSearch from "./CameraSearch";
 
 const BeerSearchResult = () => {
   const { state } = useLocation();
@@ -12,6 +13,7 @@ const BeerSearchResult = () => {
         <div>{state["name"]} / {state["beer_style"]["name"]} / {state["country"]["name"]}</div>
         <img src={state["sample_image_url"]} alt="" className="search-result-image" />
       </div>
+      <CameraSearch />
     </>
   );
 };
