@@ -12,6 +12,6 @@
  *
  *= require_tree .
  *= require_self
- *= require flag-icon
  *= require rails_bootstrap_forms
+ *= require flag_icon_css
  */
