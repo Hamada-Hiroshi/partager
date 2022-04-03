@@ -1,5 +1,4 @@
 import React from "react";
-import CameraSearch from "./CameraSearch";
 
 const BeerTop = () => {
   return (
@@ -33,7 +32,6 @@ const BeerTop = () => {
           </div>
         </div>
       </div>
-      <CameraSearch />
     </>
   );
 };
