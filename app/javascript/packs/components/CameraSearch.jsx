@@ -29,11 +29,6 @@ const CameraSearch = () => {
     display.classList.remove("display-none");
   }
 
-  const setHeight = () => {
-    let vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty("--vh", `${vh}px`);
-  }
-
   const navigate = useNavigate();
   const [progress, setProgress] = useState(false);
 
@@ -61,7 +56,6 @@ const CameraSearch = () => {
   }
 
   const CameraButton = () => {
-    setHeight();
     if (isCaptureEnable) {
       // 撮影
       return (
@@ -111,8 +105,8 @@ const CameraSearch = () => {
             width="100%"
             videoConstraints={{
               aspectRatio: (window.innerHeight - 108) / window.innerWidth,
-              facingMode: { exact: "environment" }
-              // facingMode: "user",
+              // facingMode: { exact: "environment" }
+              facingMode: "user",
               // width: { min: 640, ideal: 1170, max: 1284 },
               // height: { min: 1136, ideal: 2532, max: 2778 }
             }}
