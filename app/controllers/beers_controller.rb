@@ -2,6 +2,13 @@ class BeersController < ApplicationController
   def top
   end
 
+  def index
+    beers = Beer.includes(:beer_style, :country)
+                .where(beer_styles: { category: params[:category] })
+    @beers_props = { category: BeerStyle.categories_i18n[params[:category]],
+                     beers: beers.as_json(include: [:beer_style, :country], methods: :sample_image_url) }
+  end
+
   def image_search
     # 撮影した画像の読み取り
     image_data = params[:image_data]
@@ -28,7 +35,7 @@ class BeersController < ApplicationController
     beer_image.save!
     s3_client = Aws::S3::Client.new
     s3_client.put_object(bucket: ENV["AWS_S3_BUCKET"],
-                         key: "beers/#{beer_image.id}.jpg",
+                         key: "beers/#{beer_image.id}.png",
                          content_type: "image/jpeg",
                          body: File.open(search_image.path))
 

@@ -2,8 +2,13 @@ Rails.application.routes.draw do
   root "home#index"
   devise_for :users
   get "/beer" => "beers#top"
-  post "/beers/image_search" => "beers#image_search"
-  get "/beers/search_result" => redirect("/beer")
+  resources :beers, only: :index do
+    collection do
+      post "image_search"
+      get "search_result" => redirect("/beer")
+    end
+  end
+
   get "/wine" => redirect("/")
   get "/sake" => redirect("/")
 

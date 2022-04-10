@@ -20,7 +20,7 @@ class Beer < ApplicationRecord
     sample_image = DrinkImage.find_by(drink_id: id, drink_type: Beer.to_s, is_sample: true)
     presigner = Aws::S3::Presigner.new
     presigner.presigned_url(:get_object, bucket: ENV["AWS_S3_BUCKET"],
-                                         key: "beers/#{sample_image.id}.jpg",
+                                         key: "beers/#{sample_image.id}.png",
                                          expires_in: 600)
   end
 end

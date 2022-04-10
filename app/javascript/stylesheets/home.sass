@@ -1,6 +1,6 @@
 @import "constants"
 
-body.home.index, body.beers.top
+body.home.index, body.beers.top, body.beers.index
   .camera-image
     width: 100%
     height: 100vh
@@ -44,7 +44,8 @@ body.home.index, body.beers.top
 
   .beer
     background-color: #a19b7c3b
-    height: 120vh
+    min-height: 100vh
+    min-height: calc(var(--vh, 1vh) * 100 - 108px)
     #select-beer-genre
       display: flex
       flex-wrap: wrap
@@ -77,3 +78,22 @@ body.home.index, body.beers.top
             font-size: 1.4rem
           span.sub-font
             font-size: 0.9rem
+
+body.beers.index
+  .drink-box
+    background-color: #ffffffa1
+    border-radius: 8px
+    padding: 10px 0
+    margin-bottom: 14px
+    .drink-image
+      .index-drink-image
+        width: 100%
+    .drink-info
+      padding: 20px 10px
+      .dink-title
+        font-size: 18px
+        font-weight: bold
+      .beer-style
+      .country
+        span.flag-icon
+          margin-right: 8px
