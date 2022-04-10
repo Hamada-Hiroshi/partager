@@ -8,6 +8,7 @@ import Webcam from "react-webcam";
 import Grid from "@material-ui/core/Grid";
 import { BallTriangle } from  "react-loader-spinner";
 import Backdrop from "@material-ui/core/Backdrop";
+import axios from "axios";
 
 const CameraSearch = () => {
   const [isCaptureEnable, setCaptureEnable] = useState(false);
@@ -38,21 +39,33 @@ const CameraSearch = () => {
     let data = new FormData();
     data.append("image_data", image);
 
-    fetch("/beers/image_search", {
-      method: "post",
-      headers: { "X-CSRF-Token": csrfToken },
-      body: data
-    })
-    .then(response => response.json())
-    .then(data => {
-      console.log(data);
-      setProgress(false);
-      navigate("/beers/search_result", { state: data });
-    })
-    .catch(error => {
-      console.log(error);
-      setProgress(false);
-    });
+    axios
+      .post("/beers/image_search", { body: data }, { headers: { "X-CSRF-Token": csrfToken }})
+      .then((response) => {
+        console.log(response.data);
+        setProgress(false);
+        navigate("/beers/search_result", { state: response.data });
+      })
+      .catch(error => {
+        console.log(error);
+        setProgress(false);
+      });
+
+    // fetch("/beers/image_search", {
+    //   method: "post",
+    //   headers: { "X-CSRF-Token": csrfToken },
+    //   body: data
+    // })
+    // .then(response => response.json())
+    // .then(data => {
+    //   console.log(data);
+    //   setProgress(false);
+    //   navigate("/beers/search_result", { state: data });
+    // })
+    // .catch(error => {
+    //   console.log(error);
+    //   setProgress(false);
+    // });
   }
 
   const CameraButton = () => {
