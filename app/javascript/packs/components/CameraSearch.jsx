@@ -40,7 +40,12 @@ const CameraSearch = () => {
     data.append("image_data", image);
 
     axios
-      .post("/beers/image_search", { body: "test" }, { headers: { "X-CSRF-Token": csrfToken }})
+      .post("/beers/image_search", data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "X-CSRF-Token": csrfToken
+        }
+      })
       .then((response) => {
         console.log(response.data);
         setProgress(false);
