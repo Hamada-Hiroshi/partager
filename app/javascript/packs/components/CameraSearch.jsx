@@ -33,18 +33,38 @@ const CameraSearch = () => {
   const navigate = useNavigate();
   const [progress, setProgress] = useState(false);
 
+  const base64ToBlob = (base64, mime) => {
+    mime = mime || '';
+    let sliceSize = 1024;
+    let byteChars = atob(base64.replace(/^.*,/, ''));
+    let byteArrays = [];
+    for (let offset = 0, len = byteChars.length; offset < len; offset += sliceSize) {
+      let slice = byteChars.slice(offset, offset + sliceSize);
+      let byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+      let byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+    return new Blob(byteArrays, { type: mime });
+  }
+
   const fetchResponse = (image) => {
     setProgress(true);
     let csrfToken = document.head.querySelector("[name=csrf-token][content]").content;
-    // let data = new FormData();
-    // data.append("image_data", image);
-    let data = { "image_data": "テスト" }
-    console.log(data);
+
+    let base64ImageContent = image.replace(/^data:image\/(png|jpg);base64,/, "");
+    let blob = base64ToBlob(base64ImageContent, "image/png");
+    let formData = new FormData();
+    formData.append("image_data", blob);
+    // let data = { "image_data": "テスト" }
+    console.log(formData);
 
     axios
-      .post("/beers/image_search", data, {
+      .post("/beers/image_search", formData, {
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
           "X-CSRF-Token": csrfToken
         }
       })
