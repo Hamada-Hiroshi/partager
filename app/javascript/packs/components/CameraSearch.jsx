@@ -36,13 +36,13 @@ const CameraSearch = () => {
   const fetchResponse = (image) => {
     setProgress(true);
     let csrfToken = document.head.querySelector("[name=csrf-token][content]").content;
-    let data = new FormData();
-    data.append("image_data", image);
+    // let data = new FormData();
+    // data.append("image_data", image);
 
     axios
-      .post("/beers/image_search", data, {
+      .post("/beers/image_search", { "image_data": image }, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
           "X-CSRF-Token": csrfToken
         }
       })
