@@ -38,9 +38,11 @@ const CameraSearch = () => {
     let csrfToken = document.head.querySelector("[name=csrf-token][content]").content;
     // let data = new FormData();
     // data.append("image_data", image);
+    let data = { "image_data": "テスト" }
+    console.log(data);
 
     axios
-      .post("/beers/image_search", { "image_data": image }, {
+      .post("/beers/image_search", data, {
         headers: {
           "Content-Type": "application/json",
           "X-CSRF-Token": csrfToken
