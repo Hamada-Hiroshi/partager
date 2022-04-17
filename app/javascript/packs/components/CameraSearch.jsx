@@ -54,17 +54,17 @@ const CameraSearch = () => {
     setProgress(true);
     let csrfToken = document.head.querySelector("[name=csrf-token][content]").content;
 
-    let base64ImageContent = image.replace(/^data:image\/(png|jpg);base64,/, "");
-    let blob = base64ToBlob(base64ImageContent, "image/png");
-    let formData = new FormData();
-    formData.append("image_data", blob);
-    // let data = { "image_data": "テスト" }
-    console.log(formData);
+    let base64ImageContent = image.replace(/^data:image\/jpeg;base64,/, "");
+    // let blob = base64ToBlob(base64ImageContent, "image/png");
+    // let formData = new FormData();
+    // formData.append("image_data", blob);
+    let data = { "image_data": base64ImageContent, "test": "テスト" }
+    console.log(data);
 
     axios
-      .post("/beers/image_search", formData, {
+      .post("/beers/image_search", data, {
         headers: {
-          "Content-Type": "multipart/form-data",
+          "Content-Type": "application/json",
           "X-CSRF-Token": csrfToken
         }
       })
