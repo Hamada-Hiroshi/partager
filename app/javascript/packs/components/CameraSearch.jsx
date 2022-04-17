@@ -33,32 +33,15 @@ const CameraSearch = () => {
   const navigate = useNavigate();
   const [progress, setProgress] = useState(false);
 
-  const base64ToBlob = (base64, mime) => {
-    mime = mime || '';
-    let sliceSize = 1024;
-    let byteChars = atob(base64.replace(/^.*,/, ''));
-    let byteArrays = [];
-    for (let offset = 0, len = byteChars.length; offset < len; offset += sliceSize) {
-      let slice = byteChars.slice(offset, offset + sliceSize);
-      let byteNumbers = new Array(slice.length);
-      for (let i = 0; i < slice.length; i++) {
-        byteNumbers[i] = slice.charCodeAt(i);
-      }
-      let byteArray = new Uint8Array(byteNumbers);
-      byteArrays.push(byteArray);
-    }
-    return new Blob(byteArrays, { type: mime });
-  }
-
   const fetchResponse = (image) => {
     setProgress(true);
     let csrfToken = document.head.querySelector("[name=csrf-token][content]").content;
 
-    let base64ImageContent = image.replace(/^data:image\/jpeg;base64,/, "");
+    // let base64ImageContent = image.replace(/^data:image\/jpeg;base64,/, "");
     // let blob = base64ToBlob(base64ImageContent, "image/png");
     // let formData = new FormData();
     // formData.append("image_data", blob);
-    let data = { "image_data": base64ImageContent, "test": "テスト" }
+    let data = { "image_data": image }
     console.log(data);
 
     axios
@@ -129,8 +112,8 @@ const CameraSearch = () => {
             width="100%"
             videoConstraints={{
               aspectRatio: (window.innerHeight - 108) / window.innerWidth,
-              // facingMode: { exact: "environment" }
-              facingMode: "user",
+              facingMode: { exact: "environment" }
+              // facingMode: "user",
               // width: { min: 640, ideal: 1170, max: 1284 },
               // height: { min: 1136, ideal: 2532, max: 2778 }
             }}
