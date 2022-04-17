@@ -58,7 +58,7 @@ const CameraSearch = () => {
     // let blob = base64ToBlob(base64ImageContent, "image/png");
     // let formData = new FormData();
     // formData.append("image_data", blob);
-    let data = { "image_data": base64ImageContent, "test": "テスト" }
+    let data = { "image_data": "image_data_test", "test": "テスト" }
     console.log(data);
 
     axios
