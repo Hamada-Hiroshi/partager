@@ -15,8 +15,8 @@ const Router = () => {
         <Route path="/beer" element={<BeerTop />}></Route>
         <Route path="/wine" element={<WineTop />}></Route>
         <Route path="/sake" element={<SakeTop />}></Route>
-        <Route path="/beers" element={<Beers />}></Route>
         <Route path="/beers/search_result" element={<BeerSearchResult />}></Route>
+        <Route path="/beers/:category" element={<Beers />}></Route>
       </Routes>
     </BrowserRouter>
   );

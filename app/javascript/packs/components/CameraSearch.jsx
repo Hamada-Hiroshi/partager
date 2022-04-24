@@ -36,13 +36,7 @@ const CameraSearch = () => {
   const fetchResponse = (image) => {
     setProgress(true);
     let csrfToken = document.head.querySelector("[name=csrf-token][content]").content;
-
-    // let base64ImageContent = image.replace(/^data:image\/jpeg;base64,/, "");
-    // let blob = base64ToBlob(base64ImageContent, "image/png");
-    // let formData = new FormData();
-    // formData.append("image_data", blob);
     let data = { "image_data": image }
-    console.log(data);
 
     axios
       .post("/beers/image_search", data, {
