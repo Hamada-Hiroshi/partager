@@ -5,8 +5,8 @@ class BeersController < ApplicationController
   def index
     beers = Beer.includes(:beer_style, :country)
                 .where(beer_styles: { category: params[:category] })
-    @beers_props = { category: BeerStyle.categories_i18n[params[:category]],
-                     beers: beers.as_json(include: [:beer_style, :country], methods: :sample_image_url) }
+    render json: { category: BeerStyle.categories_i18n[params[:category]],
+                   beers: beers.as_json(include: [:beer_style, :country], methods: :sample_image_url) }
   end
 
   def image_search
