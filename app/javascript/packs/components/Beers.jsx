@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import PropTypes from "prop-types";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import CameraSearch from "./CameraSearch";
 import Grid from "@material-ui/core/Grid";
 import { Circles } from  "react-loader-spinner";
@@ -9,13 +9,14 @@ import Backdrop from "@material-ui/core/Backdrop";
 import axios from "axios";
 
 const Beers = () => {
-  const params = useParams();
+  const { search } = useLocation();
+  const query = new URLSearchParams(search);
   const [contents, setContents] = useState({ res: null, loading: true });
 
   if (contents.loading) {
     let csrfToken = document.head.querySelector("[name=csrf-token][content]").content;
     axios
-      .get(`/beers?category=${params.category}`, {
+      .get(`/beers?category=${query.get("category")}`, {
         headers: {
           "Content-Type": "application/json",
           "X-CSRF-Token": csrfToken
