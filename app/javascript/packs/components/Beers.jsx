@@ -12,7 +12,6 @@ const Beers = () => {
   const { search } = useLocation();
   const query = new URLSearchParams(search);
   const [contents, setContents] = useState({ res: null, loading: true });
-  const [preload, setPreload] = useState(false);
 
   const preloadImages = (beers) => {
     let imgArray = new Array();
@@ -20,35 +19,35 @@ const Beers = () => {
       imgArray[index] = new Image();
       imgArray[index].src = beer.sample_image_url;
     });
-    imgArray[0].onload = () => {
-      setPreload(true);
-    }
+    return imgArray;
   }
 
   if (contents.loading) {
-    let csrfToken = document.head.querySelector("[name=csrf-token][content]").content;
-    axios
-      .get(`/beers?category=${query.get("category")}`, {
-        headers: {
-          "Content-Type": "application/json",
-          "X-CSRF-Token": csrfToken
-        }
-      })
-      .then((response) => {
+    const getBeers = async () => {
+      let csrfToken = document.head.querySelector("[name=csrf-token][content]").content;
+      try {
+        const response = await axios.get(`/beers?category=${query.get("category")}`, {
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRF-Token": csrfToken
+          }
+        });
         console.log(response.data);
         if (response.data.beers.length) {
-          preloadImages(response.data.beers);
-          if (preload) {
+          const images = await preloadImages(response.data.beers);
+          images[0].onload = () =>  {
+            console.log("プリロード完了");
             setContents({ res: response.data, loading: false });
           }
         } else {
           setContents({ res: response.data, loading: false });
         }
-      })
-      .catch(error => {
+      } catch (error) {
         console.log(error);
         setContents({ res: null, loading: false });
-      });
+      }
+    }
+    getBeers();
   }
 
   return (
@@ -56,11 +55,13 @@ const Beers = () => {
       <div className="wrapper beer">
         {contents.loading ? (
           <div className="index-loading">
+            {console.log("スピナー表示")}
             <Oval color="#808080" height={30} width={30} />
           </div>
         ) : (
           <>
             <h2 className="sub-title">{contents.res.category}</h2>
+            {console.log("一覧表示")}
             {contents.res.beers.map((beer) => (
               <div key={beer.id} className="drink-box">
                 <Grid container>
