@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { useLocation } from "react-router-dom";
 import CameraSearch from "./CameraSearch";
 import Grid from "@material-ui/core/Grid";
-import { Circles } from  "react-loader-spinner";
+import { Oval } from  "react-loader-spinner";
 import Backdrop from "@material-ui/core/Backdrop";
 import axios from "axios";
 
@@ -12,6 +12,18 @@ const Beers = () => {
   const { search } = useLocation();
   const query = new URLSearchParams(search);
   const [contents, setContents] = useState({ res: null, loading: true });
+  const [preload, setPreload] = useState(false);
+
+  const preloadImages = (beers) => {
+    let imgArray = new Array();
+    beers.forEach((beer, index) => {
+      imgArray[index] = new Image();
+      imgArray[index].src = beer.sample_image_url;
+    });
+    imgArray[0].onload = () => {
+      setPreload(true);
+    }
+  }
 
   if (contents.loading) {
     let csrfToken = document.head.querySelector("[name=csrf-token][content]").content;
@@ -24,7 +36,14 @@ const Beers = () => {
       })
       .then((response) => {
         console.log(response.data);
-        setContents({ res: response.data, loading: false });
+        if (response.data.beers.length) {
+          preloadImages(response.data.beers);
+          if (preload) {
+            setContents({ res: response.data, loading: false });
+          }
+        } else {
+          setContents({ res: response.data, loading: false });
+        }
       })
       .catch(error => {
         console.log(error);
@@ -37,7 +56,7 @@ const Beers = () => {
       <div className="wrapper beer">
         {contents.loading ? (
           <div className="index-loading">
-            <Circles color="#808080" height={40} width={40} />
+            <Oval color="#808080" height={30} width={30} />
           </div>
         ) : (
           <>
