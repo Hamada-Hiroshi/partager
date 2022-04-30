@@ -5,7 +5,7 @@ import CameraSearch from "./CameraSearch";
 const BeerTop = () => {
   return (
     <>
-      <div className="wrapper beer">
+      <div className="wrapper beer top">
         <h2 className="sub-title">ビアスタイルで探す</h2>
         <div id="select-beer-genre">
           <Link to="/beers?category=lager" className="beer-genre" id="lager">
