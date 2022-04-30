@@ -1,21 +1,17 @@
 @import "constants"
 
-body.home.index, body.beers.top, body.beers.index
+body
+  // 共通
   .camera-image
     width: 100%
     height: 100vh
     height: calc(var(--vh, 1vh) * 100 - 108px)
     object-fit: cover
-  .beer-footer
-    .MuiGrid-root.MuiGrid-item
-      text-align: center
-      .MuiButtonBase-root.MuiIconButton-root
-        background-color: #FFF
-        svg.MuiSvgIcon-root
-          color: $color_main
   img.search-result-image
     width: 100%
 
+body.home
+  // トップページ（ドリンク選択）
   .drink-link
     position: relative
     background-size: cover
@@ -42,61 +38,76 @@ body.home.index, body.beers.top, body.beers.index
       transform: translate(-50%, -50%)
       margin: 0
 
+body.home, body.beers
+  // ビールページのフッター
+  .beer-footer
+    .MuiGrid-root.MuiGrid-item
+      text-align: center
+      .MuiButtonBase-root.MuiIconButton-root
+        background-color: #FFF
+        svg.MuiSvgIcon-root
+          color: $color_main
+  // ビールページ内部
   .beer
     background-color: #a19b7c3b
     min-height: 100vh
     min-height: calc(var(--vh, 1vh) * 100 - 108px)
-    #select-beer-genre
-      display: flex
-      flex-wrap: wrap
-      .beer-genre
-        position: relative
-        width: 50%
-        padding-top: 50%
-        font-size: 1.2rem
-        background-size: cover
-        &#lager
-          background-image: url("../images/lager.jpg")
-        &#ale
-          background-image: url("../images/ale.jpg")
-        &#others
-          background-image: url("../images/others.jpg")
-        &#genre-hint
-          background-color: #AAA
-        p
-          position: absolute
-          top: 50%
-          left: 50%
+    &.top
+      #select-beer-genre
+        display: flex
+        flex-wrap: wrap
+        .beer-genre
+          position: relative
+          width: 50%
+          padding-top: 50%
+          font-size: 1.2rem
+          background-size: cover
+          &#lager
+            background-image: url("../images/lager.jpg")
+          &#ale
+            background-image: url("../images/ale.jpg")
+          &#others
+            background-image: url("../images/others.jpg")
+          &#genre-hint
+            background-color: #AAA
+          p
+            position: absolute
+            top: 50%
+            left: 50%
+            width: 100%
+            text-align: center
+            -ms-transform: translate(-50%, -50%)
+            -webkit-transform: translate(-50%, -50%)
+            transform: translate(-50%, -50%)
+            margin: 0
+            font-weight: bold
+            span.main-font
+              font-size: 1.4rem
+            span.sub-font
+              font-size: 0.9rem
+    &.index
+      .index-loading
+        display: flex
+        justify-content: center
+      .drink-box
+        background-color: #ffffffa1
+        border-radius: 8px
+        padding: 10px 0
+        margin-bottom: 14px
+        .drink-image
+          .index-drink-image
+            width: 100%
+        .drink-info
+          padding: 20px 10px
+          .dink-title
+            font-size: 18px
+            font-weight: bold
+          .beer-style
+          .country
+            span.flag-icon
+              margin-right: 8px
+    &.show
+      .drink-image
+        .detail-drink-image
           width: 100%
-          text-align: center
-          -ms-transform: translate(-50%, -50%)
-          -webkit-transform: translate(-50%, -50%)
-          transform: translate(-50%, -50%)
-          margin: 0
-          font-weight: bold
-          span.main-font
-            font-size: 1.4rem
-          span.sub-font
-            font-size: 0.9rem
 
-  .index-loading
-    display: flex
-    justify-content: center
-
-  .drink-box
-    background-color: #ffffffa1
-    border-radius: 8px
-    padding: 10px 0
-    margin-bottom: 14px
-    .drink-image
-      .index-drink-image
-        width: 100%
-    .drink-info
-      padding: 20px 10px
-      .dink-title
-        font-size: 18px
-        font-weight: bold
-      .beer-style
-      .country
-        span.flag-icon
-          margin-right: 8px

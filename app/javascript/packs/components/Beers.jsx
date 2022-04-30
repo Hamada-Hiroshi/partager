@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import PropTypes from "prop-types";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import CameraSearch from "./CameraSearch";
 import Grid from "@material-ui/core/Grid";
 import { Oval } from  "react-loader-spinner";
@@ -52,7 +52,7 @@ const Beers = () => {
 
   return (
     <>
-      <div className="wrapper beer">
+      <div className="wrapper beer index">
         {contents.loading ? (
           <div className="index-loading">
             {console.log("スピナー表示")}
@@ -63,21 +63,23 @@ const Beers = () => {
             <h2 className="sub-title">{contents.res.category}</h2>
             {console.log("一覧表示")}
             {contents.res.beers.map((beer) => (
-              <div key={beer.id} className="drink-box">
-                <Grid container>
-                  <Grid item xs={5} className="drink-image">
-                    <img src={beer.sample_image_url} alt="" className="index-drink-image" />
+              <Link to={`/beers/${beer.id}`} state={beer} key={beer.id}>
+                <div className="drink-box">
+                  <Grid container>
+                    <Grid item xs={5} className="drink-image">
+                      <img src={beer.sample_image_url} alt="" className="index-drink-image" />
+                    </Grid>
+                    <Grid item xs={7} className="drink-info">
+                      <p className="dink-title">{beer.name}</p>
+                      <p className="beer-style">ビアスタイル：{beer.beer_style.name}</p>
+                      <p className="country">
+                        <span className={`flag-icon flag-icon-${beer.country.abbreviation}`}></span>
+                        {beer.country.name}
+                      </p>
+                    </Grid>
                   </Grid>
-                  <Grid item xs={7} className="drink-info">
-                    <p className="dink-title">{beer.name}</p>
-                    <p className="beer-style">ビアスタイル：{beer.beer_style.name}</p>
-                    <p className="country">
-                      <span className={`flag-icon flag-icon-${beer.country.abbreviation}`}></span>
-                      {beer.country.name}
-                    </p>
-                  </Grid>
-                </Grid>
-              </div>
+                </div>
+              </Link>
             ))}
           </>
         )}
