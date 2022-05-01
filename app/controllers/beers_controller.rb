@@ -22,13 +22,10 @@ class BeersController < ApplicationController
     res = image_annotator.text_detection(image: search_image.path, max_results: 1)
     # 画像から読み取ったtextを配列に変換
     keywords = res.responses[0].text_annotations[0]&.description&.split("\n")
-
-    # 解析した単語でDB検索 -> Elasticsearch導入するまでの暫定処理
-    beers = Beer.none
-    keywords.each do |keyword|
-      beers = beers.or(Beer.where("name LIKE ?", "%#{keyword}%"))
-    end
-    beer = beers[0]
+    # キーワードをElasticsearchに投げて検索
+    response = Beer.__elasticsearch__.search(keywords)
+    result = response.results[0]._source
+    beer = Beer.find(result.id)
 
     # 画像データをDB・S3に保存
     beer_image = current_user.drink_images.build(drink_id: beer.id, drink_type: Beer.to_s)

@@ -10,6 +10,15 @@
 #  country_id    :integer          not null
 #
 class Beer < ApplicationRecord
+  include Elasticsearch::Model
+  include Elasticsearch::Model::Callbacks
+
+  # Elasticsearchの設定
+  settings index: {
+    number_of_shards: 1,
+    number_of_replicas: 0
+  }
+
   belongs_to :beer_style
   belongs_to :country
   has_many :images, class_name: "DrinkImage", as: :drink
