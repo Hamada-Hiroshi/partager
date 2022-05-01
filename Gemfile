@@ -41,6 +41,10 @@ gem 'bootstrap_form', git: 'https://github.com/bootstrap-ruby/bootstrap_form.git
 gem 'google-cloud-vision'
 gem 'aws-sdk-s3'
 gem 'flag_icon_css_rails'
+gem 'elasticsearch', '>=7.13.0', '< 7.14.0'
+gem 'elasticsearch-model', '~> 7'
+gem 'elasticsearch-rails', '~> 7'
+gem 'bonsai-elasticsearch-rails', '~> 7'
 
 group :development, :test do
   gem 'pry-byebug'
