@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useLocation, Link } from "react-router-dom";
 import CameraSearch from "./CameraSearch";
@@ -22,7 +22,8 @@ const Beers = () => {
     return imgArray;
   }
 
-  if (contents.loading) {
+  useEffect(() => {
+    console.log("apiリクエスト");
     const getBeers = async () => {
       let csrfToken = document.head.querySelector("[name=csrf-token][content]").content;
       try {
@@ -48,7 +49,7 @@ const Beers = () => {
       }
     }
     getBeers();
-  }
+  }, []);
 
   return (
     <>
@@ -62,7 +63,7 @@ const Beers = () => {
           <>
             <h2 className="sub-title">{contents.res.category}</h2>
             {console.log("一覧表示")}
-            {contents.res.beers.map((beer) => (
+            {contents.res.beers.map(beer => (
               <Link to={`/beers/${beer.id}`} state={beer} key={beer.id}>
                 <div className="drink-box">
                   <Grid container>
