@@ -68,7 +68,7 @@ const Beers = () => {
                 <div className="drink-box">
                   <Grid container>
                     <Grid item xs={5} className="drink-image">
-                      <img src={beer.sample_image_url} alt="" className="index-drink-image" />
+                      <img src={beer.sample_image_url} alt="" className="beer-image" />
                     </Grid>
                     <Grid item xs={7} className="drink-info">
                       <p className="dink-title">{beer.name}</p>
