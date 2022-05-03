@@ -56,6 +56,29 @@ const CameraSearch = () => {
       });
   }
 
+  const judgeDevice = () => {
+    if (navigator.userAgent.indexOf("iPhone") > 0) {
+      return "iphone";
+    } else if (navigator.userAgent.indexOf("Android") > 0 && navigator.userAgent.indexOf("Mobile") > 0) {
+      return "android";
+    } else if (navigator.userAgent.indexOf("iPad") > 0) {
+      return "ipad";
+    } else if (navigator.userAgent.indexOf("Android") > 0) {
+      return "android_tablet";
+    } else {
+      return "pc";
+    }
+  }
+
+  const isPC = () => {
+    let userAgent = judgeDevice();
+    if (userAgent === "pc") {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   const CameraButton = () => {
     if (isCaptureEnable) {
       // 撮影
@@ -106,8 +129,7 @@ const CameraSearch = () => {
             width="100%"
             videoConstraints={{
               aspectRatio: (window.innerHeight - 108) / window.innerWidth,
-              facingMode: { exact: "environment" }
-              // facingMode: "user",
+              facingMode: isPC() ? "user" : { exact: "environment" }
               // width: { min: 640, ideal: 1170, max: 1284 },
               // height: { min: 1136, ideal: 2532, max: 2778 }
             }}
