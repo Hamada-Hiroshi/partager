@@ -8,6 +8,7 @@ import { useRecoilValue } from "recoil";
 import { userState } from "../store/userState";
 import CameraAltIcon from "@material-ui/icons/CameraAlt";
 import ReplayIcon from "@material-ui/icons/Replay";
+import CloseIcon from "@material-ui/icons/Close";
 import { IconButton, Grid, Backdrop } from "@material-ui/core";
 import { Box, Button, Typography, Modal } from "@material-ui/core";
 
@@ -178,11 +179,15 @@ const CameraSearch = memo(() => {
             <CameraButton />
             <Modal
               open={modalOpen}
-              onClose={() => setModalOpen(false)}
               aria-labelledby="modal-title"
               aria-describedby="modal-description"
             >
               <Box className="modal-box">
+                <Box className="modal-close-btn">
+                  <IconButton onClick={() => setModalOpen(false)}>
+                    <CloseIcon />
+                  </IconButton>
+                </Box>
                 <Typography id="modal-title" component="h2">
                   カメラで検索するにはログインが<br />
                   必要です
