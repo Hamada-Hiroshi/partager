@@ -25,9 +25,8 @@ class BeersController < ApplicationController
     keywords = res.responses[0].text_annotations[0]&.description&.split("\n")
     # キーワードをElasticsearchに投げて検索
     response = Beer.__elasticsearch__.search(keywords)
-    if response.results.blank?
-      return render json: { beer: nil }
-    end
+    return render json: { beer: nil } if response.results.blank?
+
     result = response.results[0]._source
     beer = Beer.find(result.id)
 
