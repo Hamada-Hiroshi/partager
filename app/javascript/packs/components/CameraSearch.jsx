@@ -1,16 +1,20 @@
 import React from "react";
+import { useRef, useState, useCallback, memo } from "react";
 import { useNavigate } from "react-router-dom";
+import Webcam from "react-webcam";
+import { BallTriangle } from  "react-loader-spinner";
+import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { userState } from "../store/userState";
 import CameraAltIcon from "@material-ui/icons/CameraAlt";
 import ReplayIcon from "@material-ui/icons/Replay";
-import { IconButton } from "@material-ui/core";
-import { useRef, useState, useCallback } from "react";
-import Webcam from "react-webcam";
-import Grid from "@material-ui/core/Grid";
-import { BallTriangle } from  "react-loader-spinner";
-import Backdrop from "@material-ui/core/Backdrop";
-import axios from "axios";
+import { IconButton, Grid, Backdrop } from "@material-ui/core";
+import { Box, Button, Typography, Modal } from "@material-ui/core";
 
-const CameraSearch = () => {
+const CameraSearch = memo(() => {
+  const userInfo = useRecoilValue(userState);
+  console.log(userInfo);
+  const [modalOpen, setModalOpen] = useState(false);
   const [isCaptureEnable, setCaptureEnable] = useState(false);
   const webcamRef = useRef(null);
   const [imageData, setImageData] = useState(null);
@@ -104,8 +108,12 @@ const CameraSearch = () => {
       // カメラ起動
       return (
         <IconButton onClick={() => {
-          displayNone();
-          setCaptureEnable(true);
+          if (userInfo.isLogin) {
+            displayNone();
+            setCaptureEnable(true);
+          } else {
+            setModalOpen(true);
+          }
         }}>
           <CameraAltIcon />
         </IconButton>
@@ -168,6 +176,22 @@ const CameraSearch = () => {
 
           <Grid item xs={4}>
             <CameraButton />
+            <Modal
+              open={modalOpen}
+              onClose={() => setModalOpen(false)}
+              aria-labelledby="modal-title"
+              aria-describedby="modal-description"
+            >
+              <Box className="modal-box">
+                <Typography id="modal-title" component="h2">
+                  カメラで検索するにはログインが<br />
+                  必要です
+                </Typography>
+                <Typography id="modal-description">
+                  <a href="/users/sign_in">ログインする</a>
+                </Typography>
+              </Box>
+            </Modal>
           </Grid>
 
           <Grid item xs={4}>
@@ -181,5 +205,5 @@ const CameraSearch = () => {
       </div>
     </>
   );
-};
+});
 export default CameraSearch;

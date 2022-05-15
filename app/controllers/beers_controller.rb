@@ -1,5 +1,6 @@
 class BeersController < ApplicationController
   def top
+    @current_user_props = { is_login: user_signed_in? }
   end
 
   def index

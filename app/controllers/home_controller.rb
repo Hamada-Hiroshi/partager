@@ -1,5 +1,5 @@
 class HomeController < ApplicationController
   def index
-    @hello_world_props = { name: "Stranger" }
+    @current_user_props = { is_login: user_signed_in? }
   end
 end
