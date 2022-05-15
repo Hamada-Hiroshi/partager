@@ -20,6 +20,7 @@
     "react-on-rails": "12.4.0",
     "react-router-dom": "^6.0.2",
     "react-webcam": "^6.0.0",
+    "recoil": "^0.7.3-alpha.1",
     "turbolinks": "^5.2.0",
     "webpack": "^4.46.0",
     "webpack-cli": "^3.3.12"

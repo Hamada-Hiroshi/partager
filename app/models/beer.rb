@@ -32,4 +32,15 @@ class Beer < ApplicationRecord
                                          key: "beers/#{sample_image.id}.png",
                                          expires_in: 600)
   end
+
+  def save_image(user, image)
+    beer_image = user.drink_images.build(drink_id: id, drink_type: Beer.to_s)
+    beer_image.save!
+
+    s3_client = Aws::S3::Client.new
+    s3_client.put_object(bucket: ENV["AWS_S3_BUCKET"],
+                         key: "beers/#{beer_image.id}.png",
+                         content_type: "image/png",
+                         body: File.open(image.path))
+  end
 end

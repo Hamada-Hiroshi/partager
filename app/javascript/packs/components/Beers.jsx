@@ -3,9 +3,8 @@ import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useLocation, Link } from "react-router-dom";
 import CameraSearch from "./CameraSearch";
-import Grid from "@material-ui/core/Grid";
+import { Grid, Backdrop } from "@material-ui/core";
 import { Oval } from  "react-loader-spinner";
-import Backdrop from "@material-ui/core/Backdrop";
 import axios from "axios";
 
 const Beers = () => {

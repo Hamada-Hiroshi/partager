@@ -1,5 +1,6 @@
 class BeersController < ApplicationController
   def top
+    @current_user_props = { is_login: user_signed_in? }
   end
 
   def index
@@ -24,20 +25,13 @@ class BeersController < ApplicationController
     keywords = res.responses[0].text_annotations[0]&.description&.split("\n")
     # キーワードをElasticsearchに投げて検索
     response = Beer.__elasticsearch__.search(keywords)
-    if response.results.blank?
-      return render json: { beer: nil } if response.results.blank?
-    end
+    return render json: { beer: nil } if response.results.blank?
+
     result = response.results[0]._source
     beer = Beer.find(result.id)
 
     # 画像データをDB・S3に保存
-    beer_image = current_user.drink_images.build(drink_id: beer.id, drink_type: Beer.to_s)
-    beer_image.save!
-    s3_client = Aws::S3::Client.new
-    s3_client.put_object(bucket: ENV["AWS_S3_BUCKET"],
-                         key: "beers/#{beer_image.id}.png",
-                         content_type: "image/png",
-                         body: File.open(search_image.path))
+    beer.save_image(current_user, search_image)
 
     render json: beer.as_json(include: [:beer_style, :country], methods: :sample_image_url)
   end
