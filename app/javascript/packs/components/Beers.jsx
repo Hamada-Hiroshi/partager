@@ -6,11 +6,13 @@ import CameraSearch from "./CameraSearch";
 import { Grid, Backdrop } from "@material-ui/core";
 import { Oval } from  "react-loader-spinner";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { beerSearchResultsState } from "../store/beerSearchResultsState";
 
 const Beers = () => {
-  const { search } = useLocation();
-  const query = new URLSearchParams(search);
+  const query = new URLSearchParams(useLocation().search);
   const [contents, setContents] = useState({ res: null, loading: true });
+  const [beersInfo, setBeersInfo] = useRecoilState(beerSearchResultsState);
 
   const preloadImages = (beers) => {
     let imgArray = new Array();
@@ -25,32 +27,39 @@ const Beers = () => {
   }
 
   useEffect(() => {
-    console.log("apiリクエスト");
-    const getBeers = async () => {
-      let csrfToken = document.head.querySelector("[name=csrf-token][content]").content;
-      try {
-        const response = await axios.get(`/beers?category=${query.get("category")}`, {
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRF-Token": csrfToken
-          }
-        });
-        console.log(response.data);
-        if (response.data.beers.length) {
-          const images = await preloadImages(response.data.beers);
-          images[0].onload = () =>  {
-            console.log("プリロード完了");
+    let stateParams = JSON.stringify(beersInfo.params);
+    let currentParams = JSON.stringify({ category: query.get("category") });
+    if (stateParams === currentParams) {
+      setContents({ res: beersInfo.beers, loading: false });
+    } else {
+      console.log("apiリクエスト");
+      const getBeers = async () => {
+        let csrfToken = document.head.querySelector("[name=csrf-token][content]").content;
+        try {
+          const response = await axios.get(`/beers?category=${query.get("category")}`, {
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRF-Token": csrfToken
+            }
+          });
+          console.log(response.data);
+          if (response.data.beers.length) {
+            const images = await preloadImages(response.data.beers);
+            images[0].onload = () =>  {
+              console.log("プリロード完了");
+              setContents({ res: response.data, loading: false });
+              setBeersInfo({ params: { category: query.get("category") }, beers: response.data });
+            }
+          } else {
             setContents({ res: response.data, loading: false });
           }
-        } else {
-          setContents({ res: response.data, loading: false });
+        } catch (error) {
+          console.log(error);
+          setContents({ res: null, loading: false });
         }
-      } catch (error) {
-        console.log(error);
-        setContents({ res: null, loading: false });
       }
+      getBeers();
     }
-    getBeers();
   }, []);
 
   return (
