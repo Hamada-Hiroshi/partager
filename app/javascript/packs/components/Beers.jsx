@@ -14,11 +14,14 @@ const Beers = () => {
 
   const preloadImages = (beers) => {
     let imgArray = new Array();
+    let backGroundImgArray = new Array();
     beers.forEach((beer, index) => {
       imgArray[index] = new Image();
       imgArray[index].src = beer.sample_image_url;
+      backGroundImgArray[index] = new Image();
+      backGroundImgArray[index].src = beer.content_image_url;
     });
-    return imgArray;
+    return backGroundImgArray;
   }
 
   useEffect(() => {
@@ -65,7 +68,10 @@ const Beers = () => {
             {contents.res.beers.map(beer => (
               <Link to={`/beers/${beer.id}`} state={beer} key={beer.id}>
                 <div className="drink-box">
-                  <Grid container>
+                  <div className="background-drink-image">
+                    <img src={beer.content_image_url} alt="" className="beer-content-image" />
+                  </div>
+                  <Grid container className="drink-info-box">
                     <Grid item xs={5} className="drink-image">
                       <img src={beer.sample_image_url} alt="" className="beer-image" />
                     </Grid>

@@ -48,27 +48,67 @@ body.home, body.beers
             span.sub-font
               font-size: 0.9rem
     &.index, &.show
-      .drink-box
-        background-color: #ffffffa1
-        border-radius: 8px
-        padding: 10px 0
-        margin-bottom: 14px
-        .drink-image
-          .beer-image
-            width: 100%
+      .beer-image
+        width: 100%
     &.index
+      a:hover
+        color: #555
       .index-loading
         display: flex
         justify-content: center
-      .drink-info
-        padding: 20px 10px
-        .dink-title
-          font-size: 18px
-          font-weight: bold
-        .beer-style
-        .country
-          span.flag-icon
-            margin-right: 8px
-    &.show
       .drink-box
-        margin-top: 6px
+        background-color: #ffffffa1
+        border-radius: 8px
+        padding-bottom: 10px
+        margin-bottom: 14px
+        .background-drink-image
+          overflow: hidden
+          border-radius: 8px
+          .beer-content-image
+            width: calc(100vw - 32px + 80px)
+            max-width: 462px
+            height: 180px
+            object-fit: cover
+            border-bottom-left-radius: 1000px 200px;
+            border-bottom-right-radius: 1400px 600px;
+            margin-left: -40px;
+            margin-right: -40px;
+        .drink-info-box
+          margin-top: -100px
+          .drink-info
+            margin-top: 110px
+            p
+              margin-bottom: 10px
+            .dink-title
+              font-size: 18px
+              font-weight: bold
+            .beer-style
+            .country
+              span.flag-icon
+                margin-right: 8px
+    &.show
+      background-color: #ffffffa1
+      padding-bottom: 20px
+      .background-drink-image
+        overflow: hidden
+        .beer-content-image
+          width: calc(100vw + 100px)
+          max-width: 514px
+          height: 200px
+          object-fit: cover
+          border-bottom-left-radius: 1000px 200px
+          border-bottom-right-radius: 1400px 600px
+          margin-left: -50px
+          margin-right: -50px
+      .drink-info
+        margin-top: -120px
+        .drink-text-box
+          padding: 0 20px
+          p
+            margin-bottom: 6px
+          .dink-title
+            font-weight: bold
+          span.flag-icon
+            margin-right: 10px
+
+
