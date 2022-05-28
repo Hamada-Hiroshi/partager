@@ -7,7 +7,8 @@ class BeersController < ApplicationController
     beers = Beer.includes(:beer_style, :country)
                 .where(beer_styles: { category: params[:category] })
     render json: { category: BeerStyle.categories_i18n[params[:category]],
-                   beers: beers.as_json(include: [:beer_style, :country], methods: :sample_image_url) }
+                   beers: beers.as_json(include: [:beer_style, :country],
+                                        methods: [:sample_image_url, :content_image_url]) }
   end
 
   def image_search
@@ -33,6 +34,7 @@ class BeersController < ApplicationController
     # 画像データをDB・S3に保存
     beer.save_image(current_user, search_image)
 
-    render json: beer.as_json(include: [:beer_style, :country], methods: :sample_image_url)
+    render json: beer.as_json(include: [:beer_style, :country],
+                              methods: [:sample_image_url, :content_image_url])
   end
 end
