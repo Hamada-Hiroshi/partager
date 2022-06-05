@@ -1,5 +1,4 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState, useLayoutEffect } from "react";
 import { useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import CameraSearch from "./CameraSearch";
@@ -7,8 +6,12 @@ import Grid from "@material-ui/core/Grid";
 import { Oval } from  "react-loader-spinner";
 
 const BeerInfo = () => {
-  const { state } = useLocation();
+  const { state, pathname } = useLocation();
   console.log(state);
+
+  useLayoutEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return (
     <>
