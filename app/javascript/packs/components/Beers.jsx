@@ -1,18 +1,20 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, browserHistory } from "react-router-dom";
 import CameraSearch from "./CameraSearch";
 import { Grid, Backdrop } from "@material-ui/core";
 import { Oval } from  "react-loader-spinner";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { beerSearchResultsState } from "../store/beerSearchResultsState";
+import { scrollPositionState } from "../store/scrollPositionState";
 
 const Beers = () => {
-  const query = new URLSearchParams(useLocation().search);
+  const { pathname, search, hash } = useLocation();
   const [contents, setContents] = useState({ res: null, loading: true });
   const [beersInfo, setBeersInfo] = useRecoilState(beerSearchResultsState);
+  const [scrollPosition, setScrollPosition] = useRecoilState(scrollPositionState);
 
   const preloadImages = (beers) => {
     let imgArray = new Array();
@@ -27,16 +29,14 @@ const Beers = () => {
   }
 
   useEffect(() => {
-    let stateParams = JSON.stringify(beersInfo.params);
-    let currentParams = JSON.stringify({ category: query.get("category") });
-    if (stateParams === currentParams) {
+    if (search == beersInfo.params) {
       setContents({ res: beersInfo.beers, loading: false });
     } else {
       console.log("apiリクエスト");
       const getBeers = async () => {
         let csrfToken = document.head.querySelector("[name=csrf-token][content]").content;
         try {
-          const response = await axios.get(`/beers?category=${query.get("category")}`, {
+          const response = await axios.get(`/beers/${search}`, {
             headers: {
               "Content-Type": "application/json",
               "X-CSRF-Token": csrfToken
@@ -48,7 +48,7 @@ const Beers = () => {
             images[0].onload = () =>  {
               console.log("プリロード完了");
               setContents({ res: response.data, loading: false });
-              setBeersInfo({ params: { category: query.get("category") }, beers: response.data });
+              setBeersInfo({ params: search, beers: response.data });
             }
           } else {
             setContents({ res: response.data, loading: false });
@@ -61,6 +61,13 @@ const Beers = () => {
       getBeers();
     }
   }, []);
+
+  useEffect(() => {
+    if (search == scrollPosition.params && hash == "#back") {
+      console.log("ブラウザバックスクロール");
+      window.scrollTo(0, scrollPosition.scrollY);
+    }
+  }, [contents]);
 
   return (
     <>
@@ -75,7 +82,16 @@ const Beers = () => {
             <h2 className="sub-title">{contents.res.category}</h2>
             {console.log("一覧表示")}
             {contents.res.beers.map(beer => (
-              <Link to={`/beers/${beer.id}`} state={beer} key={beer.id}>
+              <Link to={`/beers/${beer.id}`}
+                    state={beer}
+                    key={beer.id}
+                    onClick={() => {
+                      setScrollPosition({ params: search, scrollY: window.scrollY });
+                      if (!hash.length) {
+                        window.history.replaceState(null, null, `${location.href}#back`);
+                      }
+                    }}
+              >
                 <div className="drink-box">
                   <div className="background-drink-image">
                     <img src={beer.content_image_url} alt="" className="beer-content-image" />
