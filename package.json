@@ -19,6 +19,7 @@
     "react-loader-spinner": "^6.0.0-0",
     "react-on-rails": "12.4.0",
     "react-router-dom": "^6.0.2",
+    "react-star-rating-component": "^1.4.1",
     "react-webcam": "^6.0.0",
     "recoil": "^0.7.3-alpha.1",
     "turbolinks": "^5.2.0",
