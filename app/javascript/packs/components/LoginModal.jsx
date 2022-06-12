@@ -1,5 +1,5 @@
-import React, { useState, useLayoutEffect } from "react";
-import { IconButton, Box, Typography, Modal } from "@material-ui/core";
+import React from "react";
+import { IconButton, Box, Typography, Modal, Fade } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 
 const LoginModal = (props) => {
@@ -9,23 +9,26 @@ const LoginModal = (props) => {
     <>
       <Modal
         open={loginModalOpen}
-        aria-labelledby="modal-title"
-        aria-describedby="modal-description"
+        aria-labelledby="login-modal-title"
+        aria-describedby="login-modal-description"
+        className="modal-wrapper"
       >
-        <Box className="modal-box">
-          <Box className="modal-close-btn">
-            <IconButton onClick={() => setLoginModalOpen(false)}>
-              <CloseIcon />
-            </IconButton>
+        <Fade in={loginModalOpen}>
+          <Box className="login-modal-box">
+            <Box className="login-modal-close-btn">
+              <IconButton onClick={() => setLoginModalOpen(false)}>
+                <CloseIcon />
+              </IconButton>
+            </Box>
+            <Typography id="login-modal-title" component="h2">
+              カメラで検索するにはログインが<br />
+              必要です
+            </Typography>
+            <Typography id="login-modal-description">
+              <a href="/users/sign_in">ログインする</a>
+            </Typography>
           </Box>
-          <Typography id="modal-title" component="h2">
-            カメラで検索するにはログインが<br />
-            必要です
-          </Typography>
-          <Typography id="modal-description">
-            <a href="/users/sign_in">ログインする</a>
-          </Typography>
-        </Box>
+        </Fade>
       </Modal>
     </>
   );

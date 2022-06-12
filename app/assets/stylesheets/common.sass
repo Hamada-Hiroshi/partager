@@ -48,7 +48,15 @@ body
     width: 100%
 
   //モーダル
-  .modal-box
+  .modal-wrapper
+    @media (max-width: 779px)
+      width: 100%
+    @media (min-width: 780px)
+      width: 414px
+      margin: 0 auto
+
+  //ログインモーダル
+  .login-modal-box
     position: absolute
     top: 50%
     left: 50%
@@ -59,10 +67,20 @@ body
     border-radius: 10px
     text-align: center
     padding-bottom: 30px
-    .modal-close-btn
+    .login-modal-close-btn
       text-align: right
       button
         border-radius: 0 10px 0 0
-    #modal-title
+    #login-modal-title
       margin-bottom: 20px
+
+  //レビューモーダル
+  .review-modal-box
+    position: absolute
+    bottom: 0
+    height: 500px
+    width: 100%
+    background-color: #FFF
+    text-align: center
+    border-radius: 20% 20% 0 0
 
