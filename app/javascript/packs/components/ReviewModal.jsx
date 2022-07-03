@@ -30,17 +30,19 @@ const ReviewModal = (props) => {
   const displayTextArea = (isOpen) => {
     let ratingDisplay = document.getElementById("rating-area");
     let commentDescription = document.getElementById("comment-description");
-    let commentForm = document.getElementsByClassName("comment-form")[0];
+    let commentForm = document.querySelectorAll(".comment-form, .focused-comment-form")[0];
     let backButton = document.getElementById("review-back-btn");
     if (isOpen) {
       ratingDisplay.classList.add("display-none");
       commentDescription.classList.add("display-none");
       commentForm.classList.add("focused-comment-form");
+      commentForm.classList.remove("comment-form");
       backButton.classList.remove("display-none");
     } else {
       ratingDisplay.classList.remove("display-none");
       commentDescription.classList.remove("display-none");
       commentForm.classList.remove("focused-comment-form");
+      commentForm.classList.add("comment-form");
       backButton.classList.add("display-none");
     }
   }
@@ -156,7 +158,7 @@ const ReviewModal = (props) => {
                   variant="standard"
                   onFocus={() => {displayTextArea(true);}}
                   inputRef={inputComment}
-                  // maxRows={1}
+                  maxRows={20}
                   className="comment-form"
                 />
               </>
