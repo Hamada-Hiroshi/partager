@@ -1,14 +1,16 @@
 import React, { useState, useRef } from "react";
-import { TextField, Button, IconButton, Box, Grid, Modal, Slide } from "@material-ui/core";
+import { TextField, Button, IconButton, Box, Grid, Modal, Slide, Backdrop } from "@material-ui/core";
 import ArrowBackIosRoundedIcon from "@material-ui/icons/ArrowBackIosRounded";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import ReactStars from "react-rating-stars-component";
+import { BallTriangle } from "react-loader-spinner";
 import axios from "axios";
 
 const ReviewModal = (props) => {
   const { reviewModalOpen, setReviewModalOpen, drinkType, drinkId } = props
   const [rating, setRating] = useState(null);
   const inputComment = useRef(null);
+  const [progress, setProgress] = useState(false);
 
   const ratingChanged = (newRating) => {
     let score = (newRating / 5) + 0.8
@@ -62,10 +64,12 @@ const ReviewModal = (props) => {
     setProgress(true);
     let csrfToken = document.head.querySelector("[name=csrf-token][content]").content;
     let data = {
-      "drink_id": drinkId,
-      "drink_type": drinkType,
-      "score": rating,
-      "comment": inputComment.current.value
+      "review": {
+        "drink_id": drinkId,
+        "drink_type": drinkType.charAt(0).toUpperCase() + drinkType.slice(1),
+        "score": rating,
+        "comment": inputComment.current.value
+      }
     }
 
     axios
@@ -76,18 +80,23 @@ const ReviewModal = (props) => {
         }
       })
       .then((response) => {
-        console.log(response.data);
-        setProgress(false);
-        navigate("/beers/search_result", { state: response.data });
+        setReviewModalOpen(false);
+        displaySendButton(false);
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
+      })
+      .finally(() => {
         setProgress(false);
       });
   }
 
   return (
     <>
+      <Backdrop open={progress} style={{ zIndex: 1500 }}>
+        <BallTriangle color="#00BFFF" height={80} width={80} />
+      </Backdrop>
+
       <Button
         variant="outlined"
         onClick={handleSubmit}

@@ -21,7 +21,7 @@ const BeerInfo = () => {
 
   return (
     <>
-      <div className="beer show">
+      <div className="no-wrapper beer show">
         <div className="background-drink-image">
           <img src={state.content_image_url} alt="" className="beer-content-image" />
         </div>

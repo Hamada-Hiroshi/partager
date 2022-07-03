@@ -1,7 +1,7 @@
 import React, { useRef, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import Webcam from "react-webcam";
-import { BallTriangle } from  "react-loader-spinner";
+import { BallTriangle } from "react-loader-spinner";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { userState } from "../store/userState";
@@ -23,13 +23,13 @@ const CameraSearch = () => {
     }
   }, [webcamRef]);
 
-  const displayNone = () => {
-    let display = document.getElementsByClassName("wrapper")[0];
-    display.classList.add("display-none");
-  }
-  const displayShow = () => {
-    let display = document.getElementsByClassName("wrapper")[0];
-    display.classList.remove("display-none");
+  const displayShow = (isShow) => {
+    let display = document.querySelectorAll(".wrapper, .no-wrapper")[0];
+    if (isShow) {
+      display.classList.remove("display-none");
+    } else {
+      display.classList.add("display-none");
+    }
   }
 
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ const CameraSearch = () => {
         setProgress(false);
         navigate("/beers/search_result", { state: response.data });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         setProgress(false);
       });
@@ -107,7 +107,7 @@ const CameraSearch = () => {
       return (
         <IconButton onClick={() => {
           if (userInfo.isLogin) {
-            displayNone();
+            displayShow(false);
             setCaptureEnable(true);
           } else {
             setLoginModalOpen(true);
@@ -155,7 +155,7 @@ const CameraSearch = () => {
             {/* カメラ停止 */}
             {isCaptureEnable && (
               <span style={{ color: "#FFF", cursor: "pointer" }} onClick={() => {
-                displayShow();
+                displayShow(true);
                 setCaptureEnable(false);
               }}>
                 キャンセル
@@ -164,7 +164,7 @@ const CameraSearch = () => {
             {/* 写真削除 */}
             {imageData && (
               <span style={{ color: "#FFF", cursor: "pointer" }} onClick={() => {
-                displayShow();
+                displayShow(true);
                 setImageData(null);
               }}>
                 キャンセル
