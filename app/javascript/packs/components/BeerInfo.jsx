@@ -49,7 +49,12 @@ const BeerInfo = () => {
             }}>
               評価する
             </Button>
-            <ReviewModal reviewModalOpen={reviewModalOpen} setReviewModalOpen={setReviewModalOpen} />
+            <ReviewModal
+              reviewModalOpen={reviewModalOpen}
+              setReviewModalOpen={setReviewModalOpen}
+              drinkType="beer"
+              drinkId={state.id}
+            />
           </div>
         </div>
       </div>
