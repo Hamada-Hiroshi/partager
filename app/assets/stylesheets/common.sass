@@ -7,6 +7,9 @@ body
   a
     text-decoration: none
     color: #555555
+    -webkit-tap-highlight-color: rgba(0,0,0,0)
+  *:focus
+    outline: none
   ul
     margin: 0
     padding: 0
@@ -48,7 +51,15 @@ body
     width: 100%
 
   //モーダル
-  .modal-box
+  .modal-wrapper
+    @media (max-width: 779px)
+      width: 100%
+    @media (min-width: 780px)
+      width: 414px
+      margin: 0 auto
+
+  //ログインモーダル
+  .login-modal-box
     position: absolute
     top: 50%
     left: 50%
@@ -59,10 +70,119 @@ body
     border-radius: 10px
     text-align: center
     padding-bottom: 30px
-    .modal-close-btn
+    .login-modal-close-btn
       text-align: right
       button
         border-radius: 0 10px 0 0
-    #modal-title
+    #login-modal-title
       margin-bottom: 20px
+
+  //レビューモーダル
+  #review-send-btn
+    position: fixed
+    top: 22px
+    right: 50%
+    transform: translateX(140%)
+    background-color: #FFF
+    border-radius: 20px
+    z-index: 1400
+  .review-modal-box
+    position: absolute
+    bottom: 0
+    height: 500px
+    width: 100%
+    background-color: #FFF
+    text-align: center
+    border-radius: 20% 20% 0 0
+    .review-modal-icon-btns
+      margin-top: 10px
+    #comment-description
+      margin: 20px 0 0
+    .comment-form
+      width: 300px
+      margin-top: 20px
+      textarea
+        height: 19px !important
+    .focused-comment-form
+      .MuiInputBase-root
+        display: block
+        textarea
+          height: 380px !important
+    .rating-score
+      position: absolute
+      top: 70px
+      transform: translateX(-50%)
+      font-weight: bold
+      font-size: 26px
+    .rating-impression
+      position: absolute
+      top: 190px
+      transform: translateX(-50%)
+      font-size: 22px
+    .react-stars
+      position: relative
+      width: 300px
+      height: 300px
+      margin: 0 auto
+      span
+        position: absolute !important
+        top: 0
+        left: calc(50% - 17px)
+        display: inline-block
+        width: 34px
+        height: 150px
+        transform-origin: center bottom
+        padding-top: 10px
+        &:nth-child(1)
+          transform: rotate(-36deg)
+          font-size: 30px !important
+          padding-top: 0
+        &:nth-child(2)
+          transform: rotate(-50.4deg)
+        &:nth-child(3)
+          transform: rotate(-64.8deg)
+        &:nth-child(4)
+          transform: rotate(-79.2deg)
+        &:nth-child(5)
+          transform: rotate(-93.6deg)
+        &:nth-child(6)
+          transform: rotate(-108deg)
+          font-size: 30px !important
+          padding-top: 0
+        &:nth-child(7)
+          transform: rotate(-122.4deg)
+        &:nth-child(8)
+          transform: rotate(-136.8deg)
+        &:nth-child(9)
+          transform: rotate(-151.2deg)
+        &:nth-child(10)
+          transform: rotate(-165.6deg)
+        &:nth-child(11)
+          transform: rotate(-180deg)
+          font-size: 30px !important
+          padding-top: 0
+        &:nth-child(12)
+          transform: rotate(-194.4deg)
+        &:nth-child(13)
+          transform: rotate(-208.8deg)
+        &:nth-child(14)
+          transform: rotate(-223.2deg)
+        &:nth-child(15)
+          transform: rotate(-237.6deg)
+        &:nth-child(16)
+          transform: rotate(-252deg)
+          font-size: 30px !important
+          padding-top: 0
+        &:nth-child(17)
+          transform: rotate(-266.4deg)
+        &:nth-child(18)
+          transform: rotate(-280.8deg)
+        &:nth-child(19)
+          transform: rotate(-295.2deg)
+        &:nth-child(20)
+          transform: rotate(-309.6deg)
+        &:nth-child(21)
+          transform: rotate(-324deg)
+          font-size: 30px !important
+          padding-top: 0
 

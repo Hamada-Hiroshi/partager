@@ -1,21 +1,18 @@
-import React from "react";
-import { useRef, useState, useCallback, memo } from "react";
+import React, { useRef, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import Webcam from "react-webcam";
-import { BallTriangle } from  "react-loader-spinner";
+import { BallTriangle } from "react-loader-spinner";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { userState } from "../store/userState";
 import CameraAltIcon from "@material-ui/icons/CameraAlt";
 import ReplayIcon from "@material-ui/icons/Replay";
-import CloseIcon from "@material-ui/icons/Close";
 import { IconButton, Grid, Backdrop } from "@material-ui/core";
-import { Box, Button, Typography, Modal } from "@material-ui/core";
+import LoginModal from "./LoginModal";
 
-const CameraSearch = memo(() => {
+const CameraSearch = () => {
   const userInfo = useRecoilValue(userState);
-  console.log(userInfo);
-  const [modalOpen, setModalOpen] = useState(false);
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [isCaptureEnable, setCaptureEnable] = useState(false);
   const webcamRef = useRef(null);
   const [imageData, setImageData] = useState(null);
@@ -26,13 +23,13 @@ const CameraSearch = memo(() => {
     }
   }, [webcamRef]);
 
-  const displayNone = () => {
-    let display = document.getElementsByClassName("wrapper")[0];
-    display.classList.add("display-none");
-  }
-  const displayShow = () => {
-    let display = document.getElementsByClassName("wrapper")[0];
-    display.classList.remove("display-none");
+  const displayShow = (isShow) => {
+    let display = document.querySelectorAll(".wrapper, .no-wrapper")[0];
+    if (isShow) {
+      display.classList.remove("display-none");
+    } else {
+      display.classList.add("display-none");
+    }
   }
 
   const navigate = useNavigate();
@@ -55,7 +52,7 @@ const CameraSearch = memo(() => {
         setProgress(false);
         navigate("/beers/search_result", { state: response.data });
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error);
         setProgress(false);
       });
@@ -110,10 +107,10 @@ const CameraSearch = memo(() => {
       return (
         <IconButton onClick={() => {
           if (userInfo.isLogin) {
-            displayNone();
+            displayShow(false);
             setCaptureEnable(true);
           } else {
-            setModalOpen(true);
+            setLoginModalOpen(true);
           }
         }}>
           <CameraAltIcon />
@@ -158,7 +155,7 @@ const CameraSearch = memo(() => {
             {/* カメラ停止 */}
             {isCaptureEnable && (
               <span style={{ color: "#FFF", cursor: "pointer" }} onClick={() => {
-                displayShow();
+                displayShow(true);
                 setCaptureEnable(false);
               }}>
                 キャンセル
@@ -167,7 +164,7 @@ const CameraSearch = memo(() => {
             {/* 写真削除 */}
             {imageData && (
               <span style={{ color: "#FFF", cursor: "pointer" }} onClick={() => {
-                displayShow();
+                displayShow(true);
                 setImageData(null);
               }}>
                 キャンセル
@@ -177,26 +174,7 @@ const CameraSearch = memo(() => {
 
           <Grid item xs={4}>
             <CameraButton />
-            <Modal
-              open={modalOpen}
-              aria-labelledby="modal-title"
-              aria-describedby="modal-description"
-            >
-              <Box className="modal-box">
-                <Box className="modal-close-btn">
-                  <IconButton onClick={() => setModalOpen(false)}>
-                    <CloseIcon />
-                  </IconButton>
-                </Box>
-                <Typography id="modal-title" component="h2">
-                  カメラで検索するにはログインが<br />
-                  必要です
-                </Typography>
-                <Typography id="modal-description">
-                  <a href="/users/sign_in">ログインする</a>
-                </Typography>
-              </Box>
-            </Modal>
+            <LoginModal loginModalOpen={loginModalOpen} setLoginModalOpen={setLoginModalOpen} />
           </Grid>
 
           <Grid item xs={4}>
@@ -210,5 +188,5 @@ const CameraSearch = memo(() => {
       </div>
     </>
   );
-});
+};
 export default CameraSearch;

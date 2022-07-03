@@ -1,12 +1,18 @@
 import React, { useState, useLayoutEffect } from "react";
 import { useLocation } from "react-router-dom";
-import PropTypes from "prop-types";
 import CameraSearch from "./CameraSearch";
-import Grid from "@material-ui/core/Grid";
+import { Grid, Button, IconButton, Box, Typography, Modal } from "@material-ui/core";
 import { Oval } from  "react-loader-spinner";
+import { useRecoilValue } from "recoil";
+import { userState } from "../store/userState";
+import LoginModal from "./LoginModal";
+import ReviewModal from "./ReviewModal";
 
 const BeerInfo = () => {
   const { state, pathname } = useLocation();
+  const userInfo = useRecoilValue(userState);
+  const [loginModalOpen, setLoginModalOpen] = useState(false);
+  const [reviewModalOpen, setReviewModalOpen] = useState(false);
   console.log(state);
 
   useLayoutEffect(() => {
@@ -15,7 +21,7 @@ const BeerInfo = () => {
 
   return (
     <>
-      <div className="beer show">
+      <div className="no-wrapper beer show">
         <div className="background-drink-image">
           <img src={state.content_image_url} alt="" className="beer-content-image" />
         </div>
@@ -34,6 +40,21 @@ const BeerInfo = () => {
               <span className={`flag-icon flag-icon-${state.country.abbreviation}`}></span>
               {state.country.name}
             </p>
+            <Button variant="outlined" onClick={() => {
+              if (userInfo.isLogin) {
+                setReviewModalOpen(true);
+              } else {
+                setLoginModalOpen(true);
+              }
+            }}>
+              評価する
+            </Button>
+            <ReviewModal
+              reviewModalOpen={reviewModalOpen}
+              setReviewModalOpen={setReviewModalOpen}
+              drinkType="beer"
+              drinkId={state.id}
+            />
           </div>
         </div>
       </div>

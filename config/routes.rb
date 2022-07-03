@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   root "home#index"
   devise_for :users
+
   get "/beer" => "beers#top"
   resources :beers, only: :index do
     collection do
@@ -12,4 +13,5 @@ Rails.application.routes.draw do
   get "/wine" => redirect("/")
   get "/sake" => redirect("/")
 
+  resources :reviews, only: :create
 end

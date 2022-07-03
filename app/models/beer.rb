@@ -22,6 +22,7 @@ class Beer < ApplicationRecord
   belongs_to :beer_style
   belongs_to :country
   has_many :images, class_name: "DrinkImage", as: :drink
+  has_many :reviews, as: :drink
 
   validates :name, presence: true
 
