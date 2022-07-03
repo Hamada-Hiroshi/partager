@@ -156,7 +156,7 @@ const ReviewModal = (props) => {
                   multiline
                   placeholder="このビールはいかがでしたか？"
                   variant="standard"
-                  onFocus={() => {displayTextArea(true);}}
+                  onMouseDown={() => {displayTextArea(true);}}
                   inputRef={inputComment}
                   maxRows={20}
                   className="comment-form"
