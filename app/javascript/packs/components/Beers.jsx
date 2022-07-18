@@ -120,3 +120,4 @@ const Beers = () => {
   );
 };
 export default Beers;
+

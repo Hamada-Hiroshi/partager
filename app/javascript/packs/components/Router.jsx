@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import ScrollToTop from "./ScrollToTop";
+import SetUserInfo from "./SetUserInfo";
 import SelectDrink from "./SelectDrink";
 import BeerTop from "./BeerTop";
 import WineTop from "./WineTop";
@@ -18,9 +19,10 @@ const Router = (props) => {
     <RecoilRoot>
       <BrowserRouter>
         <ScrollToTop />
+        <SetUserInfo is_login={is_login} />
         <Routes>
           <Route path="/" element={<SelectDrink />}></Route>
-          <Route path="/beer" element={<BeerTop is_login={is_login} />}></Route>
+          <Route path="/beer" element={<BeerTop />}></Route>
           <Route path="/wine" element={<WineTop />}></Route>
           <Route path="/sake" element={<SakeTop />}></Route>
           <Route path="/beers/search_result" element={<BeerSearchResult />}></Route>
@@ -32,3 +34,4 @@ const Router = (props) => {
   );
 };
 export default Router;
+
