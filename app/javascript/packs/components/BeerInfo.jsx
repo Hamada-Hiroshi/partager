@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import CameraSearch from "./CameraSearch";
 import { Grid, Button, IconButton, Box, Typography, Modal } from "@material-ui/core";
@@ -14,10 +14,6 @@ const BeerInfo = () => {
   const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [reviewModalOpen, setReviewModalOpen] = useState(false);
   console.log(state);
-
-  useLayoutEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
 
   return (
     <>
@@ -63,3 +59,4 @@ const BeerInfo = () => {
   );
 };
 export default BeerInfo;
+

@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { RecoilRoot } from "recoil";
+import ScrollToTop from "./ScrollToTop";
 import SelectDrink from "./SelectDrink";
 import BeerTop from "./BeerTop";
 import WineTop from "./WineTop";
@@ -16,6 +17,7 @@ const Router = (props) => {
   return (
     <RecoilRoot>
       <BrowserRouter>
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<SelectDrink />}></Route>
           <Route path="/beer" element={<BeerTop is_login={is_login} />}></Route>
