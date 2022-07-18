@@ -38,6 +38,7 @@ const Beers = () => {
         try {
           const response = await axios.get(`/beers/${search}`, {
             headers: {
+              "X-Requested-With": "XMLHttpRequest",
               "Content-Type": "application/json",
               "X-CSRF-Token": csrfToken
             }
@@ -120,3 +121,4 @@ const Beers = () => {
   );
 };
 export default Beers;
+

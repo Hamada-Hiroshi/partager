@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   get "/beer" => "beers#top"
-  resources :beers, only: :index do
+  resources :beers, only: [:index, :show] do
     collection do
       post "image_search"
       get "search_result" => redirect("/beer")

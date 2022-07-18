@@ -1,20 +1,9 @@
 import React from "react";
 import { useEffect, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { useSetRecoilState } from "recoil";
 import CameraSearch from "./CameraSearch";
-import { userState } from "../store/userState";
 
-const BeerTop = (props) => {
-  const { is_login } = props;
-  console.log(is_login);
-
-  const setUserInfo = useSetRecoilState(userState);
-  useEffect(() => {
-    setUserInfo({ isLogin: is_login });
-    console.log("ログイン情報セット");
-  }, []);
-
+const BeerTop = () => {
   return (
     <>
       <div className="wrapper beer top">
@@ -51,3 +40,4 @@ const BeerTop = (props) => {
   );
 };
 export default BeerTop;
+
