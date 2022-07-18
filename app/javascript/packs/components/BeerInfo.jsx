@@ -1,17 +1,22 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import CameraSearch from "./CameraSearch";
 import { Grid, Button, IconButton, Box, Typography, Modal } from "@material-ui/core";
 import StarIcon from "@material-ui/icons/Star";
 import { Oval } from  "react-loader-spinner";
 import { useRecoilValue } from "recoil";
 import { userState } from "../store/userState";
+import CameraSearch from "./CameraSearch";
 import ReviewModal from "./ReviewModal";
 
 const BeerInfo = () => {
-  const beer = useLocation().state;
   const userInfo = useRecoilValue(userState);
   const [reviewModalOpen, setReviewModalOpen] = useState(false);
+
+  let beer = useLocation().state;
+  if (beer == null) {
+    // url直打ちの場合
+    // beerを取得するAjax処理を入れる
+  }
 
   return (
     <>

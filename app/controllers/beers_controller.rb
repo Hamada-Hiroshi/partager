@@ -1,21 +1,23 @@
 class BeersController < ApplicationController
+  before_action :set_current_user_props, only: [:top, :index, :show]
+
   def top
-    @current_user_props = { is_login: user_signed_in? }
   end
 
   def index
-    beers = Beer
-      .includes(:beer_style, :country)
-      .where(beer_styles: { category: params[:category] })
-    render json: {
-      category: BeerStyle.categories_i18n[params[:category]],
-      beers: beers.as_json(include: [:beer_style, :country],
-      methods: [:sample_image_url, :content_image_url])
-    }
+    if request.xhr?
+      beers = Beer
+        .includes(:beer_style, :country)
+        .where(beer_styles: { category: params[:category] })
+      render json: {
+        category: BeerStyle.categories_i18n[params[:category]],
+        beers: beers.as_json(include: [:beer_style, :country],
+        methods: [:sample_image_url, :content_image_url])
+      }
+    end
   end
 
   def show
-    @current_user_props = { is_login: user_signed_in? }
   end
 
   def image_search
@@ -44,4 +46,11 @@ class BeersController < ApplicationController
     render json: beer.as_json(include: [:beer_style, :country],
                               methods: [:sample_image_url, :content_image_url])
   end
+
+  private
+
+  def set_current_user_props
+    @current_user_props = { is_login: user_signed_in? }
+  end
 end
+
