@@ -2,16 +2,15 @@ import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import CameraSearch from "./CameraSearch";
 import { Grid, Button, IconButton, Box, Typography, Modal } from "@material-ui/core";
+import StarIcon from "@material-ui/icons/Star";
 import { Oval } from  "react-loader-spinner";
 import { useRecoilValue } from "recoil";
 import { userState } from "../store/userState";
-import LoginModal from "./LoginModal";
 import ReviewModal from "./ReviewModal";
 
 const BeerInfo = () => {
   const { state, pathname } = useLocation();
   const userInfo = useRecoilValue(userState);
-  const [loginModalOpen, setLoginModalOpen] = useState(false);
   const [reviewModalOpen, setReviewModalOpen] = useState(false);
   console.log(state);
 
@@ -36,21 +35,24 @@ const BeerInfo = () => {
               <span className={`flag-icon flag-icon-${state.country.abbreviation}`}></span>
               {state.country.name}
             </p>
-            <Button variant="outlined" onClick={() => {
-              if (userInfo.isLogin) {
-                setReviewModalOpen(true);
-              } else {
-                setLoginModalOpen(true);
-              }
-            }}>
-              評価する
-            </Button>
-            <ReviewModal
-              reviewModalOpen={reviewModalOpen}
-              setReviewModalOpen={setReviewModalOpen}
-              drinkType="beer"
-              drinkId={state.id}
-            />
+            {userInfo.isLogin && (
+              <>
+                <Button
+                  variant="outlined"
+                  className="review-btn"
+                  onClick={() => setReviewModalOpen(true)}
+                >
+                  <StarIcon />
+                  評価を追加する
+                </Button>
+                <ReviewModal
+                  reviewModalOpen={reviewModalOpen}
+                  setReviewModalOpen={setReviewModalOpen}
+                  drinkType="beer"
+                  drinkId={state.id}
+                />
+              </>
+            )}
           </div>
         </div>
       </div>
