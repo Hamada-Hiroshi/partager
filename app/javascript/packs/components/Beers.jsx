@@ -9,6 +9,7 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 import { beerSearchResultsState } from "../store/beerSearchResultsState";
 import { scrollPositionState } from "../store/scrollPositionState";
+import AverageScore from "./AverageScore";
 
 const Beers = () => {
   const { pathname, search, hash } = useLocation();
@@ -83,15 +84,16 @@ const Beers = () => {
             <h2 className="sub-title">{contents.res.category}</h2>
             {console.log("一覧表示")}
             {contents.res.beers.map(beer => (
-              <Link to={`/beers/${beer.id}`}
-                    state={beer}
-                    key={beer.id}
-                    onClick={() => {
-                      setScrollPosition({ params: search, scrollY: window.scrollY });
-                      if (!hash.length) {
-                        window.history.replaceState(null, null, `${location.href}#back`);
-                      }
-                    }}
+              <Link
+                to={`/beers/${beer.id}`}
+                state={beer}
+                key={beer.id}
+                onClick={() => {
+                  setScrollPosition({ params: search, scrollY: window.scrollY });
+                  if (!hash.length) {
+                    window.history.replaceState(null, null, `${location.href}#back`);
+                  }
+                }}
               >
                 <div className="drink-box">
                   <div className="background-drink-image">
@@ -101,7 +103,10 @@ const Beers = () => {
                     <Grid item xs={5} className="drink-image">
                       <img src={beer.sample_image_url} alt="" className="beer-image" />
                     </Grid>
-                    <Grid item xs={7} className="drink-info">
+                    <Grid item xs={7} className="drink-score">
+                      <AverageScore reviewsData={beer.reviews_data} />
+                    </Grid>
+                    <Grid item xs={12} className="drink-info">
                       <p className="dink-title">{beer.name}</p>
                       <p className="beer-style">ビアスタイル：{beer.beer_style.name}</p>
                       <p className="country">

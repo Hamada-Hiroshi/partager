@@ -75,11 +75,19 @@ body.home, body.beers
             margin-left: -20px
             margin-right: -20px
         .drink-info-box
-          margin-top: -100px
+          margin-top: -130px
+          .drink-score
+            display: flex
+            padding: 150px 0 0 20px
+            .average-score-main
+              margin-right: 10px
+            .average-score-sub > .react-stars > span
+              cursor: pointer !important
           .drink-info
-            margin-top: 110px
+            padding: 0 6%
             p
-              margin-bottom: 10px
+              font-size: 14px
+              margin-bottom: 4px
             .dink-title
               font-size: 18px
               font-weight: bold
@@ -102,7 +110,15 @@ body.home, body.beers
           margin-left: -50px
           margin-right: -50px
       .drink-info
-        margin-top: -120px
+        .drink-image
+          margin-top: -120px
+        .drink-score
+          text-align: center
+          .average-score-main
+            margin-bottom: 6px
+          .average-score-sub
+            .react-stars
+              margin: 0 auto
         .drink-text-box
           padding: 0 20px
           p

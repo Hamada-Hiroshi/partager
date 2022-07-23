@@ -7,6 +7,7 @@ import { useRecoilValue } from "recoil";
 import { userState } from "../store/userState";
 import CameraSearch from "./CameraSearch";
 import ReviewModal from "./ReviewModal";
+import AverageScore from "./AverageScore";
 
 const BeerInfo = () => {
   const userInfo = useRecoilValue(userState);
@@ -29,7 +30,8 @@ const BeerInfo = () => {
             <Grid item xs={8} className="drink-image">
               <img src={beer.sample_image_url} alt="" className="beer-image" />
             </Grid>
-            <Grid item xs={4} className="drink-score">
+            <Grid item xs={3} className="drink-score">
+              <AverageScore reviewsData={beer.reviews_data} />
             </Grid>
           </Grid>
           <div className="drink-text-box">
