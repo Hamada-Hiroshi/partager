@@ -6,13 +6,13 @@ class BeersController < ApplicationController
 
   def index
     if request.xhr?
-      beers = Beer
-        .includes(:beer_style, :country)
-        .where(beer_styles: { category: params[:category] })
+      beers = Beer.
+        includes(:beer_style, :country).
+        where(beer_styles: { category: params[:category] })
       render json: {
         category: BeerStyle.categories_i18n[params[:category]],
         beers: beers.as_json(include: [:beer_style, :country],
-        methods: [:sample_image_url, :content_image_url])
+        methods: [:sample_image_url, :content_image_url, :reviews_data])
       }
     end
   end
