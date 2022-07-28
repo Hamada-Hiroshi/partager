@@ -47,7 +47,7 @@ jobs:
           command: curl -sfL https://raw.githubusercontent.com/reviewdog/reviewdog/master/install.sh| sh -s -- -b ./bin
       - run:
           name: Run RuboCop
-          command: bundle exec rubocop | ./reviewdog -f=rubocop -reporter=github-pr-review
+          command: bundle exec rubocop | ./bin/reviewdog -f=rubocop -reporter=github-pr-review
   test:
     executor: ruby_mysql_executor
     working_directory: ~/partager
