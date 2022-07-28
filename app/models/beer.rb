@@ -26,6 +26,10 @@ class Beer < ApplicationRecord
 
   validates :name, presence: true
 
+  def lint_test
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+  end
+
   def sample_image_url
     sample_image = DrinkImage.find_by(drink_id: id, drink_type: Beer.to_s, is_sample: true)
     presigner = Aws::S3::Presigner.new
