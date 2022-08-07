@@ -5,12 +5,15 @@ import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import ReactStars from "react-rating-stars-component";
 import { BallTriangle } from "react-loader-spinner";
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { userState } from "../store/userState";
 
 const ReviewModal = (props) => {
   const { reviewModalOpen, setReviewModalOpen, drinkType, drinkId } = props
   const [rating, setRating] = useState(null);
   const inputComment = useRef(null);
   const [progress, setProgress] = useState(false);
+  const [userInfo, setUserInfo] = useRecoilState(userState);
 
   const ratingChanged = (newRating) => {
     let score = (newRating / 5) + 0.8
@@ -84,6 +87,12 @@ const ReviewModal = (props) => {
       .then((response) => {
         setReviewModalOpen(false);
         displaySendButton(false);
+        setUserInfo({
+          isLogin: userInfo.isLogin,
+          reviewedBeerIds: userInfo.reviewedBeerIds.concat(drinkId),
+          reviewedWineIds: userInfo.reviewedWineIds,
+          reviewedSakeIds: userInfo.reviewedSakeIds
+        });
       })
       .catch((error) => {
         console.log(error);

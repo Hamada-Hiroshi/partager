@@ -11,7 +11,7 @@ const AverageScore = (props) => {
   } else {
     return (
       <>
-        <div className="average-score-main">{reviewsData.average_score}</div>
+        <div className="average-score-main">{reviewsData.average_score.toFixed(1)}</div>
         <div className="average-score-sub">
           <ReactStars
             size={18}

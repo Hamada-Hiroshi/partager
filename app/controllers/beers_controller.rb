@@ -1,5 +1,5 @@
 class BeersController < ApplicationController
-  before_action :set_current_user_props, only: [:top, :index, :show]
+  before_action :set_current_user_props, only: [:top, :show]
 
   def top
   end
@@ -14,6 +14,8 @@ class BeersController < ApplicationController
         beers: beers.as_json(include: [:beer_style, :country],
         methods: [:sample_image_url, :content_image_url, :reviews_data])
       }
+    else
+      set_current_user_props
     end
   end
 
@@ -46,11 +48,4 @@ class BeersController < ApplicationController
     render json: beer.as_json(include: [:beer_style, :country],
                               methods: [:sample_image_url, :content_image_url])
   end
-
-  private
-
-  def set_current_user_props
-    @current_user_props = { is_login: user_signed_in? }
-  end
 end
-

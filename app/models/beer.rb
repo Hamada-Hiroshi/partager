@@ -54,7 +54,7 @@ class Beer < ApplicationRecord
 
   def reviews_data
     return nil if reviews.blank?
-    average_score = (reviews.sum(:score) / reviews.size).round(1)
+    average_score = (reviews.sum(:score).to_f / reviews.size).round(1)
     { average_score: average_score, count: reviews.size }
   end
 end

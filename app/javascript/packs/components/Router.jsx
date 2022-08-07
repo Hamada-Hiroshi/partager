@@ -12,14 +12,21 @@ import BeerInfo from "./BeerInfo";
 import BeerSearchResult from "./BeerSearchResult";
 
 const Router = (props) => {
-  const { is_login } = props;
-  console.log(is_login);
+  const { is_login, reviewed_beer_ids, reviewed_wine_ids, reviewed_sake_ids } = props;
+  console.log(`ログイン: ${is_login}`);
 
   return (
     <RecoilRoot>
       <BrowserRouter>
         <ScrollToTop />
-        <SetUserInfo is_login={is_login} />
+        {is_login && (
+          <SetUserInfo
+            isLogin={is_login}
+            reviewedBeerIds={reviewed_beer_ids}
+            reviewedWineIds={reviewed_wine_ids}
+            reviewedSakeIds={reviewed_sake_ids}
+          />
+        )}
         <Routes>
           <Route path="/" element={<SelectDrink />}></Route>
           <Route path="/beer" element={<BeerTop />}></Route>

@@ -17,6 +17,7 @@ const BeerInfo = () => {
   if (beer == null) {
     // url直打ちの場合
     // beerを取得するAjax処理を入れる
+    // レビュー後も再取得
   }
 
   return (
@@ -49,7 +50,7 @@ const BeerInfo = () => {
                   onClick={() => setReviewModalOpen(true)}
                 >
                   <StarIcon />
-                  評価を追加する
+                  {userInfo.reviewedBeerIds.includes(beer.id) ? "もう一度評価する" : "評価を追加する" }
                 </Button>
                 <ReviewModal
                   reviewModalOpen={reviewModalOpen}

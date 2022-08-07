@@ -3,12 +3,17 @@ import { useSetRecoilState } from "recoil";
 import { userState } from "../store/userState";
 
 const SetUserInfo = (props) => {
-  const { is_login } = props;
-  console.log(is_login);
-
+  const { isLogin, reviewedBeerIds, reviewedWineIds, reviewedSakeIds } = props;
   const setUserInfo = useSetRecoilState(userState);
+  console.log(reviewedBeerIds);
+
   useEffect(() => {
-    setUserInfo({ isLogin: is_login });
+    setUserInfo({
+      isLogin: isLogin,
+      reviewedBeerIds: reviewedBeerIds,
+      reviewedWineIds: reviewedWineIds,
+      reviewedSakeIds: reviewedSakeIds
+    });
     console.log("ログイン情報セット");
   }, []);
 

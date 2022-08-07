@@ -1,6 +1,8 @@
 class ReviewsController < ApplicationController
   def create
-    review = current_user.reviews.build(review_params)
+    review = current_user.reviews.
+      find_or_initialize_by(drink_id: params[:review][:drink_id], drink_type: params[:review][:drink_type])
+    review.attributes = review_params
     review.save!
     head :created
   end
