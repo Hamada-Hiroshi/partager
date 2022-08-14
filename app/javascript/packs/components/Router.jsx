@@ -9,7 +9,7 @@ import WineTop from "./WineTop";
 import SakeTop from "./SakeTop";
 import Beers from "./Beers";
 import BeerInfo from "./BeerInfo";
-import BeerSearchResult from "./BeerSearchResult";
+import NoSearchResult from "./NoSearchResult";
 
 const Router = (props) => {
   const { is_login, reviewed_beer_ids, reviewed_wine_ids, reviewed_sake_ids } = props;
@@ -32,7 +32,7 @@ const Router = (props) => {
           <Route path="/beer" element={<BeerTop />}></Route>
           <Route path="/wine" element={<WineTop />}></Route>
           <Route path="/sake" element={<SakeTop />}></Route>
-          <Route path="/beers/search_result" element={<BeerSearchResult />}></Route>
+          <Route path="/beers/no_search_result" element={<NoSearchResult />}></Route>
           <Route path="/beers/:id" element={<BeerInfo />}></Route>
           <Route path="/beers" element={<Beers />}></Route>
         </Routes>

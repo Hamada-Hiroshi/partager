@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :beers, only: [:index, :show] do
     collection do
       post "image_search"
-      get "search_result" => redirect("/beer")
+      get "no_search_result"
     end
   end
 

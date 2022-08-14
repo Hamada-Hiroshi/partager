@@ -39,7 +39,7 @@ class BeersController < ApplicationController
     keywords = res.responses[0].text_annotations[0]&.description&.split("\n")
     # キーワードをElasticsearchに投げて検索
     response = Beer.__elasticsearch__.search(keywords)
-    return render json: { beer: nil } if response.results.blank?
+    return render json: nil if response.results.blank?
     result = response.results[0]._source
 
     # 画像データをDB・S3に保存
@@ -50,5 +50,8 @@ class BeersController < ApplicationController
       include: [:beer_style, :country],
       methods: [:sample_image_url, :content_image_url, :reviews_data]
     )
+  end
+
+  def no_search_result
   end
 end

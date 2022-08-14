@@ -64,9 +64,13 @@ const CameraSearch = () => {
         }
       });
       console.log(response.data);
-      const images = await preloadImages(response.data);
+      if (response.data) {
+        const images = await preloadImages(response.data);
+        navigate(`/beers/${response.data.id}`, { state: response.data });
+      } else {
+        navigate("/beers/no_search_result");
+      }
       setProgress(false);
-      navigate(`/beers/${response.data.id}`, { state: response.data });
     } catch (error) {
       console.log(error);
       setProgress(false);
