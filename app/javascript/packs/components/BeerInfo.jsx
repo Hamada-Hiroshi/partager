@@ -12,8 +12,8 @@ import AverageScore from "./AverageScore";
 const BeerInfo = () => {
   const userInfo = useRecoilValue(userState);
   const [reviewModalOpen, setReviewModalOpen] = useState(false);
-
   let beer = useLocation().state;
+
   if (beer == null) {
     // url直打ちの場合
     // beerを取得するAjax処理を入れる

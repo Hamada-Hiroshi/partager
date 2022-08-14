@@ -35,27 +35,46 @@ const CameraSearch = () => {
   const navigate = useNavigate();
   const [progress, setProgress] = useState(false);
 
-  const fetchResponse = (image) => {
+  const preloadImages = (beer) => {
+    const loadImage = (imageUrl) => {
+      const img = new Image();
+      img.src = imageUrl;
+      return new Promise((resolve) => {
+        img.onload = () => {
+          resolve(img);
+        }
+      });
+    }
+    return Promise.all([
+      loadImage(beer.sample_image_url),
+      loadImage(beer.content_image_url)
+    ]);
+  }
+
+  const fetchResponse = async (image) => {
     setProgress(true);
     let csrfToken = document.head.querySelector("[name=csrf-token][content]").content;
     let data = { "image_data": image }
 
-    axios
-      .post("/beers/image_search", data, {
+    try {
+      const response = await axios.post("/beers/image_search", data, {
         headers: {
           "Content-Type": "application/json",
           "X-CSRF-Token": csrfToken
         }
-      })
-      .then((response) => {
-        console.log(response.data);
-        setProgress(false);
-        navigate("/beers/search_result", { state: response.data });
-      })
-      .catch((error) => {
-        console.log(error);
-        setProgress(false);
       });
+      console.log(response.data);
+      if (response.data) {
+        const images = await preloadImages(response.data);
+        navigate(`/beers/${response.data.id}`, { state: response.data });
+      } else {
+        navigate("/beers/no_search_result");
+      }
+      setProgress(false);
+    } catch (error) {
+      console.log(error);
+      setProgress(false);
+    }
   }
 
   const judgeDevice = () => {
