@@ -18,15 +18,21 @@ const Beers = () => {
   const [scrollPosition, setScrollPosition] = useRecoilState(scrollPositionState);
 
   const preloadImages = (beers) => {
-    let imgArray = new Array();
-    let backGroundImgArray = new Array();
+    const loadImage = (imageUrl) => {
+      const img = new Image();
+      img.src = imageUrl;
+      return new Promise((resolve) => {
+        img.onload = () => {
+          resolve(img);
+        }
+      });
+    }
+    const promiseArray = new Array;
     beers.forEach((beer, index) => {
-      imgArray[index] = new Image();
-      imgArray[index].src = beer.sample_image_url;
-      backGroundImgArray[index] = new Image();
-      backGroundImgArray[index].src = beer.content_image_url;
+      promiseArray.push(loadImage(beer.sample_image_url));
+      promiseArray.push(loadImage(beer.content_image_url));
     });
-    return backGroundImgArray;
+    return Promise.all(promiseArray);
   }
 
   useEffect(() => {
@@ -47,11 +53,9 @@ const Beers = () => {
           console.log(response.data);
           if (response.data.beers.length) {
             const images = await preloadImages(response.data.beers);
-            images[0].onload = () =>  {
-              console.log("プリロード完了");
-              setContents({ res: response.data, loading: false });
-              setBeersInfo({ params: search, beers: response.data });
-            }
+            console.log("プリロード完了");
+            setContents({ res: response.data, loading: false });
+            setBeersInfo({ params: search, beers: response.data });
           } else {
             setContents({ res: response.data, loading: false });
           }

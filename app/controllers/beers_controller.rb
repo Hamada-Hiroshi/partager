@@ -11,8 +11,10 @@ class BeersController < ApplicationController
         where(beer_styles: { category: params[:category] })
       render json: {
         category: BeerStyle.categories_i18n[params[:category]],
-        beers: beers.as_json(include: [:beer_style, :country],
-        methods: [:sample_image_url, :content_image_url, :reviews_data])
+        beers: beers.as_json(
+          include: [:beer_style, :country],
+          methods: [:sample_image_url, :content_image_url, :reviews_data]
+        )
       }
     else
       set_current_user_props
@@ -38,14 +40,15 @@ class BeersController < ApplicationController
     # キーワードをElasticsearchに投げて検索
     response = Beer.__elasticsearch__.search(keywords)
     return render json: { beer: nil } if response.results.blank?
-
     result = response.results[0]._source
-    beer = Beer.find(result.id)
 
     # 画像データをDB・S3に保存
+    beer = Beer.find(result.id)
     beer.save_image(current_user, search_image)
 
-    render json: beer.as_json(include: [:beer_style, :country],
-                              methods: [:sample_image_url, :content_image_url])
+    render json: beer.as_json(
+      include: [:beer_style, :country],
+      methods: [:sample_image_url, :content_image_url, :reviews_data]
+    )
   end
 end
