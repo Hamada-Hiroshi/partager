@@ -85,7 +85,11 @@ const CameraSearch = () => {
       } else {
         navigate("/beers/no_search_result");
       }
+      // 検索結果が現在のページと同じ場合以下の処理が必要
+      displayShow(true);
       setProgress(false);
+      setCaptureEnable(false);
+      setImageData(null);
     } catch (error) {
       console.log(error);
       setProgress(false);
