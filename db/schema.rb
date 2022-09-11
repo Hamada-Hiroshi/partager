@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_11_074331) do
+ActiveRecord::Schema.define(version: 2022_09_11_055457) do
 
   create_table "beer_styles", id: :integer, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2022_06_11_074331) do
 
   create_table "beers", id: :integer, charset: "utf8mb4", collation: "utf8mb4_general_ci", force: :cascade do |t|
     t.string "name", null: false
+    t.text "label_text"
     t.integer "beer_style_id", null: false
     t.integer "country_id", null: false
     t.datetime "created_at", precision: 6, null: false

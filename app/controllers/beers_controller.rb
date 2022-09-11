@@ -36,9 +36,9 @@ class BeersController < ApplicationController
     image_annotator = Google::Cloud::Vision.image_annotator
     res = image_annotator.text_detection(image: search_image.path, max_results: 1)
     # 画像から読み取ったtextを配列に変換
-    keywords = res.responses[0].text_annotations[0]&.description&.split("\n")
+    keyword = res.responses[0].text_annotations[0]&.description
     # キーワードをElasticsearchに投げて検索
-    response = Beer.__elasticsearch__.search(keywords)
+    response = Beer.search_by_keyword(keyword)
     return render json: nil if response.results.blank?
     result = response.results[0]._source
 
