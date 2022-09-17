@@ -15,38 +15,62 @@ body.home, body.beers
     min-height: 100vh
     min-height: calc(var(--vh, 1vh) * 100 - 108px)
     &.top
-      #select-beer-genre
-        display: flex
-        flex-wrap: wrap
-        .beer-genre
+      .beer-search
+        padding-top: 10px
+        background-color: #ffffffa1
+        #beer-keyword-search
+          margin: 0 20px 30px
           position: relative
-          width: 50%
-          padding-top: 50%
-          font-size: 1.2rem
-          background-size: cover
-          &#lager
-            background-image: image-url("lager.jpg")
-          &#ale
-            background-image: image-url("ale.jpg")
-          &#others
-            background-image: image-url("others.jpg")
-          &#genre-hint
-            background-color: #AAA
-          p
+          .MuiInputBase-formControl
+            border-radius: 30px
+            background-color: #FFF
+            input
+              padding: 12px 70px 12px 20px
+            fieldset
+              top: 0
+          svg
             position: absolute
             top: 50%
-            left: 50%
-            width: 100%
-            text-align: center
-            -ms-transform: translate(-50%, -50%)
-            -webkit-transform: translate(-50%, -50%)
-            transform: translate(-50%, -50%)
-            margin: 0
-            font-weight: bold
-            span.main-font
-              font-size: 1.4rem
-            span.sub-font
-              font-size: 0.9rem
+            right: 0
+            transform: translateY(-50%)
+            border-left: 1px solid #AAA
+            padding: 10px 10px 10px 5px
+            width: 60px
+            height: 100%
+            cursor: pointer
+        #select-beer-genre
+          display: flex
+          flex-wrap: wrap
+          margin-top: 20px
+          .beer-genre
+            position: relative
+            width: 50%
+            padding-top: 50%
+            font-size: 1.2rem
+            background-size: cover
+            &#lager
+              background-image: image-url("lager.jpg")
+            &#ale
+              background-image: image-url("ale.jpg")
+            &#others
+              background-image: image-url("others.jpg")
+            &#all-style
+              background-color: #AAA
+            p
+              position: absolute
+              top: 50%
+              left: 50%
+              width: 100%
+              text-align: center
+              -ms-transform: translate(-50%, -50%)
+              -webkit-transform: translate(-50%, -50%)
+              transform: translate(-50%, -50%)
+              margin: 0
+              font-weight: bold
+              span.main-font
+                font-size: 1.4rem
+              span.sub-font
+                font-size: 0.9rem
     &.index, &.show
       .beer-image
         width: 100%
