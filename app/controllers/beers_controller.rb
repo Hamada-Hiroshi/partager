@@ -37,6 +37,7 @@ class BeersController < ApplicationController
     res = image_annotator.text_detection(image: search_image.path, max_results: 1)
     # 画像から読み取ったtextを配列に変換
     keyword = res.responses[0].text_annotations[0]&.description
+    return render json: nil if keyword.blank?
     # キーワードをElasticsearchに投げて検索
     response = Beer.search_by_keyword(keyword)
     return render json: nil if response.results.blank?
