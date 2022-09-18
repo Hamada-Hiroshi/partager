@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   get "/beer" => "beers#top"
   resources :beers, only: [:index, :show] do
     collection do
+      post "keyword_search"
       post "image_search"
       get "no_search_result"
     end

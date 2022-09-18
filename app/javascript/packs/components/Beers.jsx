@@ -36,7 +36,8 @@ const Beers = () => {
   }
 
   useEffect(() => {
-    if (search == beersInfo.params) {
+    if (decodeURI(search) == beersInfo.params) {
+      console.log(search);
       setContents({ res: beersInfo.beers, loading: false });
     } else {
       console.log("apiリクエスト");

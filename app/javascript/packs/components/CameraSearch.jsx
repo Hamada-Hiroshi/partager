@@ -66,7 +66,7 @@ const CameraSearch = () => {
     ]);
   }
 
-  const fetchResponse = async (image) => {
+  const searchImage = async (image) => {
     setProgress(true);
     let csrfToken = document.head.querySelector("[name=csrf-token][content]").content;
     let data = { "image_data": image }
@@ -217,7 +217,7 @@ const CameraSearch = () => {
 
           <Grid item xs={4}>
             {imageData && (
-              <span style={{ color: "#FFF", cursor: "pointer" }} onClick={() => fetchResponse(imageData)}>
+              <span style={{ color: "#FFF", cursor: "pointer" }} onClick={() => searchImage(imageData)}>
                 検索
               </span>
             )}

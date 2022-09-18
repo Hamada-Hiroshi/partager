@@ -1,50 +1,54 @@
-import React, { useEffect, useCallback } from "react";
-import { Link } from "react-router-dom";
-import { TextField } from "@material-ui/core";
+import React, { useState, useEffect, useCallback, useRef } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { TextField, Backdrop } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
+import { BallTriangle } from "react-loader-spinner";
+import axios from "axios";
+import { useRecoilState } from "recoil";
+import { beerSearchResultsState } from "../store/beerSearchResultsState";
 import CameraSearch from "./CameraSearch";
 
 const BeerTop = () => {
-  const handleSearch = () => {
-    console.log("検索実行");
-    // setProgress(true);
-    // let csrfToken = document.head.querySelector("[name=csrf-token][content]").content;
-    // let data = {
-    //   "review": {
-    //     "drink_id": drinkId,
-    //     "drink_type": drinkType.charAt(0).toUpperCase() + drinkType.slice(1),
-    //     "score": rating,
-    //     "comment": inputComment.current.value
-    //   }
-    // }
-    //
-    // axios
-    //   .post("/reviews", data, {
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //       "X-CSRF-Token": csrfToken
-    //     }
-    //   })
-    //   .then((response) => {
-    //     setReviewModalOpen(false);
-    //     displaySendButton(false);
-    //     setUserInfo({
-    //       isLogin: userInfo.isLogin,
-    //       reviewedBeerIds: userInfo.reviewedBeerIds.concat(drinkId),
-    //       reviewedWineIds: userInfo.reviewedWineIds,
-    //       reviewedSakeIds: userInfo.reviewedSakeIds
-    //     });
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   })
-    //   .finally(() => {
-    //     setProgress(false);
-    //   });
+  const navigate = useNavigate();
+  const [progress, setProgress] = useState(false);
+  const inputKeyword = useRef(null);
+  const [beersInfo, setBeersInfo] = useRecoilState(beerSearchResultsState);
+
+  const searchKeyword = async () => {
+    setProgress(true);
+    let csrfToken = document.head.querySelector("[name=csrf-token][content]").content;
+    let data = { "keyword": inputKeyword.current.value }
+    console.log(data);
+
+    try {
+      const response = await axios.post("/beers/keyword_search", data, {
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": csrfToken
+        }
+      });
+      console.log(response.data);
+      setProgress(false);
+      if (response.data) {
+        let keywordParam = `?keyword=${inputKeyword.current.value}`
+        // const images = await preloadImages(response.data);
+        setBeersInfo({ params: keywordParam, beers: response.data });
+        navigate(`/beers${keywordParam}`, { state: response.data });
+      } else {
+        navigate("/beers/no_search_result");
+      }
+    } catch (error) {
+      console.log(error);
+      setProgress(false);
+    }
   }
 
   return (
     <>
+      <Backdrop open={progress} style={{ zIndex: 99 }}>
+        <BallTriangle color="#00BFFF" height={80} width={80} />
+      </Backdrop>
+
       <div className="no-wrapper beer top">
         <div className="beer-search">
           <div id="beer-keyword-search">
@@ -54,9 +58,10 @@ const BeerTop = () => {
               type="search"
               variant="outlined"
               placeholder="キーワードを入力してください"
+              inputRef={inputKeyword}
               fullWidth
             />
-            <SearchIcon onClick={handleSearch} />
+            <SearchIcon onClick={() => searchKeyword()} />
           </div>
 
           <h2 className="sub-title">ビールを検索する</h2>
