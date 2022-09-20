@@ -86,9 +86,9 @@ workflows:
             - build
             - production_deploy
       - production_deploy:
-          requires:
-            - build
-            - test
+          # requires:
+            # - build
+            # - test
           filters:
             branches:
               only: master
