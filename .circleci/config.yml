@@ -84,6 +84,7 @@ workflows:
       - test:
           requires:
             - build
+            - production_deploy
       - production_deploy:
           requires:
             - build
