@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { useLocation, Link, browserHistory } from "react-router-dom";
+import { useLocation, useNavigate, Link, browserHistory } from "react-router-dom";
 import CameraSearch from "./CameraSearch";
 import { Grid, Backdrop } from "@material-ui/core";
 import { Oval } from  "react-loader-spinner";
@@ -12,6 +12,7 @@ import { scrollPositionState } from "../store/scrollPositionState";
 import AverageScore from "./AverageScore";
 
 const Beers = () => {
+  const navigate = useNavigate();
   const { pathname, search, hash } = useLocation();
   const [contents, setContents] = useState({ res: null, loading: true });
   const [beersInfo, setBeersInfo] = useRecoilState(beerSearchResultsState);
@@ -52,13 +53,13 @@ const Beers = () => {
             }
           });
           console.log(response.data);
-          if (response.data.beers.length) {
+          if (response.data) {
             const images = await preloadImages(response.data.beers);
             console.log("プリロード完了");
             setContents({ res: response.data, loading: false });
             setBeersInfo({ params: search, beers: response.data });
           } else {
-            setContents({ res: response.data, loading: false });
+            navigate("/beers/no_search_result");
           }
         } catch (error) {
           console.log(error);
@@ -86,7 +87,7 @@ const Beers = () => {
           </div>
         ) : (
           <>
-            <h2 className="sub-title">{contents.res.category}</h2>
+            <h2 className="sub-title">{contents.res.title}</h2>
             {console.log("一覧表示")}
             {contents.res.beers.map(beer => (
               <Link

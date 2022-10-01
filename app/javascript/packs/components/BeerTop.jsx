@@ -17,12 +17,13 @@ const BeerTop = () => {
   const searchKeyword = async () => {
     setProgress(true);
     let csrfToken = document.head.querySelector("[name=csrf-token][content]").content;
-    let data = { "keyword": inputKeyword.current.value }
-    console.log(data);
+    let url = `/beers?keyword=${inputKeyword.current.value}`
+    let keywordParam = `?keyword=${inputKeyword.current.value}`
 
     try {
-      const response = await axios.post("/beers/keyword_search", data, {
+      const response = await axios.get(`/beers${keywordParam}`, {
         headers: {
+          "X-Requested-With": "XMLHttpRequest",
           "Content-Type": "application/json",
           "X-CSRF-Token": csrfToken
         }
@@ -30,7 +31,6 @@ const BeerTop = () => {
       console.log(response.data);
       setProgress(false);
       if (response.data) {
-        let keywordParam = `?keyword=${inputKeyword.current.value}`
         // const images = await preloadImages(response.data);
         setBeersInfo({ params: keywordParam, beers: response.data });
         navigate(`/beers${keywordParam}`, { state: response.data });

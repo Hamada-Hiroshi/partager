@@ -6,11 +6,21 @@ class BeersController < ApplicationController
 
   def index
     if request.xhr?
-      beers = Beer.
-        includes(:beer_style, :country).
-        where(beer_styles: { category: params[:category] })
+      return render json: nil if params[:category].blank? && params[:keyword].blank?
+
+      response = Beer.search(params)
+      return render json: nil if response.results.blank?
+
+      beers = response.records.records
+      title =
+        if params[:category].present?
+          BeerStyle.categories_i18n[params[:category]]
+        elsif params[:keyword].present?
+          "#{params[:keyword]} の検索結果"
+        end
+
       render json: {
-        category: BeerStyle.categories_i18n[params[:category]],
+        title: title,
         beers: beers.as_json(
           include: [:beer_style, :country],
           methods: [:sample_image_url, :content_image_url, :reviews_data]
@@ -22,23 +32,6 @@ class BeersController < ApplicationController
   end
 
   def show
-  end
-
-  def keyword_search
-    keyword = params[:keyword]
-    return render json: nil if keyword.blank?
-
-    response = Beer.search_by_keyword(keyword)
-    return render json: nil if response.results.blank?
-
-    beers = response.records.records
-    render json: {
-      category: "#{keyword} の検索結果一覧",
-      beers: beers.as_json(
-        include: [:beer_style, :country],
-        methods: [:sample_image_url, :content_image_url, :reviews_data]
-      )
-    }
   end
 
   def image_search
@@ -56,7 +49,8 @@ class BeersController < ApplicationController
     return render json: nil if keyword.blank?
 
     # キーワードをElasticsearchに投げて検索
-    response = Beer.search_by_keyword(keyword)
+    params = { keyword: keyword }
+    response = Beer.search(params)
     return render json: nil if response.results.blank?
 
     # 画像データをDB・S3に保存

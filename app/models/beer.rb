@@ -29,15 +29,30 @@ class Beer < ApplicationRecord
     end
   end
 
-  def self.search_by_keyword(keyword)
-    query = {
-      multi_match: {
-        query: keyword,
-        fields: [:name, :label_text],
-        type: "most_fields",
+  def as_indexed_json(*)
+    as_json(include: { beer_style: { only: :category } })
+  end
+
+  def self.search(params)
+    query = {}
+    if params[:keyword].present?
+      query[:must] = {
+        multi_match: {
+          query: params[:keyword],
+          fields: [:name, :label_text],
+          type: "most_fields",
+        }
       }
-    }
-    __elasticsearch__.search(query: query)
+    end
+    if params[:category].present?
+      query[:filter] = {
+        term: {
+          "beer_style.category" => params[:category]
+        }
+      }
+    end
+
+    __elasticsearch__.search(query: { bool: query }, size: 100)
   end
 
   def sample_image_url
