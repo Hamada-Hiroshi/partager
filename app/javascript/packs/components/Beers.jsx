@@ -1,42 +1,26 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { useLocation, Link, browserHistory } from "react-router-dom";
-import CameraSearch from "./CameraSearch";
+import { useLocation, useNavigate, Link, browserHistory } from "react-router-dom";
 import { Grid, Backdrop } from "@material-ui/core";
 import { Oval } from  "react-loader-spinner";
 import axios from "axios";
+import CameraSearch from "./CameraSearch";
+import AverageScore from "./AverageScore";
 import { useRecoilState } from "recoil";
 import { beerSearchResultsState } from "../store/beerSearchResultsState";
 import { scrollPositionState } from "../store/scrollPositionState";
-import AverageScore from "./AverageScore";
+import { preloadImages } from "../common";
 
 const Beers = () => {
+  const navigate = useNavigate();
   const { pathname, search, hash } = useLocation();
   const [contents, setContents] = useState({ res: null, loading: true });
   const [beersInfo, setBeersInfo] = useRecoilState(beerSearchResultsState);
   const [scrollPosition, setScrollPosition] = useRecoilState(scrollPositionState);
 
-  const preloadImages = (beers) => {
-    const loadImage = (imageUrl) => {
-      const img = new Image();
-      img.src = imageUrl;
-      return new Promise((resolve) => {
-        img.onload = () => {
-          resolve(img);
-        }
-      });
-    }
-    const promiseArray = new Array;
-    beers.forEach((beer, index) => {
-      promiseArray.push(loadImage(beer.sample_image_url));
-      promiseArray.push(loadImage(beer.content_image_url));
-    });
-    return Promise.all(promiseArray);
-  }
-
   useEffect(() => {
-    if (search == beersInfo.params) {
+    if (decodeURI(search) == beersInfo.params) {
+      console.log(search);
       setContents({ res: beersInfo.beers, loading: false });
     } else {
       console.log("apiリクエスト");
@@ -51,13 +35,13 @@ const Beers = () => {
             }
           });
           console.log(response.data);
-          if (response.data.beers.length) {
+          if (response.data) {
             const images = await preloadImages(response.data.beers);
             console.log("プリロード完了");
             setContents({ res: response.data, loading: false });
             setBeersInfo({ params: search, beers: response.data });
           } else {
-            setContents({ res: response.data, loading: false });
+            navigate("/beers/no_search_result");
           }
         } catch (error) {
           console.log(error);
@@ -85,7 +69,7 @@ const Beers = () => {
           </div>
         ) : (
           <>
-            <h2 className="sub-title">{contents.res.category}</h2>
+            <h2 className="sub-title">{contents.res.title}</h2>
             {console.log("一覧表示")}
             {contents.res.beers.map(beer => (
               <Link
@@ -130,4 +114,3 @@ const Beers = () => {
   );
 };
 export default Beers;
-

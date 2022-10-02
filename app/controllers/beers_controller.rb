@@ -6,11 +6,21 @@ class BeersController < ApplicationController
 
   def index
     if request.xhr?
-      beers = Beer.
-        includes(:beer_style, :country).
-        where(beer_styles: { category: params[:category] })
+      return render json: nil if params[:category].blank? && params[:keyword].blank?
+
+      response = Beer.search(params)
+      return render json: nil if response.results.blank?
+
+      beers = response.records.records
+      title =
+        if params[:category].present?
+          BeerStyle.categories_i18n[params[:category]]
+        elsif params[:keyword].present?
+          "#{params[:keyword]} の検索結果"
+        end
+
       render json: {
-        category: BeerStyle.categories_i18n[params[:category]],
+        title: title,
         beers: beers.as_json(
           include: [:beer_style, :country],
           methods: [:sample_image_url, :content_image_url, :reviews_data]
@@ -35,15 +45,16 @@ class BeersController < ApplicationController
     # 画像から言語解析
     image_annotator = Google::Cloud::Vision.image_annotator
     res = image_annotator.text_detection(image: search_image.path, max_results: 1)
-    # 画像から読み取ったtextを配列に変換
     keyword = res.responses[0].text_annotations[0]&.description
     return render json: nil if keyword.blank?
+
     # キーワードをElasticsearchに投げて検索
-    response = Beer.search_by_keyword(keyword)
+    params = { keyword: keyword }
+    response = Beer.search(params)
     return render json: nil if response.results.blank?
-    result = response.results[0]._source
 
     # 画像データをDB・S3に保存
+    result = response.results[0]._source
     beer = Beer.find(result.id)
     beer.save_image(current_user, search_image)
 
