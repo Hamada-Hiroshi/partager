@@ -1,15 +1,15 @@
-import React from "react";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { useLocation, useNavigate, Link, browserHistory } from "react-router-dom";
-import CameraSearch from "./CameraSearch";
 import { Grid, Backdrop } from "@material-ui/core";
 import { Oval } from  "react-loader-spinner";
 import axios from "axios";
+import CameraSearch from "./CameraSearch";
+import AverageScore from "./AverageScore";
 import { useRecoilState } from "recoil";
 import { beerSearchResultsState } from "../store/beerSearchResultsState";
 import { scrollPositionState } from "../store/scrollPositionState";
-import AverageScore from "./AverageScore";
+import { preloadImages } from "../common";
 
 const Beers = () => {
   const navigate = useNavigate();
@@ -17,24 +17,6 @@ const Beers = () => {
   const [contents, setContents] = useState({ res: null, loading: true });
   const [beersInfo, setBeersInfo] = useRecoilState(beerSearchResultsState);
   const [scrollPosition, setScrollPosition] = useRecoilState(scrollPositionState);
-
-  const preloadImages = (beers) => {
-    const loadImage = (imageUrl) => {
-      const img = new Image();
-      img.src = imageUrl;
-      return new Promise((resolve) => {
-        img.onload = () => {
-          resolve(img);
-        }
-      });
-    }
-    const promiseArray = new Array;
-    beers.forEach((beer, index) => {
-      promiseArray.push(loadImage(beer.sample_image_url));
-      promiseArray.push(loadImage(beer.content_image_url));
-    });
-    return Promise.all(promiseArray);
-  }
 
   useEffect(() => {
     if (decodeURI(search) == beersInfo.params) {
@@ -132,4 +114,3 @@ const Beers = () => {
   );
 };
 export default Beers;
-

@@ -7,6 +7,7 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 import { beerSearchResultsState } from "../store/beerSearchResultsState";
 import CameraSearch from "./CameraSearch";
+import { preloadImages } from "../common";
 
 const BeerTop = () => {
   const navigate = useNavigate();
@@ -29,9 +30,8 @@ const BeerTop = () => {
         }
       });
       console.log(response.data);
-      setProgress(false);
       if (response.data) {
-        // const images = await preloadImages(response.data);
+        const images = await preloadImages(response.data.beers);
         setBeersInfo({ params: keywordParam, beers: response.data });
         navigate(`/beers${keywordParam}`, { state: response.data });
       } else {
@@ -98,4 +98,3 @@ const BeerTop = () => {
   );
 };
 export default BeerTop;
-
