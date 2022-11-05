@@ -1,7 +1,7 @@
 import React from "react";
 import CameraSearch from "./CameraSearch";
 
-const NoSearchResult = () => {
+const NoSearchResult: React.VFC = () => {
   return (
     <>
       <div className="wrapper beer">

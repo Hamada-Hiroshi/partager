@@ -8,10 +8,10 @@ class ApplicationController < ActionController::Base
     reviewed_wine_ids = is_login ? reviews.where(drink_type: "Wine").pluck(:drink_id) : []
     reviewed_sake_ids = is_login ? reviews.where(drink_type: "Sake").pluck(:drink_id) : []
     @current_user_props = {
-      is_login: is_login,
-      reviewed_beer_ids: reviewed_beer_ids,
-      reviewed_wine_ids: reviewed_wine_ids,
-      reviewed_sake_ids: reviewed_sake_ids,
+      isLogin: is_login,
+      reviewedBeerIds: reviewed_beer_ids,
+      reviewedWineIds: reviewed_wine_ids,
+      reviewedSakeIds: reviewed_sake_ids,
     }
   end
 end

@@ -10,21 +10,22 @@ import SakeTop from "./SakeTop";
 import Beers from "./Beers";
 import BeerInfo from "./BeerInfo";
 import NoSearchResult from "./NoSearchResult";
+import UserInfo from "../types/UserInfo"
 
-const Router = (props) => {
-  const { is_login, reviewed_beer_ids, reviewed_wine_ids, reviewed_sake_ids } = props;
-  console.log(`ログイン: ${is_login}`);
+const Router: React.VFC<UserInfo> = (props) => {
+  const { isLogin, reviewedBeerIds, reviewedWineIds, reviewedSakeIds } = props;
+  console.log(`ログイン: ${props.isLogin}`);
 
   return (
     <RecoilRoot>
       <BrowserRouter>
         <ScrollToTop />
-        {is_login && (
+        {isLogin && (
           <SetUserInfo
-            isLogin={is_login}
-            reviewedBeerIds={reviewed_beer_ids}
-            reviewedWineIds={reviewed_wine_ids}
-            reviewedSakeIds={reviewed_sake_ids}
+            isLogin={isLogin}
+            reviewedBeerIds={reviewedBeerIds}
+            reviewedWineIds={reviewedWineIds}
+            reviewedSakeIds={reviewedSakeIds}
           />
         )}
         <Routes>
@@ -41,4 +42,3 @@ const Router = (props) => {
   );
 };
 export default Router;
-

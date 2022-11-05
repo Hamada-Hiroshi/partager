@@ -2,7 +2,12 @@ import React from "react";
 import { IconButton, Box, Typography, Modal, Fade } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 
-const LoginModal = (props) => {
+type LoginModal = {
+  loginModalOpen: boolean;
+  setLoginModalOpen: Function;
+}
+
+const LoginModal: React.VFC<LoginModal> = (props) => {
   const { loginModalOpen, setLoginModalOpen } = props
 
   return (

@@ -1,7 +1,12 @@
 import React from "react";
 import ReactStars from "react-rating-stars-component";
+import ReviewsData from "../types/ReviewsData"
 
-const AverageScore = (props) => {
+type AverageScore = {
+  reviewsData: ReviewsData | null;
+}
+
+const AverageScore: React.VFC<AverageScore> = (props) => {
   const { reviewsData } = props;
 
   if (reviewsData === null) {
