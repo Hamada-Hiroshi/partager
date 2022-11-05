@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 import { userState } from "../store/userState";
+import UserInfo from "../types/UserInfo"
 
-const SetUserInfo = (props) => {
+const SetUserInfo: React.VFC<UserInfo> = (props) => {
   const { isLogin, reviewedBeerIds, reviewedWineIds, reviewedSakeIds } = props;
-  const setUserInfo = useSetRecoilState(userState);
+  const setUserInfo = useSetRecoilState<UserInfo>(userState);
   console.log(reviewedBeerIds);
 
   useEffect(() => {
@@ -20,4 +21,3 @@ const SetUserInfo = (props) => {
   return null;
 };
 export default SetUserInfo;
-

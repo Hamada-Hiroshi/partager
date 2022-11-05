@@ -1,25 +1,25 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { TextField, Backdrop } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import { BallTriangle } from "react-loader-spinner";
 import axios from "axios";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { beerSearchResultsState } from "../store/beerSearchResultsState";
+import SearchedBeers from "../types/SearchedBeers";
 import CameraSearch from "./CameraSearch";
 import { preloadImages } from "../common";
 
-const BeerTop = () => {
+const BeerTop: React.VFC = () => {
   const navigate = useNavigate();
-  const [progress, setProgress] = useState(false);
-  const inputKeyword = useRef(null);
-  const [beersInfo, setBeersInfo] = useRecoilState(beerSearchResultsState);
+  const [progress, setProgress] = useState<boolean>(false);
+  const inputKeyword = useRef<HTMLInputElement>(null);
+  const setSearchResults = useSetRecoilState<SearchedBeers>(beerSearchResultsState);
 
   const searchKeyword = async () => {
     setProgress(true);
-    let csrfToken = document.head.querySelector("[name=csrf-token][content]").content;
-    let url = `/beers?keyword=${inputKeyword.current.value}`
-    let keywordParam = `?keyword=${inputKeyword.current.value}`
+    const csrfToken = (document.head.querySelector("[name=csrf-token][content]") as HTMLMetaElement).content;
+    let keywordParam = `?keyword=${inputKeyword.current?.value}`
 
     try {
       const response = await axios.get(`/beers${keywordParam}`, {
@@ -31,8 +31,8 @@ const BeerTop = () => {
       });
       console.log(response.data);
       if (response.data) {
-        const images = await preloadImages(response.data.beers);
-        setBeersInfo({ params: keywordParam, beers: response.data });
+        await preloadImages(response.data.beers);
+        setSearchResults({ params: keywordParam, title: response.data.title, beers: response.data.beers });
         navigate(`/beers${keywordParam}`, { state: response.data });
       } else {
         navigate("/beers/no_search_result");
@@ -41,7 +41,7 @@ const BeerTop = () => {
       console.log(error);
       setProgress(false);
     }
-  }
+  };
 
   return (
     <>
@@ -50,8 +50,7 @@ const BeerTop = () => {
       </Backdrop>
 
       <div className="no-wrapper beer top">
-        <div className="beer-search">
-          <div id="beer-keyword-search">
+        <div className="beer-search"> <div id="beer-keyword-search">
             <TextField
               id="outlined-search"
               label={false}

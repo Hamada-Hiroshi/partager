@@ -9,21 +9,26 @@ import CameraAltIcon from "@material-ui/icons/CameraAlt";
 import ReplayIcon from "@material-ui/icons/Replay";
 import { IconButton, Grid, Backdrop } from "@material-ui/core";
 import LoginModal from "./LoginModal";
+import { preloadImages, isPC } from "../common";
+import UserInfo from "../types/UserInfo";
 
-const CameraSearch = () => {
-  const userInfo = useRecoilValue(userState);
-  const [loginModalOpen, setLoginModalOpen] = useState(false);
-  const [isCaptureEnable, setCaptureEnable] = useState(false);
-  const webcamRef = useRef(null);
-  const [imageData, setImageData] = useState(null);
+const CameraSearch: React.VFC = () => {
+  const navigate = useNavigate();
+  const [progress, setProgress] = useState<boolean>(false);
+  const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
+  const [isCaptureEnable, setCaptureEnable] = useState<boolean>(false);
+  const userInfo: UserInfo = useRecoilValue(userState);
+  const webcamRef = useRef<Webcam>(null);
+  const [imageData, setImageData] = useState<string | null>(null);
+
   const capture = useCallback(() => {
-    const imageSrc = webcamRef.current.getScreenshot();
+    const imageSrc = webcamRef.current?.getScreenshot();
     if (imageSrc) {
       setImageData(imageSrc);
     }
   }, [webcamRef]);
 
-  const displayShow = (isShow) => {
+  const displayShow = (isShow: boolean) => {
     let display = document.querySelectorAll(".wrapper, .no-wrapper")[0];
     if (isShow) {
       display.classList.remove("display-none");
@@ -32,43 +37,9 @@ const CameraSearch = () => {
     }
   }
 
-  const stopEvent = (event) => {
-    event.preventDefault();
-  }
-
-  useEffect(() => {
-    if (isCaptureEnable || imageData) {
-      window.addEventListener("wheel", stopEvent, { passive: false });
-      window.addEventListener("touchmove", stopEvent, { passive: false });
-    }
-    return () => {
-      window.removeEventListener("wheel", stopEvent, { passive: false });
-      window.removeEventListener("touchmove", stopEvent, { passive: false });
-    }
-  }, [isCaptureEnable, imageData]);
-
-  const navigate = useNavigate();
-  const [progress, setProgress] = useState(false);
-
-  const preloadImages = (beer) => {
-    const loadImage = (imageUrl) => {
-      const img = new Image();
-      img.src = imageUrl;
-      return new Promise((resolve) => {
-        img.onload = () => {
-          resolve(img);
-        }
-      });
-    }
-    return Promise.all([
-      loadImage(beer.sample_image_url),
-      loadImage(beer.content_image_url)
-    ]);
-  }
-
-  const searchImage = async (image) => {
+  const searchImage = async (image: string) => {
     setProgress(true);
-    let csrfToken = document.head.querySelector("[name=csrf-token][content]").content;
+    const csrfToken = (document.head.querySelector("[name=csrf-token][content]") as HTMLMetaElement).content;
     let data = { "image_data": image }
 
     try {
@@ -80,7 +51,7 @@ const CameraSearch = () => {
       });
       console.log(response.data);
       if (response.data) {
-        const images = await preloadImages(response.data);
+        await preloadImages([response.data]);
         navigate(`/beers/${response.data.id}`, { state: response.data });
       } else {
         navigate("/beers/no_search_result");
@@ -96,28 +67,20 @@ const CameraSearch = () => {
     }
   }
 
-  const judgeDevice = () => {
-    if (navigator.userAgent.indexOf("iPhone") > 0) {
-      return "iphone";
-    } else if (navigator.userAgent.indexOf("Android") > 0 && navigator.userAgent.indexOf("Mobile") > 0) {
-      return "android";
-    } else if (navigator.userAgent.indexOf("iPad") > 0) {
-      return "ipad";
-    } else if (navigator.userAgent.indexOf("Android") > 0) {
-      return "android_tablet";
-    } else {
-      return "pc";
-    }
+  const stopEvent = (event: any) => {
+    event.preventDefault();
   }
 
-  const isPC = () => {
-    let userAgent = judgeDevice();
-    if (userAgent === "pc") {
-      return true;
-    } else {
-      return false;
+  useEffect(() => {
+    if (isCaptureEnable || imageData) {
+      window.addEventListener("wheel", stopEvent, { passive: false });
+      window.addEventListener("touchmove", stopEvent, { passive: false });
     }
-  }
+    return () => {
+      window.removeEventListener("wheel", stopEvent);
+      window.removeEventListener("touchmove", stopEvent);
+    }
+  }, [isCaptureEnable, imageData]);
 
   const CameraButton = () => {
     if (isCaptureEnable) {

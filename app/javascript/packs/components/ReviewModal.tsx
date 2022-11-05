@@ -7,76 +7,68 @@ import { BallTriangle } from "react-loader-spinner";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { userState } from "../store/userState";
+import UserInfo from "../types/UserInfo";
 
-const ReviewModal = (props) => {
+type ReviewModal = {
+  reviewModalOpen: boolean;
+  setReviewModalOpen: Function;
+  drinkType: string;
+  drinkId: number;
+}
+
+const ReviewModal: React.VFC<ReviewModal> = (props) => {
   const { reviewModalOpen, setReviewModalOpen, drinkType, drinkId } = props
-  const [rating, setRating] = useState(null);
-  const inputComment = useRef(null);
-  const [progress, setProgress] = useState(false);
-  const [userInfo, setUserInfo] = useRecoilState(userState);
+  const [rating, setRating] = useState<number>(0);
+  const inputComment = useRef<HTMLInputElement>(null);
+  const [progress, setProgress] = useState<boolean>(false);
+  const [userInfo, setUserInfo] = useRecoilState<UserInfo>(userState);
 
-  const ratingChanged = (newRating) => {
-    let score = (newRating / 5) + 0.8
+  const ratingChanged = (newRating: number) => {
+    let score: number = (newRating / 5) + 0.8
     setRating(score);
     displaySendButton(true);
   }
 
-  const displaySendButton = (isShow) => {
+  const displaySendButton = (isShow: boolean) => {
     let sendButton = document.getElementById("review-send-btn");
     if (isShow) {
-      sendButton.classList.remove("display-none");
+      sendButton?.classList.remove("display-none");
     } else {
-      sendButton.classList.add("display-none");
+      sendButton?.classList.add("display-none");
     }
   }
 
-  const displayTextArea = (isOpen) => {
+  const displayTextArea = (isOpen: boolean) => {
     let ratingDisplay = document.getElementById("rating-area");
     let commentDescription = document.getElementById("comment-description");
     let commentForm = document.querySelectorAll(".comment-form, .focused-comment-form")[0];
     let backButton = document.getElementById("review-back-btn");
     if (isOpen) {
-      ratingDisplay.classList.add("display-none");
-      commentDescription.classList.add("display-none");
+      ratingDisplay?.classList.add("display-none");
+      commentDescription?.classList.add("display-none");
       commentForm.classList.add("focused-comment-form");
       commentForm.classList.remove("comment-form");
-      backButton.classList.remove("display-none");
+      backButton?.classList.remove("display-none");
     } else {
-      ratingDisplay.classList.remove("display-none");
-      commentDescription.classList.remove("display-none");
+      ratingDisplay?.classList.remove("display-none");
+      commentDescription?.classList.remove("display-none");
       commentForm.classList.remove("focused-comment-form");
       commentForm.classList.add("comment-form");
-      backButton.classList.add("display-none");
-    }
-  }
-
-  const ratingImpression = () => {
-    if (rating >= 1 && rating < 2) {
-      return "Poor";
-    } else if (rating >= 2 && rating < 3) {
-      return "Average";
-    } else if (rating >= 3 && rating < 4) {
-      return "Good !";
-    } else if (rating >= 4 && rating < 5) {
-      return "Very Good !!";
-    } else if (rating == 5) {
-      return "Excellent !!!";
+      backButton?.classList.add("display-none");
     }
   }
 
   const handleSubmit = () => {
-    console.log(inputComment.current.value);
     setProgress(true);
-    let csrfToken = document.head.querySelector("[name=csrf-token][content]").content;
+    const csrfToken = (document.head.querySelector("[name=csrf-token][content]") as HTMLMetaElement).content;
     let data = {
       "review": {
         "drink_id": drinkId,
         "drink_type": drinkType.charAt(0).toUpperCase() + drinkType.slice(1),
         "score": rating,
-        "comment": inputComment.current.value
+        "comment": inputComment.current?.value
       }
     }
-
     axios
       .post("/reviews", data, {
         headers: {
@@ -84,7 +76,7 @@ const ReviewModal = (props) => {
           "X-CSRF-Token": csrfToken
         }
       })
-      .then((response) => {
+      .then(() => {
         setReviewModalOpen(false);
         displaySendButton(false);
         setUserInfo({
@@ -100,6 +92,37 @@ const ReviewModal = (props) => {
       .finally(() => {
         setProgress(false);
       });
+  }
+
+  const RatingArea = () => {
+    let impression: string = ""
+    if (rating >= 1 && rating < 2) {
+      impression = "Poor";
+    } else if (rating >= 2 && rating < 3) {
+      impression = "Average";
+    } else if (rating >= 3 && rating < 4) {
+      impression = "Good !";
+    } else if (rating >= 4 && rating < 5) {
+      impression = "Very Good !!";
+    } else if (rating == 5) {
+      impression = "Excellent !!!";
+    }
+    return (
+      <div id="rating-area">
+        <span className="rating-score">
+          {rating > 0 ? rating.toFixed(1) : ""}
+        </span>
+        <span className="rating-impression">
+          {impression}
+        </span>
+        <ReactStars
+          count={21}
+          onChange={ratingChanged}
+          size={16}
+          activeColor="#ffd700"
+        />
+      </div>
+    );
   }
 
   return (
@@ -135,7 +158,7 @@ const ReviewModal = (props) => {
                 </Grid>
                 <Grid item xs={4}>
                   <IconButton onClick={() => {
-                    setRating(null);
+                    setRating(0);
                     setReviewModalOpen(false);
                     displaySendButton(false);
                   }}>
@@ -144,21 +167,8 @@ const ReviewModal = (props) => {
                 </Grid>
               </Grid>
             </Box>
-            <div id="rating-area">
-              <span className="rating-score">
-                {!rating ? "" : rating.toFixed(1)}
-              </span>
-              <span className="rating-impression">
-                {ratingImpression()}
-              </span>
-              <ReactStars
-                count={21}
-                onChange={ratingChanged}
-                size={16}
-                activeColor="#ffd700"
-              />
-            </div>
-            {rating && (
+            <RatingArea />
+            {rating > 0 && (
               <>
                 <p id="comment-description">ご意見をお聞かせください</p>
                 <TextField
@@ -179,4 +189,3 @@ const ReviewModal = (props) => {
   );
 };
 export default ReviewModal;
-

@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
-import { Grid, Button, IconButton, Box, Typography, Modal } from "@material-ui/core";
+import { Grid, Button } from "@material-ui/core";
 import StarIcon from "@material-ui/icons/Star";
-import { Oval } from  "react-loader-spinner";
 import { useRecoilValue } from "recoil";
 import { userState } from "../store/userState";
 import CameraSearch from "./CameraSearch";
 import ReviewModal from "./ReviewModal";
 import AverageScore from "./AverageScore";
+import UserInfo from "../types/UserInfo";
 
-const BeerInfo = () => {
-  const userInfo = useRecoilValue(userState);
-  const [reviewModalOpen, setReviewModalOpen] = useState(false);
+const BeerInfo: React.VFC = () => {
+  const userInfo: UserInfo = useRecoilValue(userState);
+  const [reviewModalOpen, setReviewModalOpen] = useState<boolean>(false);
   let beer = useLocation().state;
 
   if (beer == null) {
@@ -68,4 +68,3 @@ const BeerInfo = () => {
   );
 };
 export default BeerInfo;
-
