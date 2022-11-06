@@ -94,7 +94,7 @@ const ReviewModal: React.VFC<ReviewModal> = (props) => {
       });
   }
 
-  const RatingArea = () => {
+  const RatingStatus = () => {
     let impression: string = ""
     if (rating >= 1 && rating < 2) {
       impression = "Poor";
@@ -108,20 +108,14 @@ const ReviewModal: React.VFC<ReviewModal> = (props) => {
       impression = "Excellent !!!";
     }
     return (
-      <div id="rating-area">
+      <>
         <span className="rating-score">
           {rating > 0 ? rating.toFixed(1) : ""}
         </span>
         <span className="rating-impression">
           {impression}
         </span>
-        <ReactStars
-          count={21}
-          onChange={ratingChanged}
-          size={16}
-          activeColor="#ffd700"
-        />
-      </div>
+      </>
     );
   }
 
@@ -167,7 +161,15 @@ const ReviewModal: React.VFC<ReviewModal> = (props) => {
                 </Grid>
               </Grid>
             </Box>
-            <RatingArea />
+            <div id="rating-area">
+              <RatingStatus />
+              <ReactStars
+                count={21}
+                onChange={ratingChanged}
+                size={16}
+                activeColor="#ffd700"
+              />
+            </div>
             {rating > 0 && (
               <>
                 <p id="comment-description">ご意見をお聞かせください</p>
