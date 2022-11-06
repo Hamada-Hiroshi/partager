@@ -2,7 +2,7 @@ import ReviewsData from "./ReviewsData";
 import BeerStyle from "./BeerStyle";
 import Country from "./Country";
 
-type BeerInfo = {
+type Beer = {
   id: number;
   name: string;
   label_text: string | null;
@@ -14,4 +14,4 @@ type BeerInfo = {
   beer_style: BeerStyle;
   country: Country;
 }
-export default BeerInfo;
+export default Beer;

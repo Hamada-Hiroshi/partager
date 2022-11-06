@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { Grid } from "@material-ui/core";
-import { Oval } from  "react-loader-spinner";
 import axios from "axios";
 import CameraSearch from "./CameraSearch";
 import AverageScore from "./AverageScore";
+import LoadingSpinner from "./LoadingSpinner";
 import { useRecoilState } from "recoil";
 import { beerSearchResultsState } from "../store/beerSearchResultsState";
 import { scrollPositionState } from "../store/scrollPositionState";
@@ -24,11 +24,10 @@ const Beers = () => {
       console.log(search);
       setLoading(false);
     } else {
-      console.log("apiリクエスト");
       const getBeers = async () => {
         const csrfToken = (document.head.querySelector("[name=csrf-token][content]") as HTMLMetaElement).content;
         try {
-          const response = await axios.get(`/beers/${search}`, {
+          const response = await axios.get(`/beers/ajax/${search}`, {
             headers: {
               "X-Requested-With": "XMLHttpRequest",
               "Content-Type": "application/json",
@@ -64,10 +63,7 @@ const Beers = () => {
     <>
       <div className="wrapper beer index">
         {loading ? (
-          <div className="index-loading">
-            {console.log("スピナー表示")}
-            <Oval color="#808080" height={30} width={30} />
-          </div>
+          <LoadingSpinner />
         ) : (
           <>
             <h2 className="sub-title">{searchResults.title}</h2>
@@ -75,8 +71,7 @@ const Beers = () => {
             {searchResults.beers.map(beer => (
               <Link
                 to={`/beers/${beer.id}`}
-                state={beer}
-                key={beer.id}
+                state={beer} key={beer.id}
                 onClick={() => {
                   setScrollPosition({ params: search, scrollY: window.scrollY });
                   if (!hash.length) {

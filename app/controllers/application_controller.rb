@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::Base
   private
 
+  def store_location
+    session[:previous_url] = request.referer
+  end
+
   def set_current_user_props
     is_login = user_signed_in?
     reviews = current_user&.reviews

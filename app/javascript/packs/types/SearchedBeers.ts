@@ -1,8 +1,8 @@
-import BeerInfo from "./BeerInfo";
+import Beer from "./Beer";
 
 type SearchedBeers = {
   params : string;
   title: string;
-  beers: Array<BeerInfo>;
+  beers: Array<Beer>;
 }
 export default SearchedBeers;

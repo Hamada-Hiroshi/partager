@@ -1,37 +1,46 @@
 class BeersController < ApplicationController
-  before_action :set_current_user_props, only: [:top, :show]
+  before_action :set_current_user_props, only: [:top, :index, :show]
 
   def top
   end
 
   def index
-    if request.xhr?
-      return render json: nil if params[:category].blank? && params[:keyword].blank?
-
-      response = Beer.search(params)
-      return render json: nil if response.results.blank?
-
-      beers = response.records.records
-      title =
-        if params[:category].present?
-          BeerStyle.categories_i18n[params[:category]]
-        elsif params[:keyword].present?
-          "#{params[:keyword]} の検索結果"
-        end
-
-      render json: {
-        title: title,
-        beers: beers.as_json(
-          include: [:beer_style, :country],
-          methods: [:sample_image_url, :content_image_url, :reviews_data]
-        )
-      }
-    else
-      set_current_user_props
-    end
   end
 
   def show
+  end
+
+  def get_beers_ajax
+    return render json: nil if params[:category].blank? && params[:keyword].blank?
+
+    response = Beer.search(params)
+    return render json: nil if response.results.blank?
+
+    beers = response.records.records
+    title =
+      if params[:category].present?
+        BeerStyle.categories_i18n[params[:category]]
+      elsif params[:keyword].present?
+        "#{params[:keyword]} の検索結果"
+      end
+
+    render json: {
+      title: title,
+      beers: beers.as_json(
+        include: [:beer_style, :country],
+        methods: [:sample_image_url, :content_image_url, :reviews_data]
+      )
+    }
+  end
+
+  def get_beer_info_ajax
+    beer = Beer.find_by(id: params[:id])
+    return render json: nil if beer.nil?
+
+    render json: beer.as_json(
+      include: [:beer_style, :country],
+      methods: [:sample_image_url, :content_image_url, :reviews_data]
+    )
   end
 
   def image_search
