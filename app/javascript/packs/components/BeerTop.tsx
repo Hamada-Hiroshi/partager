@@ -22,7 +22,7 @@ const BeerTop: React.VFC = () => {
     let keywordParam = `?keyword=${inputKeyword.current?.value}`
 
     try {
-      const response = await axios.get(`/beers${keywordParam}`, {
+      const response = await axios.get(`/beers/ajax${keywordParam}`, {
         headers: {
           "X-Requested-With": "XMLHttpRequest",
           "Content-Type": "application/json",
