@@ -1,5 +1,5 @@
 import React from "react";
-import CameraSearch from "./CameraSearch";
+import CameraSearch from "../organisms/CameraSearch";
 
 const NoSearchResult: React.VFC = () => {
   return (

@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { Grid } from "@material-ui/core";
 import axios from "axios";
-import CameraSearch from "./CameraSearch";
-import AverageScore from "./AverageScore";
-import LoadingSpinner from "./LoadingSpinner";
+import CameraSearch from "../organisms/CameraSearch";
+import AverageScore from "../molecules/AverageScore";
+import LoadingSpinner from "../atoms/LoadingSpinner";
 import { useRecoilState } from "recoil";
-import { beerSearchResultsState } from "../store/beerSearchResultsState";
-import { scrollPositionState } from "../store/scrollPositionState";
-import SearchedBeers from "../types/SearchedBeers";
-import ScrollPosition from "../types/ScrollPosition";
-import { preloadImages } from "../common";
+import { beerSearchResultsState } from "../../store/beerSearchResultsState";
+import { scrollPositionState } from "../../store/scrollPositionState";
+import SearchedBeers from "../../types/SearchedBeers";
+import ScrollPosition from "../../types/ScrollPosition";
+import { preloadImages } from "../../common";
 
 const Beers = () => {
   const navigate = useNavigate();
@@ -21,7 +21,6 @@ const Beers = () => {
 
   useEffect(() => {
     if (decodeURI(search) == searchResults.params) {
-      console.log(search);
       setLoading(false);
     } else {
       const getBeers = async () => {

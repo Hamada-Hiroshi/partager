@@ -5,10 +5,10 @@ import SearchIcon from "@material-ui/icons/Search";
 import { BallTriangle } from "react-loader-spinner";
 import axios from "axios";
 import { useSetRecoilState } from "recoil";
-import { beerSearchResultsState } from "../store/beerSearchResultsState";
-import SearchedBeers from "../types/SearchedBeers";
-import CameraSearch from "./CameraSearch";
-import { preloadImages } from "../common";
+import { beerSearchResultsState } from "../../store/beerSearchResultsState";
+import SearchedBeers from "../../types/SearchedBeers";
+import CameraSearch from "../organisms/CameraSearch";
+import { preloadImages } from "../../common";
 
 const BeerTop: React.VFC = () => {
   const navigate = useNavigate();

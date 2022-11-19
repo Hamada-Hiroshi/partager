@@ -6,8 +6,8 @@ import ReactStars from "react-rating-stars-component";
 import { BallTriangle } from "react-loader-spinner";
 import axios from "axios";
 import { useRecoilState } from "recoil";
-import { userState } from "../store/userState";
-import UserInfo from "../types/UserInfo";
+import { userState } from "../../store/userState";
+import UserInfo from "../../types/UserInfo";
 
 type ReviewModal = {
   reviewModalOpen: boolean;

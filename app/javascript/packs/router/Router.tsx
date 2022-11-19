@@ -1,13 +1,13 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ScrollToTop from "../components/ScrollToTop";
-import SelectDrink from "../components/SelectDrink";
-import BeerTop from "../components/BeerTop";
-import WineTop from "../components/WineTop";
-import SakeTop from "../components/SakeTop";
-import Beers from "../components/Beers";
-import BeerInfo from "../components/BeerInfo";
-import NoSearchResult from "../components/NoSearchResult";
+import SelectDrink from "../components/pages/SelectDrink";
+import BeerTop from "../components/pages/BeerTop";
+import WineTop from "../components/pages/WineTop";
+import SakeTop from "../components/pages/SakeTop";
+import Beers from "../components/pages/Beers";
+import BeerInfo from "../components/pages/BeerInfo";
+import NoSearchResult from "../components/pages/NoSearchResult";
 
 const Router: React.VFC = () => {
   return (

@@ -1,5 +1,4 @@
 export const preloadImages = (drinks: Array<any>) => {
-  console.log(drinks);
   const loadImage = (imageUrl: string) => {
     const img = new Image();
     img.src = imageUrl;

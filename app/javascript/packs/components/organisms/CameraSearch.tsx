@@ -4,13 +4,13 @@ import Webcam from "react-webcam";
 import { BallTriangle } from "react-loader-spinner";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
-import { userState } from "../store/userState";
+import { userState } from "../../store/userState";
 import CameraAltIcon from "@material-ui/icons/CameraAlt";
 import ReplayIcon from "@material-ui/icons/Replay";
 import { IconButton, Grid, Backdrop } from "@material-ui/core";
 import LoginModal from "./LoginModal";
-import { preloadImages, isPC } from "../common";
-import UserInfo from "../types/UserInfo";
+import { preloadImages, isPC } from "../../common";
+import UserInfo from "../../types/UserInfo";
 
 const CameraSearch: React.VFC = () => {
   const navigate = useNavigate();

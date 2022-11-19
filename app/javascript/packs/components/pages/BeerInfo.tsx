@@ -3,14 +3,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Grid, Button } from "@material-ui/core";
 import StarIcon from "@material-ui/icons/Star";
 import { useRecoilValue } from "recoil";
-import { userState } from "../store/userState";
-import CameraSearch from "./CameraSearch";
-import ReviewModal from "./ReviewModal";
-import AverageScore from "./AverageScore";
-import LoadingSpinner from "./LoadingSpinner";
-import UserInfo from "../types/UserInfo";
-import Beer from "../types/Beer";
-import { preloadImages } from "../common";
+import { userState } from "../../store/userState";
+import CameraSearch from "../organisms/CameraSearch";
+import ReviewModal from "../organisms/ReviewModal";
+import AverageScore from "../molecules/AverageScore";
+import LoadingSpinner from "../atoms/LoadingSpinner";
+import UserInfo from "../../types/UserInfo";
+import Beer from "../../types/Beer";
+import { preloadImages } from "../../common";
 import axios from "axios";
 
 const BeerInfo: React.VFC = () => {
