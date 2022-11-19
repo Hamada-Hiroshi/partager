@@ -12,7 +12,7 @@ import LoginModal from "./LoginModal";
 import { preloadImages, isPC } from "../../common";
 import UserInfo from "../../types/UserInfo";
 
-const CameraSearch: React.VFC = () => {
+const CameraSearchFooter: React.VFC = () => {
   const navigate = useNavigate();
   const [progress, setProgress] = useState<boolean>(false);
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
@@ -190,4 +190,4 @@ const CameraSearch: React.VFC = () => {
     </>
   );
 };
-export default CameraSearch;
+export default CameraSearchFooter;

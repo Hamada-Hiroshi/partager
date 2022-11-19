@@ -1,5 +1,6 @@
-h1 ログイン
+= render "layouts/header"
 
+h1 ログイン
 = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
   .form-floating
     = f.email_field :email, autocomplete: "email", placeholder: "メールアドレス", class: "form-control", id: "user_email"

@@ -7,7 +7,7 @@ import axios from "axios";
 import { useSetRecoilState } from "recoil";
 import { beerSearchResultsState } from "../../store/beerSearchResultsState";
 import SearchedBeers from "../../types/SearchedBeers";
-import CameraSearch from "../organisms/CameraSearch";
+import SearchFooterLayout from "../templates/SearchFooterLayout";
 import { preloadImages } from "../../common";
 
 const BeerTop: React.VFC = () => {
@@ -44,7 +44,7 @@ const BeerTop: React.VFC = () => {
   };
 
   return (
-    <>
+    <SearchFooterLayout>
       <Backdrop open={progress} style={{ zIndex: 99 }}>
         <BallTriangle color="#00BFFF" height={80} width={80} />
       </Backdrop>
@@ -92,8 +92,7 @@ const BeerTop: React.VFC = () => {
           </div>
         </div>
       </div>
-      <CameraSearch />
-    </>
+    </SearchFooterLayout>
   );
 };
 export default BeerTop;

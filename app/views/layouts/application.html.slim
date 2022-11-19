@@ -9,9 +9,6 @@ html
     = stylesheet_link_tag "application", media: "all"
     = javascript_pack_tag "application"
   body class="#{controller_classes}"
-    .header
-      .logo
-        | Partager
     /.flash
       .notice
         = flash[:notice]

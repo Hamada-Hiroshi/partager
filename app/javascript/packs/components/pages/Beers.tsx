@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { Grid } from "@material-ui/core";
 import axios from "axios";
-import CameraSearch from "../organisms/CameraSearch";
+import SearchFooterLayout from "../templates/SearchFooterLayout";
 import AverageScore from "../molecules/AverageScore";
 import LoadingSpinner from "../atoms/LoadingSpinner";
 import { useRecoilState } from "recoil";
@@ -59,7 +59,7 @@ const Beers = () => {
   }, [loading]);
 
   return (
-    <>
+    <SearchFooterLayout>
       <div className="wrapper beer index">
         {loading ? (
           <LoadingSpinner />
@@ -104,8 +104,7 @@ const Beers = () => {
           </>
         )}
       </div>
-      <CameraSearch />
-    </>
+    </SearchFooterLayout>
   );
 };
 export default Beers;

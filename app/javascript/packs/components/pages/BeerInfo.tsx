@@ -4,7 +4,7 @@ import { Grid, Button } from "@material-ui/core";
 import StarIcon from "@material-ui/icons/Star";
 import { useRecoilValue } from "recoil";
 import { userState } from "../../store/userState";
-import CameraSearch from "../organisms/CameraSearch";
+import SearchFooterLayout from "../templates/SearchFooterLayout";
 import ReviewModal from "../organisms/ReviewModal";
 import AverageScore from "../molecules/AverageScore";
 import LoadingSpinner from "../atoms/LoadingSpinner";
@@ -48,7 +48,7 @@ const BeerInfo: React.VFC = () => {
   }, []);
 
   return (
-    <>
+    <SearchFooterLayout>
       {!beer ? (
         <div className="wrapper beer show">
           <LoadingSpinner />
@@ -96,8 +96,7 @@ const BeerInfo: React.VFC = () => {
           </div>
         </div>
       )}
-      <CameraSearch />
-    </>
+    </SearchFooterLayout>
   );
 };
 export default BeerInfo;
