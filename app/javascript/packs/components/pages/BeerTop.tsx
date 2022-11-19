@@ -1,13 +1,13 @@
 import React, { useState, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { TextField, Backdrop } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
-import { BallTriangle } from "react-loader-spinner";
 import axios from "axios";
 import { useSetRecoilState } from "recoil";
 import { beerSearchResultsState } from "../../store/beerSearchResultsState";
 import SearchedBeers from "../../types/SearchedBeers";
 import SearchFooterLayout from "../templates/SearchFooterLayout";
+import SubmittingSpinner from "../atoms/SubmittingSpinner";
 import { preloadImages } from "../../common";
 
 const BeerTop: React.VFC = () => {
@@ -45,10 +45,7 @@ const BeerTop: React.VFC = () => {
 
   return (
     <SearchFooterLayout>
-      <Backdrop open={progress} style={{ zIndex: 99 }}>
-        <BallTriangle color="#00BFFF" height={80} width={80} />
-      </Backdrop>
-
+      <SubmittingSpinner progress={progress} />
       <div className="no-wrapper beer top">
         <div className="beer-search"> <div id="beer-keyword-search">
             <TextField
