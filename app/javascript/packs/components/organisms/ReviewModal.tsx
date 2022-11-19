@@ -1,11 +1,11 @@
 import React, { useState, useRef } from "react";
+import { useRecoilState } from "recoil";
+import axios from "axios";
+import ReactStars from "react-rating-stars-component";
 import { TextField, Button, IconButton, Box, Grid, Modal, Slide } from "@material-ui/core";
 import ArrowBackIosRoundedIcon from "@material-ui/icons/ArrowBackIosRounded";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
-import ReactStars from "react-rating-stars-component";
 import SubmittingSpinner from "../atoms/SubmittingSpinner";
-import axios from "axios";
-import { useRecoilState } from "recoil";
 import { userState } from "../../store/userState";
 import UserInfo from "../../types/UserInfo";
 

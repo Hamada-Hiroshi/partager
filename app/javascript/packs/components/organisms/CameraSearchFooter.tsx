@@ -1,15 +1,15 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import Webcam from "react-webcam";
-import SubmittingSpinner from "../atoms/SubmittingSpinner";
-import axios from "axios";
 import { useRecoilValue } from "recoil";
-import { userState } from "../../store/userState";
+import axios from "axios";
+import { IconButton, Grid } from "@material-ui/core";
 import CameraAltIcon from "@material-ui/icons/CameraAlt";
 import ReplayIcon from "@material-ui/icons/Replay";
-import { IconButton, Grid } from "@material-ui/core";
-import LoginModal from "./LoginModal";
 import { preloadImages, isPC } from "../../common";
+import LoginModal from "./LoginModal";
+import SubmittingSpinner from "../atoms/SubmittingSpinner";
+import { userState } from "../../store/userState";
 import UserInfo from "../../types/UserInfo";
 
 const CameraSearchFooter: React.VFC = () => {

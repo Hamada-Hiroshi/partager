@@ -1,14 +1,14 @@
 import React, { useState, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { useSetRecoilState } from "recoil";
+import axios from "axios";
 import { TextField } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
-import axios from "axios";
-import { useSetRecoilState } from "recoil";
-import { beerSearchResultsState } from "../../store/beerSearchResultsState";
-import SearchedBeers from "../../types/SearchedBeers";
+import { preloadImages } from "../../common";
 import SearchFooterLayout from "../templates/SearchFooterLayout";
 import SubmittingSpinner from "../atoms/SubmittingSpinner";
-import { preloadImages } from "../../common";
+import { beerSearchResultsState } from "../../store/beerSearchResultsState";
+import SearchedBeers from "../../types/SearchedBeers";
 
 const BeerTop: React.VFC = () => {
   const navigate = useNavigate();

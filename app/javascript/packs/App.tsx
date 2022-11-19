@@ -1,7 +1,7 @@
 import React from "react";
 import { RecoilRoot } from "recoil";
-import SetUserInfo from "./components/SetUserInfo";
 import Router from "./router/Router";
+import SetUserInfo from "./components/SetUserInfo";
 import UserInfo from "./types/UserInfo"
 
 const App: React.VFC<UserInfo> = (props) => {

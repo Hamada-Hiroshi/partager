@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
-import { Grid } from "@material-ui/core";
+import { useRecoilState } from "recoil";
 import axios from "axios";
+import { Grid } from "@material-ui/core";
+import { preloadImages } from "../../common";
 import SearchFooterLayout from "../templates/SearchFooterLayout";
 import AverageScore from "../molecules/AverageScore";
 import LoadingSpinner from "../atoms/LoadingSpinner";
-import { useRecoilState } from "recoil";
 import { beerSearchResultsState } from "../../store/beerSearchResultsState";
 import { scrollPositionState } from "../../store/scrollPositionState";
 import SearchedBeers from "../../types/SearchedBeers";
 import ScrollPosition from "../../types/ScrollPosition";
-import { preloadImages } from "../../common";
 
 const Beers = () => {
   const navigate = useNavigate();

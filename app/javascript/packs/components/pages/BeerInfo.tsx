@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import axios from "axios";
 import { Grid, Button } from "@material-ui/core";
 import StarIcon from "@material-ui/icons/Star";
-import { useRecoilValue } from "recoil";
-import { userState } from "../../store/userState";
+import { preloadImages } from "../../common";
 import SearchFooterLayout from "../templates/SearchFooterLayout";
 import ReviewModal from "../organisms/ReviewModal";
 import AverageScore from "../molecules/AverageScore";
 import LoadingSpinner from "../atoms/LoadingSpinner";
+import { userState } from "../../store/userState";
 import UserInfo from "../../types/UserInfo";
 import Beer from "../../types/Beer";
-import { preloadImages } from "../../common";
-import axios from "axios";
 
 const BeerInfo: React.VFC = () => {
   const userInfo: UserInfo = useRecoilValue(userState);
