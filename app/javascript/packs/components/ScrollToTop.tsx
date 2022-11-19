@@ -15,4 +15,3 @@ const ScrollToTop: React.VFC = () => {
   return null;
 };
 export default ScrollToTop;
-
