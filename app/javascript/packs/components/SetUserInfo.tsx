@@ -6,7 +6,6 @@ import UserInfo from "../types/UserInfo"
 const SetUserInfo: React.VFC<UserInfo> = (props) => {
   const { isLogin, reviewedBeerIds, reviewedWineIds, reviewedSakeIds } = props;
   const setUserInfo = useSetRecoilState<UserInfo>(userState);
-  console.log(reviewedBeerIds);
 
   useEffect(() => {
     setUserInfo({

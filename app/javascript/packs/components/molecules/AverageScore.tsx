@@ -1,6 +1,6 @@
 import React from "react";
 import ReactStars from "react-rating-stars-component";
-import ReviewsData from "../types/ReviewsData"
+import ReviewsData from "../../types/ReviewsData"
 
 type AverageScore = {
   reviewsData: ReviewsData | null;

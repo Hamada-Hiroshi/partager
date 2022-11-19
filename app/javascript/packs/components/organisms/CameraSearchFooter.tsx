@@ -1,18 +1,18 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import Webcam from "react-webcam";
-import { BallTriangle } from "react-loader-spinner";
-import axios from "axios";
 import { useRecoilValue } from "recoil";
-import { userState } from "../store/userState";
+import axios from "axios";
+import { IconButton, Grid } from "@material-ui/core";
 import CameraAltIcon from "@material-ui/icons/CameraAlt";
 import ReplayIcon from "@material-ui/icons/Replay";
-import { IconButton, Grid, Backdrop } from "@material-ui/core";
+import { preloadImages, isPC } from "../../common";
 import LoginModal from "./LoginModal";
-import { preloadImages, isPC } from "../common";
-import UserInfo from "../types/UserInfo";
+import SubmittingSpinner from "../atoms/SubmittingSpinner";
+import { userState } from "../../store/userState";
+import UserInfo from "../../types/UserInfo";
 
-const CameraSearch: React.VFC = () => {
+const CameraSearchFooter: React.VFC = () => {
   const navigate = useNavigate();
   const [progress, setProgress] = useState<boolean>(false);
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
@@ -122,10 +122,7 @@ const CameraSearch: React.VFC = () => {
 
   return (
     <>
-      <Backdrop open={progress} style={{ zIndex: 99 }}>
-        <BallTriangle color="#00BFFF" height={80} width={80} />
-      </Backdrop>
-
+      <SubmittingSpinner progress={progress} />
       {/* カメラ起動時のディスプレイ */}
       {isCaptureEnable && (
         <div>
@@ -190,4 +187,4 @@ const CameraSearch: React.VFC = () => {
     </>
   );
 };
-export default CameraSearch;
+export default CameraSearchFooter;

@@ -1,14 +1,14 @@
 import React, { useState, useRef } from "react";
 import { useNavigate, Link } from "react-router-dom";
-import { TextField, Backdrop } from "@material-ui/core";
-import SearchIcon from "@material-ui/icons/Search";
-import { BallTriangle } from "react-loader-spinner";
-import axios from "axios";
 import { useSetRecoilState } from "recoil";
-import { beerSearchResultsState } from "../store/beerSearchResultsState";
-import SearchedBeers from "../types/SearchedBeers";
-import CameraSearch from "./CameraSearch";
-import { preloadImages } from "../common";
+import axios from "axios";
+import { TextField } from "@material-ui/core";
+import SearchIcon from "@material-ui/icons/Search";
+import { preloadImages } from "../../common";
+import SearchFooterLayout from "../templates/SearchFooterLayout";
+import SubmittingSpinner from "../atoms/SubmittingSpinner";
+import { beerSearchResultsState } from "../../store/beerSearchResultsState";
+import SearchedBeers from "../../types/SearchedBeers";
 
 const BeerTop: React.VFC = () => {
   const navigate = useNavigate();
@@ -44,11 +44,8 @@ const BeerTop: React.VFC = () => {
   };
 
   return (
-    <>
-      <Backdrop open={progress} style={{ zIndex: 99 }}>
-        <BallTriangle color="#00BFFF" height={80} width={80} />
-      </Backdrop>
-
+    <SearchFooterLayout>
+      <SubmittingSpinner progress={progress} />
       <div className="no-wrapper beer top">
         <div className="beer-search"> <div id="beer-keyword-search">
             <TextField
@@ -92,8 +89,7 @@ const BeerTop: React.VFC = () => {
           </div>
         </div>
       </div>
-      <CameraSearch />
-    </>
+    </SearchFooterLayout>
   );
 };
 export default BeerTop;

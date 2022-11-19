@@ -1,13 +1,13 @@
 import React, { useState, useRef } from "react";
-import { TextField, Button, IconButton, Box, Grid, Modal, Slide, Backdrop } from "@material-ui/core";
+import { useRecoilState } from "recoil";
+import axios from "axios";
+import ReactStars from "react-rating-stars-component";
+import { TextField, Button, IconButton, Box, Grid, Modal, Slide } from "@material-ui/core";
 import ArrowBackIosRoundedIcon from "@material-ui/icons/ArrowBackIosRounded";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
-import ReactStars from "react-rating-stars-component";
-import { BallTriangle } from "react-loader-spinner";
-import axios from "axios";
-import { useRecoilState } from "recoil";
-import { userState } from "../store/userState";
-import UserInfo from "../types/UserInfo";
+import SubmittingSpinner from "../atoms/SubmittingSpinner";
+import { userState } from "../../store/userState";
+import UserInfo from "../../types/UserInfo";
 
 type ReviewModal = {
   reviewModalOpen: boolean;
@@ -121,10 +121,7 @@ const ReviewModal: React.VFC<ReviewModal> = (props) => {
 
   return (
     <>
-      <Backdrop open={progress} style={{ zIndex: 1500 }}>
-        <BallTriangle color="#00BFFF" height={80} width={80} />
-      </Backdrop>
-
+      <SubmittingSpinner progress={progress} />
       <Button
         variant="outlined"
         onClick={handleSubmit}
