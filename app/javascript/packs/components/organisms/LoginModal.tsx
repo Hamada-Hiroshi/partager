@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { IconButton, Box, Typography, Modal, Fade } from "@material-ui/core";
 import CloseIcon from "@material-ui/icons/Close";
 
@@ -7,7 +7,7 @@ type LoginModal = {
   setLoginModalOpen: Function;
 }
 
-const LoginModal: React.VFC<LoginModal> = (props) => {
+const LoginModal: React.VFC<LoginModal> = memo((props) => {
   const { loginModalOpen, setLoginModalOpen } = props
 
   return (
@@ -37,5 +37,5 @@ const LoginModal: React.VFC<LoginModal> = (props) => {
       </Modal>
     </>
   );
-};
+});
 export default LoginModal;

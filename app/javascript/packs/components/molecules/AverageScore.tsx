@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import ReactStars from "react-rating-stars-component";
 import ReviewsData from "../../types/ReviewsData"
 
@@ -6,7 +6,7 @@ type AverageScore = {
   reviewsData: ReviewsData | null;
 }
 
-const AverageScore: React.VFC<AverageScore> = (props) => {
+const AverageScore: React.VFC<AverageScore> = memo((props) => {
   const { reviewsData } = props;
 
   if (reviewsData === null) {
@@ -30,6 +30,6 @@ const AverageScore: React.VFC<AverageScore> = (props) => {
       </>
     );
   }
-};
+});
 export default AverageScore;
 
