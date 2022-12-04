@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, { useRef, useState, useEffect, useCallback, memo } from "react";
 import { useNavigate } from "react-router-dom";
 import Webcam from "react-webcam";
 import { useRecoilValue } from "recoil";
@@ -12,7 +12,7 @@ import SubmittingSpinner from "../atoms/SubmittingSpinner";
 import { userState } from "../../store/userState";
 import UserInfo from "../../types/UserInfo";
 
-const CameraSearchFooter: React.VFC = () => {
+const CameraSearchFooter: React.VFC = memo(() => {
   const navigate = useNavigate();
   const [progress, setProgress] = useState<boolean>(false);
   const [loginModalOpen, setLoginModalOpen] = useState<boolean>(false);
@@ -186,5 +186,5 @@ const CameraSearchFooter: React.VFC = () => {
       </div>
     </>
   );
-};
+});
 export default CameraSearchFooter;
