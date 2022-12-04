@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useLayoutEffect, useRef, VFC, memo } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
+import InfiniteScroll from "react-infinite-scroller";
 import { useRecoilState } from "recoil";
 import axios from "axios";
 import { Grid } from "@material-ui/core";
@@ -8,71 +9,96 @@ import SearchFooterLayout from "../templates/SearchFooterLayout";
 import AverageScore from "../molecules/AverageScore";
 import LoadingSpinner from "../atoms/LoadingSpinner";
 import { beerSearchResultsState } from "../../store/beerSearchResultsState";
-import { scrollPositionState } from "../../store/scrollPositionState";
+// import { scrollPositionState } from "../../store/scrollPositionState";
 import SearchedBeers from "../../types/SearchedBeers";
-import ScrollPosition from "../../types/ScrollPosition";
 
-const Beers = () => {
+const Beers: VFC = memo(() => {
   const navigate = useNavigate();
   const { search, hash } = useLocation();
-  const [loading, setLoading] = useState<boolean>(true);
+  // const [loading, setLoading] = useState<boolean>(true);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const searchedTitle = useRef<string>("");
+  const beerIds = useRef<number[]>([]);
   const [searchResults, setSearchResults] = useRecoilState<SearchedBeers>(beerSearchResultsState);
-  const [scrollPosition, setScrollPosition] = useRecoilState<ScrollPosition>(scrollPositionState);
+  // const [scrollPosition, setScrollPosition] = useRecoilState<ScrollPosition>(scrollPositionState);
 
-  useEffect(() => {
-    if (decodeURI(search) == searchResults.params) {
-      setLoading(false);
-    } else {
-      const getBeers = async () => {
-        const csrfToken = (document.head.querySelector("[name=csrf-token][content]") as HTMLMetaElement).content;
+  const loadMore = async (page: number) => {
+    const csrfToken = (document.head.querySelector("[name=csrf-token][content]") as HTMLMetaElement).content;
+    const headers = { "X-Requested-With": "XMLHttpRequest", "Content-Type": "application/json", "X-CSRF-Token": csrfToken }
+    console.log("load_page", page)
+
+    if (page == 1) {
+      const searchBeers = async () => {
         try {
-          const response = await axios.get(`/beers/ajax/${search}`, {
-            headers: {
-              "X-Requested-With": "XMLHttpRequest",
-              "Content-Type": "application/json",
-              "X-CSRF-Token": csrfToken
-            }
-          });
-          console.log(response.data);
-          if (response.data) {
-            await preloadImages(response.data.beers);
-            console.log("プリロード完了");
-            setSearchResults({ params: search, title: response.data.title, beers: response.data.beers });
-            setLoading(false);
+          const searchResponse = await axios.get(`/beers/search/ajax${search}`, { headers: headers });
+          console.log("beer_ids", searchResponse.data.beer_ids);
+          if (searchResponse.data) {
+            searchedTitle.current = searchResponse.data.title;
+            beerIds.current = searchResponse.data.beer_ids;
           } else {
             navigate("/beers/no_search_result");
           }
         } catch (error) {
           console.log(error);
-          setLoading(false);
         }
       }
-      getBeers();
+      await searchBeers();
+    }
+
+    // beerIds10件分ずつデータを取得する
+    const loadBeers = async () => {
+      try {
+        const storedBeerIds = searchResults.beers.map(beer => beer.id);
+        const diffBeerIds = beerIds.current.filter(beerId => !storedBeerIds.includes(beerId));
+        const targetIds = diffBeerIds.slice(0, 10);
+        console.log("target", targetIds);
+        if (targetIds.length < 1) {
+          setHasMore(false);
+          return;
+        }
+        const beersResponse = await axios.get(`/beers/ajax?ids=${targetIds}`, { headers: headers });
+        await preloadImages(beersResponse.data);
+        console.log("プリロード完了");
+        setSearchResults({
+          params: searchResults.params,
+          title: searchedTitle.current,
+          beers: [...searchResults.beers, ...beersResponse.data]
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    loadBeers();
+  }
+
+  // URL直打ちの場合
+  useLayoutEffect(() => {
+    if (decodeURI(search) != searchResults.params) {
+      setSearchResults({ params: decodeURI(search), title: "", beers: [] });
+      console.log(search);
     }
   }, []);
 
-  useEffect(() => {
-    if (!loading && search == scrollPosition.params && hash == "#back") {
-      console.log("ブラウザバックスクロール");
-      window.scrollTo(0, scrollPosition.scrollY);
-    }
-  }, [loading]);
+  // useEffect(() => {
+  //   if (!loading && search == scrollPosition.params && hash == "#back") {
+  //     console.log("ブラウザバックスクロール");
+  //     window.scrollTo(0, scrollPosition.scrollY);
+  //   }
+  // }, [loading]);
 
   return (
     <SearchFooterLayout>
       <div className="wrapper beer index">
-        {loading ? (
-          <LoadingSpinner />
-        ) : (
-          <>
+        {decodeURI(search) == searchResults.params && (
+          <InfiniteScroll loadMore={loadMore} hasMore={hasMore} loader={<LoadingSpinner key={0} />}>
             <h2 className="sub-title">{searchResults.title}</h2>
-            {console.log("一覧表示")}
+            {console.log("一覧表示", searchResults.beers)}
             {searchResults.beers.map(beer => (
               <Link
                 to={`/beers/${beer.id}`}
                 state={beer} key={beer.id}
                 onClick={() => {
-                  setScrollPosition({ params: search, scrollY: window.scrollY });
+                  // setScrollPosition({ params: search, scrollY: window.scrollY });
                   if (!hash.length) {
                     window.history.replaceState(null, "", `${location.href}#back`);
                   }
@@ -101,10 +127,10 @@ const Beers = () => {
                 </div>
               </Link>
             ))}
-          </>
+          </InfiniteScroll>
         )}
       </div>
     </SearchFooterLayout>
   );
-};
+});
 export default Beers;
