@@ -9,18 +9,15 @@ import SearchFooterLayout from "../templates/SearchFooterLayout";
 import AverageScore from "../molecules/AverageScore";
 import LoadingSpinner from "../atoms/LoadingSpinner";
 import { beerSearchResultsState } from "../../store/beerSearchResultsState";
-// import { scrollPositionState } from "../../store/scrollPositionState";
 import SearchedBeers from "../../types/SearchedBeers";
 
 const Beers: VFC = memo(() => {
   const navigate = useNavigate();
-  const { search, hash } = useLocation();
-  // const [loading, setLoading] = useState<boolean>(true);
+  const { search } = useLocation();
   const [hasMore, setHasMore] = useState<boolean>(true);
   const searchedTitle = useRef<string>("");
   const beerIds = useRef<number[]>([]);
   const [searchResults, setSearchResults] = useRecoilState<SearchedBeers>(beerSearchResultsState);
-  // const [scrollPosition, setScrollPosition] = useRecoilState<ScrollPosition>(scrollPositionState);
 
   const loadMore = async (page: number) => {
     const csrfToken = (document.head.querySelector("[name=csrf-token][content]") as HTMLMetaElement).content;
@@ -75,16 +72,8 @@ const Beers: VFC = memo(() => {
   useLayoutEffect(() => {
     if (decodeURI(search) != searchResults.params) {
       setSearchResults({ params: decodeURI(search), title: "", beers: [] });
-      console.log(search);
     }
   }, []);
-
-  // useEffect(() => {
-  //   if (!loading && search == scrollPosition.params && hash == "#back") {
-  //     console.log("ブラウザバックスクロール");
-  //     window.scrollTo(0, scrollPosition.scrollY);
-  //   }
-  // }, [loading]);
 
   return (
     <SearchFooterLayout>
@@ -94,16 +83,7 @@ const Beers: VFC = memo(() => {
             <h2 className="sub-title">{searchResults.title}</h2>
             {console.log("一覧表示", searchResults.beers)}
             {searchResults.beers.map(beer => (
-              <Link
-                to={`/beers/${beer.id}`}
-                state={beer} key={beer.id}
-                onClick={() => {
-                  // setScrollPosition({ params: search, scrollY: window.scrollY });
-                  if (!hash.length) {
-                    window.history.replaceState(null, "", `${location.href}#back`);
-                  }
-                }}
-              >
+              <Link to={`/beers/${beer.id}`} state={beer} key={beer.id}>
                 <div className="drink-box">
                   <div className="background-drink-image">
                     <img src={beer.content_image_url} alt="" className="beer-content-image" />
