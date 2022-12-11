@@ -13,17 +13,23 @@ class BeersController < ApplicationController
   def search_beers_ajax
     return render json: nil if params[:category].blank? && params[:keyword].blank?
 
-    response = Beer.search(params)
-    return render json: nil if response.results.blank?
+    if params[:category] == "all"
+      title = "全てのスタイル"
+      beer_ids = Beer.all.ids
+    else
+      response = Beer.search(params)
+      return render json: nil if response.results.blank?
 
-    title =
-      if params[:category].present?
-        BeerStyle.categories_i18n[params[:category]]
-      elsif params[:keyword].present?
-        "#{params[:keyword]} の検索結果"
-      end
+      title =
+        if params[:category].present?
+          BeerStyle.categories_i18n[params[:category]]
+        elsif params[:keyword].present?
+          "#{params[:keyword]} の検索結果"
+        end
+      beer_ids = response.records.ids.map(&:to_i)
+    end
 
-    render json: { title: title, beer_ids: response.records.ids.map(&:to_i) }
+    render json: { title: title, beer_ids: beer_ids }
   end
 
   def get_beers_ajax

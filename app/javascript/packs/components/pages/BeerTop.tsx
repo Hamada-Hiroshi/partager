@@ -17,6 +17,7 @@ const BeerTop: React.VFC = () => {
   const lagerParam: string = "?category=lager";
   const aleParam: string = "?category=ale";
   const othersParam: string = "?category=others";
+  const allParam: string = "?category=all";
   const [searchResults, setSearchResults] = useRecoilState<SearchedBeers>(beerSearchResultsState);
 
   const searchKeyword = async () => {
@@ -89,9 +90,9 @@ const BeerTop: React.VFC = () => {
                 <span className="sub-font">-その他-</span>
               </p>
             </Link>
-            <div className="beer-genre" id="all-style">
-              <p>すべてのスタイル</p>
-            </div>
+            <Link to={`/beers${allParam}`} onClick={() => setSearchParams(allParam)} className="beer-genre" id="all">
+              <p style={{ color: "#000" }}>すべてのスタイル</p>
+            </Link>
           </div>
         </div>
       </div>
